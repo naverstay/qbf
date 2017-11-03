@@ -1,0 +1,235 @@
+include mixins.pug
+doctype html
+html(lang='ru')
+  +dev_head('QBF главная')
+
+  body
+    .wrapper
+      .base
+        +header()
+
+        div.main_content
+          .slider_section
+            .section_inner.clearfix
+              .main_slider
+                .mainSlider
+                  +slide('i/manager.png')
+                  +slide('i/manager_1.png')
+                  +slide('i/manager_2.png')
+                  +slide('i/manager_3.png')
+                  +slide('i/manager_4.png')
+                        
+                .sliderDots.slider_dots
+                
+              .get_plan_form
+                +slider_form()
+                
+          .strategy_section
+            .section_inner.clearfix
+              h2.section_title Стратегии, проверенные временем
+                
+              .tabs
+                .tab_control.tabControl.selected
+                  img(src='i/strategy_1.jpg')
+                  span.strategy_name Средневзвешенная
+                .tab_unit.selected
+                  .tab_content
+                    .chart_holder
+                      #main_chart.chart_block
+                .tab_control.tabControl
+                  img(src='i/strategy_2.jpg')
+                  span.strategy_name Консервативная
+                .tab_unit
+                  .tab_content 2
+                .tab_control.tabControl
+                  img(src='i/strategy_3.jpg')
+                  span.strategy_name Высокодоходная
+                .tab_unit
+                  .tab_content 3
+                    
+          .features_section
+            .section_inner
+              ul.features_list
+                li
+                  .feature_item
+                    .feature_img
+                      img(src='svg/amount.svg')
+                    p Сумма<br>инвестирования
+                    .feature_tip
+                      span.fz_20 от
+                      span.fz_50  1 800
+                      span.fz_20  тыс. Р
+                    
+                li
+                  .feature_item
+                    .feature_img
+                      img(src='svg/term.svg')
+                    p Срок<br>инвестирования
+                    .feature_tip
+                      span.fz_50  12
+                      span.fz_20  мес
+                      
+                li
+                  .feature_item
+                    .feature_img
+                      img(src='svg/income.svg')
+                    p Целевая<br>доходность
+                    .feature_tip
+                      span.fz_50  16-20
+                      span.fz_20  %
+                    
+                li
+                  .feature_item
+                    .feature_img
+                      img(src='svg/liquidity.svg')
+                    p Ликвидность
+                    .feature_tip
+                      span.fz_50  20
+                      span.fz_20  дней
+                    
+                li
+                  .feature_item
+                    .feature_img
+                      img(src='svg/remuneration.svg')
+                    p Вознаграждение<br>за успех
+                    .feature_tip
+                      span.fz_50  30
+                      span.fz_20  %
+                      
+          .section_inner
+            .stock_block
+              .stock_caption Акции американских эмитентов — основной инструмент средневзвешенного портфеля.
+                
+              .stock_box
+                p В рамках портфеля реализуются стратегии с оптимальным соотношением доходности и риска. В результате рост стоимости портфеля должен опередить динамику индекса S&P500.
+                      
+              .stock_box
+                p Структура портфеля позволяет сохранять высокий уровень надежности и ликвидности инвестиций практически при любой рыночной конъюнктуре.
+                      
+            .drivers_block
+              .drivers_caption Драйверы роста
+                
+              ul.drivers_list
+                li: .driver_img: img(src='i/driver_1.png')
+                li: .driver_img: img(src='i/driver_2.png')
+                li: .driver_img: img(src='i/driver_3.png')
+                li: .driver_img: img(src='i/driver_4.png')
+                li: .driver_img: img(src='i/driver_5.png')
+                li: .driver_img: img(src='i/driver_6.png')
+                li: .driver_img: img(src='i/driver_7.png')
+                
+              p Идеи актуальны по состоянию на I полугодие 2017 года.
+
+            .callback_holder
+              .callback_info
+                h3.callback_title Получите 
+                h4.callback_tip персональную консультацию по стратегиям.
+                p Мы перезвоним вам в течение 20-ти минут.
+              .callback_form
+                form(action='#')
+                  .f_cell
+                    .input_w
+                      input.f_input_v1(placeholder='Как вас зовут')
+                  .f_cell
+                    .input_w
+                      input.f_input_v1(placeholder='Телефон или почта')
+                    
+                  .f_cell
+                    label.check_v1
+                      input.inp_hidden(type='checkbox')
+                      span.check_text Я даю свое согласие на обработку персональных данных
+                    
+                  .f_cell
+                    button.btn_v2.callback_btn.gray_btn
+                      span.fw_b Получить консультацию
+                
+            .news_holder
+              ul.news_list
+                li
+                  .news_unit
+                    h3.news_title Рынки сегодня 
+                    h4.news_review Российская отрасль генерации электроэнергии 
+                    
+                    .news_img
+                      img(src='i/news_1.jpg')
+                      time.news_date(datetime="2017-06-10") 06.10.2017
+                      
+                    p В четверг, 5 октября, ключевые американские фондовые индексы завершили торговую сессию в зеленой зоне. Инвесторы отыгрывали каскад данных макроэкономической статистики по США, а также финансовые результаты компании Constellation Brands
+              
+                li
+                  .news_unit
+                    h3.news_title Обзоры
+                    h4.news_review Япония и США – иена и доллар 
+                    
+                    .news_img
+                      img(src='i/news_2.jpg')
+                      time.news_date(datetime="2017-06-10") 06.10.2017
+                      
+                    p В 1960 году Япония и США подписали «Договор о взаимном сотрудничестве и гарантии безопасности», с которого, по сути, начался длительный период весьма тесных отношении между странами не только в военных вопросах, но и в вопросах экономического развития 
+            
+            .mission_holder
+              .mission_block
+                h3.mission_title Мы защищаем капиталы с&nbsp;2008 года и показываем положительный результат. 
+                p Компания не собирается останавливаться на достигнутом — нас ждут новые рынки, новые возможности и сердца новых клиентов.
+
+                p Мы принимаем на себя разумные риски и дает возможность бизнесу любого масштаба расти и развиваться.
+                
+              .mission_image
+                .mission_image_w
+                  img(src='i/plane.jpg')
+              
+            .benefits_holder
+              ul.benefits_list
+                li
+                  .benefit_item
+                    .benefit_img
+                      img(src='svg/service.svg')
+                    h4.benefits_caption Сервис
+                    p У каждого инвестора компании целый штат специалистов, который решает задачу индивидуально и эффективно.
+                    
+                li
+                  .benefit_item
+                    .benefit_img
+                      img(src='svg/analysts.svg')
+                    h4.benefits_caption Аналитики
+                    p Специалисты аналитического отдела заслужили доверие не только клиентов, но и профессионалов в области. На рынке к нам прислушиваются и ценят мнение.
+                    
+                li
+                  .benefit_item
+                    .benefit_img
+                      img(src='svg/honesty.svg')
+                    h4.benefits_caption Честность
+                    p Мы предлагаем клиентам, партнерам и инвесторам прозрачные условия сотрудничества. Совместная работа означает доверие.
+                    
+                li
+                  .benefit_item
+                    .benefit_img
+                      img(src='svg/incomes.svg')
+                    h4.benefits_caption Доходность 10 лет
+                    p С 2008 года инвесторы компании получают доход, за всю историю не было ни одного убыточного года.
+                    
+                    
+          .recognition_holder.clearfix
+            .recognition_block
+              .recognition_title Профессиональное признание
+                
+              ul.recognition_list
+                li: .recognition_item: img(src='i/confession_1.png')
+                li: .recognition_item: img(src='i/confession_2.png')
+                li: .recognition_item: img(src='i/confession_2.png')
+                li: .recognition_item: img(src='i/confession_2.png')
+                li: .recognition_item: img(src='i/confession_3.png')
+                li: .recognition_item: img(src='i/confession_4.png')
+                li: .recognition_item: img(src='i/confession_4.png')
+              
+            .charity_block
+              .recognition_title Благотворительность
+                    
+                    
+                      
+
+      .footer
+        
+        
+        
+    +scripts()

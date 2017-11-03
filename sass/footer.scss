@@ -1,0 +1,80 @@
+@import "includes/global_var";
+@import "font_icons";
+
+.footer {
+  padding-top: 10px;
+}
+
+.popup {
+  background: #f4f4f4;
+  padding: 0 20px 20px;
+  text-align: center;
+
+  p {
+    margin-bottom: 20px;
+  }
+}
+
+// **********  text
+
+.text_center {
+  text-align: center;
+}
+
+.text_right {
+  text-align: right;
+}
+
+.text_left {
+  text-align: left;
+}
+
+.text_upper {
+  text-transform: uppercase;
+}
+
+.fw_bl {
+  font-family: $LatoBlack;
+}
+
+.fw_b {
+  font-family: $LatoBold;
+}
+
+.fw_r {
+  font-family: $LatoRegular;
+}
+
+.fw_l {
+  font-family: $LatoLight;
+}
+
+.fw_t {
+  font-family: $LatoThin;
+}
+
+.fz_16 {
+  font-size: 16px;
+}
+
+.rect_1024 {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  max-width: 1240px;
+  border: solid red;
+  border-width: 0 1px;
+  pointer-events: none;
+
+  &:before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    border-left: 1px solid red;
+  }
+}

@@ -1,0 +1,112 @@
+mixin dev_head(page_title)
+    head
+        title=page_title
+        | <!-- saved from url=(0014)about:internet -->
+        meta(charset='utf-8')
+        meta(name='viewport', content="width=device-width, initial-scale=1.0")
+        meta(name="SKYPE_TOOLBAR", content="SKYPE_TOOLBAR_PARSER_COMPATIBLE")
+        meta(name="apple-mobile-web-app-capable", content="yes")
+        meta(name="format-detection", content="telephone=no")
+        //-style
+            include ../styles/main_global.css
+        link(rel='stylesheet', href='styles/main_global.css', media='all')
+        link(href='http://fonts.googleapis.com/css?family=Open+Sans:400,600&subset=latin,cyrillic', rel='stylesheet')
+        link(href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,400italic&subset=latin,cyrillic', rel='stylesheet')
+
+
+mixin loop_while(counter)
+    -i=0;
+    while i < counter
+        -i++;
+        block
+
+mixin header()
+  .header
+    .section_inner.clearfix
+      .logo_block
+        a.logo(href='#')
+          img(src='svg/qbf_logo.svg' width=145 height=37)
+
+      .phone_block
+        a.callback_link(href='tel:+78124072112')
+          span.i-phone
+          span.fw_b.link_text +7 (812) 407-21-12
+
+      ul.main_menu
+        li.menu_item
+          a.menu_link(href='www.qbfin.ru')
+            span.link_text www.qbfin.ru
+        li.menu_item
+          a.btn_v1.cabinet_btn.green_btn(href='#')
+            span.fw_b Личный кабинет
+            
+mixin slider_form()
+  form(action='#')
+    .f_cell
+      .fl: .dm
+        label.label_v1 Ваш возраст
+      .input_w.fr.select_box_v1
+        select.select2()
+          option 21-25
+          option 26-30
+          option 31-35
+          option 36-40
+
+    .f_cell
+      .fl: .dm
+        label.label_v1 Я готов инвестировать
+      .input_w.fr.select_box_v1
+        select.select2()
+          option 21-25
+          option 26-30
+          option 31-35
+          option 36-40
+
+    .f_cell
+      .fl: .dm
+        label.label_v1 На срок
+      .input_w.fr.select_box_v1
+        select.select2()
+          option 21-25
+          option 26-30
+          option 31-35
+          option 36-40
+
+    .f_cell
+      .fl: .dm
+        label.label_v1 Риск
+      .input_w.fr.select_box_v1
+        select.select2()
+          option 21-25
+          option 26-30
+          option 31-35
+          option 36-40
+
+    .f_cell
+      .input_w.fr.select_box_v1
+        button.btn_v2.green_btn_2.action_btn
+          span.fw_b Получить фин.план 
+
+mixin slide(img)
+  .slide
+    .slide_photo: .slide_photo_w
+      img(src= img)
+    .slide_text
+      .slide_caption Узнайте
+      .slide_label как сохранить<br>и защитить капитал
+
+      q.slide_quote(cite='#')
+        p С 2008 года QBF преумножает капитал своих клиентов — это неизменно, из года в год, несмотря на все кризисы и волнения на рынках.
+
+      .quote_author_name Голубев Алексей
+      .quote_author_post руководитель клиентского офиса г. Санкт-Петербург
+
+
+mixin scripts()
+    script(src='js/jquery1.10.js')
+    script(src='js/slick.min.js')
+    script(src='js/select2.js')
+    script(src='js/d3.v4.min.js')
+    script(src='js/script.js')
+    //script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCl7THpWflv0u70jhfuU4T6KbuNy0fuxME&callback=loadMap')
+    
