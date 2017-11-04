@@ -23,15 +23,6 @@ mixin loop_while(counter)
 mixin header()
   .header
     .section_inner.clearfix
-      .logo_block
-        a.logo(href='#')
-          img(src='svg/qbf_logo.svg' width=145 height=37)
-
-      .phone_block
-        a.callback_link(href='tel:+78124072112')
-          span.i-phone
-          span.fw_b.link_text +7 (812) 407-21-12
-
       ul.main_menu
         li.menu_item
           a.menu_link(href='www.qbfin.ru')
@@ -40,14 +31,23 @@ mixin header()
           a.btn_v1.cabinet_btn.green_btn(href='#')
             span.fw_b Личный кабинет
             
+      .logo_block
+        a.logo(href='#')
+          img(src='svg/qbf_logo.svg' width=145 height=37)
+
+      .phone_block
+        a.callback_link(href='tel:+78124072112')
+          span.i-phone
+          span.fw_b.link_text +7 (812) 407-21-12
+            
 mixin callback_holder()
   .callback_holder
     .callback_info
-      h3.callback_title Получите 
-      h4.callback_tip персональную консультацию по стратегиям.
-      p Мы перезвоним вам в течение 20-ти минут.
+      h3.callback_title.fadeMeUp Получите 
+      h4.callback_tip.fadeMeUp персональную консультацию по стратегиям.
+      p.fadeMeUp Мы перезвоним вам в течение 20-ти минут.
 
-    .callback_form
+    .callback_form.fadeMeUp
       form(action='#')
         .f_cell
           .input_w

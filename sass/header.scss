@@ -5,44 +5,41 @@
   top: 0;
   right: 0;
   left: 0;
-  padding-top: 10px;
+  padding: 10px 0;
+  line-height: 42px;
 
   @include respond-to-min($resp_step_2) {
-    line-height: 42px;
     padding: 42px 0 25px;
   }
 }
 
 .logo_block {
+  float: left;
+  padding-right: 25px;
 
   @include respond-to-min($resp_step_2) {
-    float: left;
     padding-right: 75px;
+  }
+
+  @include respond-to-max($resp_step_1) {
+    padding-right: 10px;
+    max-width: 120px;
   }
 }
 
 .phone_block {
-  @include respond-to-min($resp_step_2) {
-    float: left;
-  }
+  float: left;
 }
 
 .logo {
   display: inline-block;
   position: relative;
 
-  span,
   img {
     display: inline-block;
     vertical-align: middle;
     line-height: 1;
-  }
-
-  span {
-    font-size: 15px;
-    color: #a7a7a7;
-    padding-left: 12px;
-    letter-spacing: -.3px;
+    max-width: 100%;
   }
 }
 
@@ -54,11 +51,11 @@
 
 .main_menu {
   text-align: center;
+  float: right;
 
-  @include respond-to-min($resp_step_2) {
-    float: right;
+  @include respond-to-max($resp_step_1) {
+    text-align: right;
   }
-
 }
 
 .main_m_item {
@@ -68,14 +65,15 @@
   max-width: 330px;
 }
 
-.main_menu {
-  float: right;
-}
-
 .menu_item {
+  padding-left: 10px;
+
+  @include respond-to-min($resp_step_1) {
+    float: left;
+    padding-left: 20px;
+  }
 
   @include respond-to-min($resp_step_2) {
-    float: left;
     padding-left: 42px;
   }
 }
@@ -94,7 +92,6 @@
 }
 
 .callback_link {
-  font-size: 18px;
   color: $default_t_color;
 
   .link_text {
@@ -103,5 +100,9 @@
 
   &:hover .link_text {
     text-decoration: underline;
+  }
+
+  @include respond-to-min($resp_step_1) {
+    font-size: 18px;
   }
 }

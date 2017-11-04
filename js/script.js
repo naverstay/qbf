@@ -9,6 +9,8 @@ var all_pins = [],
     mapTypeControl: false,
     scaleControl: true
   },
+  wnd,
+  resize_timer,
   gmap,
   map_offices = [
     {lt: 59.931915, lg: 30.401380}, // SPb
@@ -19,6 +21,8 @@ var all_pins = [],
   ],
   center,
   body_var,
+  chart_data,
+  area_data,
   mainSlider;
 
 function docScrollTo(pos, speed, callback) {
@@ -132,8 +136,6 @@ function callbackDialog() {
         action: function () {
 
           var form_data = $('.popupForm').serialize(); //собераем все данные из формы
-
-          console.log(form_data);
 
           $.ajax({
             type: "POST", //Метод отправки
@@ -308,116 +310,250 @@ function initSelect() {
   });
 }
 
-function initChart() {
-  var svg_holder = $("#main_chart");
-  var parse = d3.timeParse("%d-%b-%y");
+function adjustTextLabels(selection) {
+  selection.selectAll('.tick text')
+    .attr('transform', 'translate(20,-30)');
+}
 
-  d3.text("data/chart_3.csv", function (text) {
-    console.log(d3.csvParseRows(text));
-    console.log(d3.csvFormatRows(d3.csvParseRows(text)));
-  });
-
-  d3.csv("data/chart_3.csv", function (prices) {
-    //prices is an array of json objects containing the data in from the csv
-    console.log("prices:", prices);
-
-// 2. Use the margin convention practice 
-    var margin = {top: 50, right: 50, bottom: 50, left: 50}
-      , width = svg_holder.width() - margin.left - margin.right // Use the window's width 
-      , height = svg_holder.height() - margin.top - margin.bottom; // Use the window's height
-
-// The number of datapoints
-    var n = 21;
-
-// 5. X scale will use the index of our data
-    var xScale = d3.scaleLinear()
-      .domain([0, n - 1]) // input
-      .range([0, width]); // output
-
-// 6. Y scale will use the randomly generate number 
-    var yScale = d3.scaleLinear()
-      .domain([0, 1]) // input 
-      .range([height, 0]); // output 
-
-// 7. d3's line generator
-    var line = d3.line()
-      .x(function (d, i) {
-        return xScale(i);
-      }) // set the x values for the line generator
-      .y(function (d) {
-        return yScale(d.y);
-      }) // set the y values for the line generator 
-      .curve(d3.curveMonotoneX) // apply smoothing to the line
-
-// 8. An array of objects of length N. Each object has key -> value pair, the key being "y" and the value is a random number
-    var dataset = d3.range(n).map(function (d) {
-      return {"y": d3.randomUniform(1)()}
-    });
-
-    //var dataset = prices.map(function (d) {
-    //  //each d is one line of the csv file represented as a json object
-    //  console.log("d", d, new Date(d.date));
-    //  month = (new Date(d.date)).getMonth();
-    //  console.log("month:", d.date, month);
-    //  //we slice the dollar sign off then convert to a number with the + sign
-    //  //slicing works like "$216".slice(1) gives you 216, 
-    //  //you can also give it a range like "$216 asdf".slice(1,4) gives you 216
-    //  p = d.price;
-    //  price = +p.slice(1);
-    //  console.log("price:", p, price);
-    //  return {"month": month, "value": price};
-    //});
-    //
-    //
-    //console.log("data", data);
-
-// 1. Add the SVG to the page and employ #2
-    var svg = d3.select("#main_chart").append("svg")
+function loadAreaChart() {
+  var svg_holder = $("#area_chart");
+  var svg = d3.select("#area_chart").append("svg"),
+    margin = {top: 0, right: 0, bottom: 0, left: 0}
+    , width = svg_holder.width() - margin.left - margin.right // Use the window's width 
+    , height = svg_holder.height() - margin.top - margin.bottom, // Use the window's height
+    g = svg
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
-      .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+      .append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-// 3. Call the x axis in a group tag
-    svg.append("g")
-      .attr("class", "x axis")
-      .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(xScale)); // Create an axis component with d3.axisBottom
+  var x = d3.scaleTime()
+    .rangeRound([0, width]);
 
-// 4. Call the y axis in a group tag
-    svg.append("g")
-      .attr("class", "y axis")
-      .call(d3.axisLeft(yScale)); // Create an axis component with d3.axisLeft
+  var y = d3.scaleLinear()
+    .rangeRound([height, 0]);
 
-// 9. Append the path, bind the data, and call the line generator 
-    svg.append("path")
-      .datum(dataset) // 10. Binds data to the line 
-      .attr("class", "line") // Assign a class for styling 
-      .attr("d", line); // 11. Calls the line generator 
+  var area = d3.area()
+    .x(function (d) {
+      return x(d.date);
+    })
+    .y1(function (d) {
+      return y(d.val);
+    });
 
-// 12. Appends a circle for each datapoint 
-    svg.selectAll(".dot")
-      .data(dataset)
-      .enter().append("circle") // Uses the enter().append() method
-      .attr("class", "dot") // Assign a class for styling
-      .attr("cx", function (d, i) {
-        return xScale(i)
-      })
-      .attr("cy", function (d) {
-        return yScale(d.y)
-      })
-      .attr("r", 5);
-  });
+  x.domain(d3.extent(area_data, function (d) {
+    return d.date;
+  }));
+  y.domain([0, d3.max(area_data, function (d) {
+    return d.val;
+  })]);
 
+  area.y0(y(0));
+
+  g.append("path")
+    .datum(area_data)
+    .attr("fill", "rgba(12,174,167,.29)")
+    .attr("d", area);
+
+  g.append("g")
+    .attr("class", "axis axis--x")
+    .attr("transform", "translate(0," + height + ")")
+    .call(
+      d3.axisBottom(x)
+        .ticks(5)
+        .tickSize(-height)
+    ).call(adjustTextLabels);
 
 }
 
-$(window).resize(function () {
+function initAreaChart() {
+  var parseTime = d3.timeParse("%d/%m/%Y");
 
+  function type(d, _, columns) {
+    d.date = parseTime(d.date);
+    for (var i = 1, n = columns.length, c; i < n; ++i) {
+      d[c = columns[i]] = +(d[c]).replace(/,/, '.');
+    }
+    return d;
+  }
+
+  d3.csv("data/chart_5.csv", type, function (error, data) {
+    if (error) throw error;
+
+    area_data = data;
+
+    loadAreaChart();
+  });
+}
+
+function loadChart() {
+  var chartToggleList = $(".chartToggleList");
+  var updateLegend = !(chartToggleList.children().length > 2);
+  var svg_holder = $("#main_chart");
+  var svg = d3.select("#main_chart").append("svg");
+
+  var margin = {top: 20, right: 0, bottom: 50, left: 50}
+    , width = svg_holder.width() - margin.left - margin.right // Use the window's width 
+    , height = svg_holder.height() - margin.top - margin.bottom; // Use the window's height
+
+  var g = svg
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+  var x = d3.scaleTime().range([0, width]),
+    y = d3.scaleLinear().range([height, 0]),
+    z = d3.scaleOrdinal(d3.schemeCategory10);
+
+  var line = d3.line()
+    .curve(d3.curveLinear)
+    .x(function (d) {
+      return x(d.date);
+    })
+    .y(function (d) {
+      return y(d.val);
+    });
+
+  var percents = chart_data.columns.slice(1).map(function (id) {
+    return {
+      id: id,
+      values: chart_data.map(function (d) {
+        return {date: d.date, val: d[id]};
+      })
+    };
+  });
+
+  x.domain(d3.extent(chart_data, function (d) {
+    return d.date;
+  }));
+
+  y.domain([
+    d3.min(percents, function (c) {
+      return d3.min(c.values, function (d) {
+        return d.val;
+      });
+    }),
+    d3.max(percents, function (c) {
+      return d3.max(c.values, function (d) {
+        return d.val;
+      });
+    })
+  ]);
+
+  z.domain(percents.map(function (c) {
+    return c.id;
+  }));
+
+  g.append("g")
+    .attr("class", "axis axis--x")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(x));
+
+  g.append("g")
+    .attr("class", "axis axis--y")
+    .call(
+      d3.axisLeft(y)
+        .ticks(5)
+        .tickSize(-width)
+        .tickFormat(d3.format(",.0%"))
+    );
+
+  var graph = g.selectAll(".graph")
+    .data(percents)
+    .enter().append("g")
+    .attr("class", function (d, i) {
+      return 'graph graph_' + i;
+    });
+
+  graph.append("path")
+    .attr("d", function (d) {
+      return line(d.values);
+    })
+    .attr("class", function (d, i) {
+
+      if (updateLegend) {
+        chartToggleList.append($('<li class="line_' + (i + 1) + '"><label class="check_v1"><input class="inp_hidden chartToggle" type="checkbox" data-chart=".graph_' + (i + 1) + '" checked=""><span class="check_text">' + d.id + '</span></label></li>'));
+      }
+
+      return 'line line_' + i;
+    });
+
+  graph.selectAll(".dot")
+    .data(function (d) {
+      return d.values;
+    })
+    .enter().append("circle") // Uses the enter().append() method
+    .attr("class", function (d, i) {
+      return 'dot';
+      //return (i % 10) ? 'dot hide' : 'dot';
+    }) // Assign a class for styling
+    .attr("cx", function (d) {
+      return x(d.date);
+    })
+    .attr("cy", function (d, i) {
+      return y(d.val);
+    })
+    .attr("r", 5);
+}
+
+function initChart() {
+  var parseTime = d3.timeParse("%d/%m/%Y");
+
+  function type(d, _, columns) {
+    d.date = parseTime(d.date);
+    for (var i = 1, n = columns.length, c; i < n; ++i) {
+      d[c = columns[i]] = +(d[c]).replace(/,/, '.');
+    }
+    return d;
+  }
+
+  d3.csv("data/chart_4.csv", type, function (error, data) {
+    if (error) throw error;
+
+    chart_data = data;
+
+    loadChart();
+  });
+}
+
+function updateFade() {
+  var scrtop = getScrollTop(), wndH = wnd.innerHeight();
+
+  $('.fadeMeUp:not(.fade_up)').each(function (ind) {
+    var blck = $(this);
+
+    if ((scrtop + wndH * .9) > blck.offset().top) {
+      blck.addClass('fade_up');
+    }
+  });
+}
+
+function getScrollTop() {
+  return window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+}
+
+$(window).on('resize', function () {
+  clearTimeout(resize_timer);
+
+  resize_timer = setTimeout(function () {
+    updateGraph();
+  }, 1);
+}).on('scroll', function () {
+  updateFade();
+}).on('load', function () {
+  updateFade();
 });
+
+function updateGraph() {
+  $("#main_chart,#area_chart").empty();
+
+  loadChart();
+
+  loadAreaChart();
+}
 
 $(function ($) {
 
+  wnd = $(window);
   body_var = $('body');
 
   initSelect();
@@ -428,7 +564,12 @@ $(function ($) {
 
   initChart();
 
-  body_var.delegate('.tabControl', 'click', function () {
+  initAreaChart();
+
+  body_var.delegate('.chartToggle', 'change', function () {
+    var chck = $(this), chrt = $('.graph' + chck.attr('data-chart'));
+    chrt.toggle(chck.prop('checked'));
+  }).delegate('.tabControl', 'click', function () {
     $(this).siblings().removeClass('selected').end().next('.tab_unit').andSelf().addClass('selected');
     return false;
   }).delegate('.scrollTo', 'click', function () {
@@ -447,7 +588,7 @@ $(function ($) {
       var office = map_offices[ind];
 
       $('.officeAddr').eq(ind).show().siblings().hide();
-      
+
       center = new google.maps.LatLng(office.lt, office.lg);
       gmap.setCenter(center);
     }

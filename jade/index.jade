@@ -29,27 +29,38 @@ html(lang='ru')
               h2.section_title Стратегии, проверенные временем
                 
               .tabs
-                .tab_control.tabControl.selected
+                .tab_control.tabControl.selected.fadeMeUp
                   img(src='i/strategy_1.jpg')
                   span.strategy_name Средневзвешенная
-                .tab_unit.selected
+                .tab_unit.selected.fadeMeUp
                   .tab_content
                     .chart_holder
                       #main_chart.chart_block
-                .tab_control.tabControl
+                      
+                    .area_chart_holder
+                      #area_chart.chart_block
+                        
+                    .chart_footer
+                      .chart_controls
+                        ul.chart_toggle_list.chartToggleList
+                          li.line_0: label.check_v1
+                              input.inp_hidden.chartToggle(type='checkbox' data-chart='.graph_0' checked)
+                              span.check_text Средневзвешенная
+                              
+                .tab_control.tabControl.fadeMeUp
                   img(src='i/strategy_2.jpg')
                   span.strategy_name Консервативная
-                .tab_unit
+                .tab_unit.fadeMeUp
                   .tab_content 2
-                .tab_control.tabControl
+                .tab_control.tabControl.fadeMeUp
                   img(src='i/strategy_3.jpg')
                   span.strategy_name Высокодоходная
-                .tab_unit
+                .tab_unit.fadeMeUp
                   .tab_content 3
                     
           .features_section
             .section_inner
-              ul.features_list
+              ul.features_list.fadeMeUp
                 li
                   .feature_item
                     .feature_img
@@ -98,33 +109,33 @@ html(lang='ru')
                       
           .section_inner
             .stock_block
-              .stock_caption Акции американских эмитентов — основной инструмент средневзвешенного портфеля.
+              .stock_caption.fadeMeUp Акции американских эмитентов — основной инструмент средневзвешенного портфеля.
                 
-              .stock_box
+              .stock_box.fadeMeUp
                 p В рамках портфеля реализуются стратегии с оптимальным соотношением доходности и риска. В результате рост стоимости портфеля должен опередить динамику индекса S&P500.
                       
-              .stock_box
+              .stock_box.fadeMeUp
                 p Структура портфеля позволяет сохранять высокий уровень надежности и ликвидности инвестиций практически при любой рыночной конъюнктуре.
                       
             .drivers_block
-              .drivers_caption Драйверы роста
+              .drivers_caption.fadeMeUp Драйверы роста
                 
               ul.drivers_list
-                li: .driver_img: img(src='i/driver_1.png')
-                li: .driver_img: img(src='i/driver_2.png')
-                li: .driver_img: img(src='i/driver_3.png')
-                li: .driver_img: img(src='i/driver_4.png')
-                li: .driver_img: img(src='i/driver_5.png')
-                li: .driver_img: img(src='i/driver_6.png')
-                li: .driver_img: img(src='i/driver_7.png')
+                li.fadeMeUp: .driver_img: img(src='i/driver_1.png')
+                li.fadeMeUp: .driver_img: img(src='i/driver_2.png')
+                li.fadeMeUp: .driver_img: img(src='i/driver_3.png')
+                li.fadeMeUp: .driver_img: img(src='i/driver_4.png')
+                li.fadeMeUp: .driver_img: img(src='i/driver_5.png')
+                li.fadeMeUp: .driver_img: img(src='i/driver_6.png')
+                li.fadeMeUp: .driver_img: img(src='i/driver_7.png')
                 
-              p Идеи актуальны по состоянию на I полугодие 2017 года.
+              p.fadeMeUp Идеи актуальны по состоянию на I полугодие 2017 года.
 
             +callback_holder()
               
             .news_holder
               ul.news_list
-                li
+                li.fadeMeUp
                   .news_unit
                     h3.news_title Рынки сегодня 
                     h4.news_review Российская отрасль генерации электроэнергии 
@@ -135,7 +146,7 @@ html(lang='ru')
                       
                     p В четверг, 5 октября, ключевые американские фондовые индексы завершили торговую сессию в зеленой зоне. Инвесторы отыгрывали каскад данных макроэкономической статистики по США, а также финансовые результаты компании Constellation Brands
               
-                li
+                li.fadeMeUp
                   .news_unit
                     h3.news_title Обзоры
                     h4.news_review Япония и США – иена и доллар 
@@ -148,76 +159,76 @@ html(lang='ru')
             
             .mission_holder
               .mission_block
-                h3.mission_title Мы защищаем капиталы с&nbsp;2008 года и показываем положительный результат. 
-                p Компания не собирается останавливаться на достигнутом — нас ждут новые рынки, новые возможности и сердца новых клиентов.
+                h3.mission_title.fadeMeUp Мы защищаем капиталы с&nbsp;2008 года и показываем положительный результат. 
+                p.fadeMeUp Компания не собирается останавливаться на достигнутом — нас ждут новые рынки, новые возможности и сердца новых клиентов.
 
-                p Мы принимаем на себя разумные риски и дает возможность бизнесу любого масштаба расти и развиваться.
+                p.fadeMeUp Мы принимаем на себя разумные риски и дает возможность бизнесу любого масштаба расти и развиваться.
                 
               .mission_image
-                .mission_image_w
+                .mission_image_w.fadeMeUp
                   img(src='i/plane.jpg')
               
             .benefits_holder
               ul.benefits_list
                 li
                   .benefit_item
-                    .benefit_img
+                    .benefit_img.fadeMeUp
                       img(src='svg/service.svg')
-                    h4.benefits_caption Сервис
-                    p У каждого инвестора компании целый штат специалистов, который решает задачу индивидуально и эффективно.
+                    h4.benefits_caption.fadeMeUp Сервис
+                    p.fadeMeUp У каждого инвестора компании целый штат специалистов, который решает задачу индивидуально и эффективно.
                     
                 li
                   .benefit_item
-                    .benefit_img
+                    .benefit_img.fadeMeUp
                       img(src='svg/analysts.svg')
-                    h4.benefits_caption Аналитики
-                    p Специалисты аналитического отдела заслужили доверие не только клиентов, но и профессионалов в области. На рынке к нам прислушиваются и ценят мнение.
+                    h4.benefits_caption.fadeMeUp Аналитики
+                    p.fadeMeUp Специалисты аналитического отдела заслужили доверие не только клиентов, но и профессионалов в области. На рынке к нам прислушиваются и ценят мнение.
                     
                 li
                   .benefit_item
-                    .benefit_img
+                    .benefit_img.fadeMeUp
                       img(src='svg/honesty.svg')
-                    h4.benefits_caption Честность
-                    p Мы предлагаем клиентам, партнерам и инвесторам прозрачные условия сотрудничества. Совместная работа означает доверие.
+                    h4.benefits_caption.fadeMeUp Честность
+                    p.fadeMeUp Мы предлагаем клиентам, партнерам и инвесторам прозрачные условия сотрудничества. Совместная работа означает доверие.
                     
                 li
                   .benefit_item
-                    .benefit_img
+                    .benefit_img.fadeMeUp
                       img(src='svg/incomes.svg')
-                    h4.benefits_caption Доходность 10 лет
-                    p С 2008 года инвесторы компании получают доход, за всю историю не было ни одного убыточного года.
+                    h4.benefits_caption.fadeMeUp Доходность 10 лет
+                    p.fadeMeUp С 2008 года инвесторы компании получают доход, за всю историю не было ни одного убыточного года.
                     
                     
           .recognition_section: .recognition_holder
             .recognition_block
-              h3.recognition_title Профессиональное признание
+              h3.recognition_title.fadeMeUp Профессиональное признание
                 
               ul.recognition_list
-                li: .recognition_item
+                li.fadeMeUp: .recognition_item
                   .recognition_img
                     img(src='i/confession_1.png')
                   p Лучший юридический департамент 2016
-                li: .recognition_item
+                li.fadeMeUp: .recognition_item
                   .recognition_img
                     img(src='i/confession_2.png')
                   p Лучший инвестиционный консультант 2016
-                li: .recognition_item
+                li.fadeMeUp: .recognition_item
                   .recognition_img
                     img(src='i/confession_2.png')
                   p Лучшая инвестиционная компания 2014–2016
-                li: .recognition_item
+                li.fadeMeUp: .recognition_item
                   .recognition_img
                     img(src='i/confession_2.png')
                   p QBFAsset Management «Старт года»
-                li: .recognition_item
+                li.fadeMeUp: .recognition_item
                   .recognition_img
                     img(src='i/confession_3.png')
                   p HR рейтинг привлекательности работодателя — A.HR, 2015
-                li: .recognition_item
+                li.fadeMeUp: .recognition_item
                   .recognition_img
                     img(src='i/confession_4.png')
                   p HR рейтинг привлекательности работодателя — A.HR, 2014
-                li: .recognition_item
+                li.fadeMeUp: .recognition_item
                   .recognition_img
                     img(src='i/confession_4.png')
                   p Лауреат Финансовая элита России 2017
@@ -225,16 +236,16 @@ html(lang='ru')
               ul.diplomas_list
                 +loop_while(3)
                   li
-                    .diploma_img
+                    .diploma_img.fadeMeUp
                       img(src='i/diploma.jpg')
                   
             .charity_block
-              h3.recognition_title Благотворительность
+              h3.recognition_title.fadeMeUp Благотворительность
                     
-              p Благотворительная инициатива QBF направлена на привлечение средств инвесторов, заинтересованных в развитии своего региона.
+              p.fadeMeUp Благотворительная инициатива QBF направлена на привлечение средств инвесторов, заинтересованных в развитии своего региона.
                       
               ul.charity_list
-                li
+                li.fadeMeUp
                   .charity_item
                     .charity_img
                       img(src='i/charity_1.png')
@@ -242,7 +253,7 @@ html(lang='ru')
                     p Калининград 
                     p 
                       a.charity_link(href='#') www.deti39.com
-                li
+                li.fadeMeUp
                   .charity_item
                     .charity_img
                       img(src='i/charity_2.png')
@@ -250,7 +261,7 @@ html(lang='ru')
                     p Екатеринбург
                     p 
                       a.charity_link(href='#') www.svoi-deti.ru
-                li
+                li.fadeMeUp
                   .charity_item
                     .charity_img
                       img(src='i/charity_3.png')
@@ -258,7 +269,7 @@ html(lang='ru')
                     p Тюмень 
                     p 
                       a.charity_link(href='#') fondshedevr.ru
-                li
+                li.fadeMeUp
                   .charity_item
                     .charity_img
                       img(src='i/charity_4.png')
@@ -267,16 +278,16 @@ html(lang='ru')
                     p 
                       a.charity_link(href='#') www.ostrovaru.com
               
-              .charity_footer: p Раскрытие информации
+              .charity_footer: p.fadeMeUp Раскрытие информации
               
           .join_section
             .section_inner
-              h3.join_title 
+              h3.join_title.fadeMeUp
                 span Начните инвестировать сейчас<br>
                 span.fw_b вместе с QBF
             
             .join_mountain
-              .join_logo
+              .join_logo.fadeMeUp
                 img(src='i/logo3.png')
               img(src='i/mountain.png')
               
@@ -285,9 +296,9 @@ html(lang='ru')
                 
           .contact_section
             .section_inner
-              h3.contact_title Контакты
+              h3.contact_title.fadeMeUp Контакты
               
-              ul.office_switcher
+              ul.office_switcher.fadeMeUp
                 li: label.check_v2
                   input.inp_hidden.officeSwitch(type='radio' name='office' checked value=0)
                   span.check_text: span Санкт-Петербург
@@ -308,7 +319,7 @@ html(lang='ru')
             #qbf_map.map_block
                 
             .section_inner
-              .map_info
+              .map_info.fadeMeUp
                 .office_address.officeAddr
                   p 195112, г.Санкт-Петербург<br>Малоохтинский проспект, д. 64,<br>литера Б<br>БЦ «Санкт-Петербург Плаза»
                   ul.map_contacts
@@ -348,7 +359,7 @@ html(lang='ru')
                     
           .follow_section
             .section_inner
-              h3.follow_title 
+              h3.follow_title.fadeMeUp
                 span Следите за нами в социальных сетях 
                 span.fw_b  #qbf
                 span.fw_b  #qbfregion
@@ -367,25 +378,25 @@ html(lang='ru')
                 li
                   .widget_box
                     img(src='i/yt.png')
-                    
+
       .footer
         .section_inner.clearfix
-          .footer_contacts
+          .footer_contacts.fadeMeUp
             .lang_block
               img(src='i/flag.png')
-              
-            p 
+
+            p
               a.info_link(href='#') Раскрытие информации
-            
+
             p 
               a.info_link.fw_bl(href='#') qbfin.ru
-              
-            p.copyright © ООО ИК «КьюБиЭф» 2017. 
-              
+
+            p.copyright © ООО ИК «КьюБиЭф» 2017.
+
             a.footer_logo(href='#')
               img(src='svg/logo.svg')
             
-          .footer_info
+          .footer_info.fadeMeUp
             p Целевая доходность является ориентировочной, определена в рамках инвестиционного горизонта на основании ожиданий ООО ИК "КьюБиЭф" по получению потенциального дохода от совершения определенных операций с отдельными видами финансовых инструментов.
   
             p ООО ИК «КьюБиЭф» (ОГРН 5087746335551, ИНН 7733673955). Лицензия на осуществление брокерской деятельности № 077-12805-100000 выдана ФСФР России 24 декабря 2009 года без ограничения срока действия, лицензия на осуществление дилерской деятельности № 077-12816-010000 выдана ФСФР России 24 декабря 2009 года без ограничения срока действия лицензия на осуществление деятельности по управлению ценными бумагами № 077-12828-001000 выдана ФСФР России 24 декабря 2009 года без ограничения срока действия.
@@ -397,10 +408,10 @@ html(lang='ru')
             p ООО ИК Кьюбиэф РФ № 045-12828-001000
             
             .footer_attention
-              .fl Не является публичной офертой 
-              
+              .fl Не является публичной офертой
+
               .dev_block Разработка сайта — goga.spb.ru
-              
+      
+  +scripts()
 
-
-+scripts()
+          

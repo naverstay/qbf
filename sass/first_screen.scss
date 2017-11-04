@@ -40,6 +40,7 @@ body {
 }
 
 .wrapper {
+  overflow: hidden;
   position: relative;
   //padding-top: 100px;
   //min-height: 100%;
@@ -84,16 +85,20 @@ body {
   margin: 0 auto;
   padding: 0 10px;
 
+  @include respond-to-min($resp_step_1) {
+    padding: 0 10px;
+  }
+
   @include respond-to-min($resp_step_2) {
     padding: 0 20px;
   }
 }
 
 .get_plan_form {
-  padding: 37px 39px 27px;
+  padding: 17px 10px;
   border-radius: 2px;
   border: 1px solid #dadada;
-  margin-top: 50px;
+  margin-top: 20px;
 
   .f_cell {
     @extend %clearfix;
@@ -110,9 +115,18 @@ body {
     }
   }
 
+  @include respond-to-min($resp_step_1) {
+    margin-top: 50px;
+  }
+
   @include respond-to-min($resp_step_2) {
     float: right;
     width: 35.5%;
+    margin-top: 75px;
+    padding: 37px 39px 27px;
+  }
+
+  @include respond-to-min($resp_step_3) {
     margin-top: 113px;
   }
 }
@@ -158,9 +172,11 @@ body {
 .slide_photo {
   max-height: 685px;
   overflow: hidden;
+  display: none;
 
-  @include respond-to-min($resp_step_2) {
+  @include respond-to-min($resp_step_1) {
     float: right;
+    display: block;
     margin-left: -30%;
   }
 }
@@ -217,7 +233,7 @@ body {
     }
   }
 
-  @include respond-to-min($resp_step_2) {
+  @include respond-to-min($resp_step_1) {
     position: absolute;
     left: 0;
     bottom: 80px;
@@ -227,22 +243,39 @@ body {
 }
 
 .slide_caption {
-  font: 80px/1.05 $LatoThin;
+  font: 30px/1.05 $LatoThin;
   margin-bottom: 5px;
   letter-spacing: -.02em;
+
+  @include respond-to-min($resp_step_1) {
+    font-size: 60px;
+  }
+
+  @include respond-to-min($resp_step_2) {
+    font-size: 80px;
+  }
 }
 
 .slide_label {
-  font: 44px/1.1 $LatoBold;
+  font: 22px/1.1 $LatoBold;
   color: $gl_green;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   letter-spacing: -.02em;
+
+  @include respond-to-min($resp_step_1) {
+    font-size: 32px;
+  }
+
+  @include respond-to-min($resp_step_2) {
+    font-size: 44px;
+    margin-bottom: 40px;
+  }
 }
 
 .slide_quote {
   display: block;
   position: relative;
-  padding-top: 65px;
+  padding-top: 35px;
   padding-bottom: 30px;
   max-width: 360px;
 
@@ -251,14 +284,25 @@ body {
     position: absolute;
     left: 0;
     top: -2px;
-    font: 110px/1 $cross_font_TimesNewRoman;
+    font: 70px/1 $cross_font_TimesNewRoman;
     color: #383b41;
+
+    @include respond-to-min($resp_step_1) {
+      font-size: 110px;
+    }
   }
 
   p {
-    font-size: 16px;
     line-height: 1.65;
     opacity: .6;
+  }
+
+  @include respond-to-min($resp_step_1) {
+    padding-top: 65px;
+
+    p {
+      font-size: 16px;
+    }
   }
 }
 
@@ -275,9 +319,11 @@ body {
 .strategy_section {
   background: #fff;
   padding-top: 30px;
+  padding-bottom: 50px;
 
   @include respond-to-min($resp_step_2) {
     padding-top: 80px;
+    padding-bottom: 117px;
   }
 }
 
@@ -309,6 +355,7 @@ $tab_h: 113px;
     position: relative;
     text-align: center;
     height: $tab_h;
+    overflow: hidden;
 
     &:before {
       content: '';
@@ -387,11 +434,13 @@ $tab_h: 113px;
 }
 
 .tab_content {
-  min-height: 500px;
+  //min-height: 500px;
 }
 
 .chart_holder {
   position: relative;
+  margin-left: -20px;
+  min-height: 320px;
 
   &:before {
     content: '';
@@ -401,7 +450,37 @@ $tab_h: 113px;
   }
 
   @include respond-to-min($resp_step_2) {
-    margin-left: -40px;
+    margin-left: -50px;
+  }
+}
+
+.area_chart_holder {
+  position: relative;
+  height: 44px;
+  margin: 20px 0 30px;
+  border-top: 1px solid #f0eeee;
+
+  @include respond-to-min($resp_step_1) {
+    margin: 40px 0 50px;
+  }
+}
+
+.chart_footer {
+
+}
+
+.chart_controls {
+
+}
+
+.chart_toggle_list {
+  @extend %clearfix;
+  margin-left: -36px;
+
+  li {
+    float: left;
+    margin-bottom: 15px;
+    padding-left: 36px;
   }
 }
 
@@ -411,27 +490,103 @@ $tab_h: 113px;
   bottom: 0;
   left: 0;
   right: 0;
+
+  .tick {
+    text {
+      fill: rgba(5, 5, 5, .5);
+      font-size: 12px;
+    }
+  }
 }
 
-/* Style the lines by removing the fill and applying a stroke */
 .line {
   fill: none;
-  stroke: #ffab00;
-  stroke-width: 3;
+  stroke-width: 2;
+
+  &.line_0 {
+    stroke: #0caea7;
+  }
+
+  &.line_1 {
+    stroke: #63a945;
+  }
+
+  &.line_2 {
+    stroke: #ad80d9;
+  }
+
+  &.line_3 {
+    stroke: #00758f;
+  }
+
+  &.line_4 {
+    stroke: #4260c3;
+  }
+
+  &.line_5 {
+    stroke: #ebb9df;
+  }
+
+  &.line_6 {
+    stroke: #84e2ff;
+  }
+
+  &.line_7 {
+    stroke: #9ea900;
+  }
 }
 
-/* Style the dots by assigning a fill and stroke */
+.tick line {
+  stroke: #f0eeee;
+}
+
+.domain {
+  stroke: #f0eeee;
+}
+
 .dot {
-  fill: #ffab00;
-  stroke: #fff;
+  fill: #fff;
+  stroke-width: 2px;
+
+  .graph_0 & {
+    stroke: #0caea7;
+  }
+
+  .graph_1 & {
+    stroke: #63a945;
+  }
+
+  .graph_2 & {
+    stroke: #ad80d9;
+  }
+
+  .graph_3 & {
+    stroke: #00758f;
+  }
+
+  .graph_4 & {
+    stroke: #4260c3;
+  }
+
+  .graph_5 & {
+    stroke: #ebb9df;
+  }
+
+  .graph_6 & {
+    stroke: #84e2ff;
+  }
+
+  .graph_7 & {
+    stroke: #9ea900;
+  }
 }
 
 .features_section {
   background: #383b41;
-  padding: 40px 0 40px;
+  padding: 40px 0 5px;
 
   @include respond-to-min($resp_step_2) {
-    padding: 65px 0 60px;
+    padding: 65px 0 25px;
   }
 }
 
@@ -441,13 +596,24 @@ $tab_h: 113px;
 
   li {
     padding-left: 20px;
+    margin-bottom: 35px;
+    display: inline-block;
+    vertical-align: top;
+    width: 50%;
   }
 
   @include respond-to-min($resp_step_2) {
+    margin-right: -2%;
+
+    li {
+      width: 33%;
+    }
+  }
+
+  @include respond-to-min($resp_step_3) {
     margin-right: -10%;
 
     li {
-      float: left;
       width: 20%;
     }
   }
@@ -474,6 +640,20 @@ $tab_h: 113px;
     font-size: 50px;
   }
 
+  @include respond-to-max($resp_step_1) {
+    p {
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+
+    .fz_20 {
+      font-size: 14px;
+    }
+
+    .fz_50 {
+      font-size: 26px;
+    }
+  }
 }
 
 .feature_tip {
@@ -565,12 +745,14 @@ $tab_h: 113px;
   li {
     display: inline-block;
     vertical-align: middle;
-    min-width: 14%;
     margin-bottom: 30px;
-    padding: 15px 5px;
+    min-width: 25%;
+    padding: 15px;
 
     @include respond-to-min($resp_step_2) {
       margin-bottom: 50px;
+      min-width: 14%;
+      padding: 15px 5px;
     }
   }
 }
@@ -597,6 +779,7 @@ $tab_h: 113px;
 
 .callback_info {
   color: #fff;
+  padding-bottom: 30px;
 
   p {
     font: 15px $LatoLight;
@@ -606,11 +789,14 @@ $tab_h: 113px;
   @include respond-to-min($resp_step_2) {
     float: left;
     width: 50%;
-    padding-top: 30px;
 
     p {
       font-size: 18px;
     }
+  }
+
+  @include respond-to-min($resp_step_3) {
+    padding-top: 30px;
   }
 }
 
@@ -662,7 +848,7 @@ $tab_h: 113px;
   padding: 30px 0;
 
   @include respond-to-min($resp_step_2) {
-    padding: 105px 0;
+    padding: 105px 0 75px;
   }
 }
 
@@ -670,7 +856,7 @@ $tab_h: 113px;
   @extend %clearfix;
 
   li {
-    margin-bottom: 12px;
+    margin-bottom: 42px;
 
     @include respond-to-min($resp_step_2) {
       width: 50%;
@@ -784,8 +970,10 @@ $tab_h: 113px;
 }
 
 .mission_image {
+  display: none;
 
   @include respond-to-min($resp_step_2) {
+    display: block;
     float: right;
     width: 50%;
   }
@@ -843,6 +1031,8 @@ $tab_h: 113px;
   li {
     padding-left: 20px;
     margin-bottom: 20px;
+    float: left;
+    width: 50%;
   }
 
   @include respond-to-min($resp_step_2) {
@@ -924,21 +1114,12 @@ $tab_h: 113px;
   z-index: 1;
   position: relative;
   padding: 30px 20px;
+  background: #383b41;
 
   @include respond-to-min($resp_step_2) {
     float: left;
     width: 50%;
     padding-top: 57px;
-
-    &:before {
-      content: '';
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      right: 100%;
-      width: 5000px;
-      background: inherit;
-    }
   }
 }
 
@@ -1015,14 +1196,20 @@ $tab_h: 113px;
 }
 
 .recognition_list {
-  @extend %clearfix;
+  font-size: 0;
 
   li {
-    float: left;
-    margin-bottom: 15px;
+    display: inline-block;
+    vertical-align: top;
+    font-size: 14px;
+    margin-bottom: 30px;
+    width: 50%;
 
     @include respond-to-min($resp_step_2) {
-      margin-bottom: 30px;
+      width: 33%;
+    }
+
+    @include respond-to-min($resp_step_3) {
       width: 25%;
     }
   }
@@ -1035,6 +1222,7 @@ $tab_h: 113px;
 
 .recognition_item {
   text-align: center;
+  padding: 5px 5px 0;
 
   p {
     font: 12px/1.5 $LatoRegular;
@@ -1066,7 +1254,9 @@ $tab_h: 113px;
   @extend %clearfix;
 
   li {
-    margin-bottom: 20px;
+    margin-bottom: 40px;
+    float: left;
+    width: 50%;
   }
 
   @include respond-to-min($resp_step_2) {
@@ -1075,7 +1265,14 @@ $tab_h: 113px;
 
     li {
       padding-top: 30px;
+      margin-bottom: 20px;
       float: left;
+      width: 33%;
+    }
+  }
+
+  @include respond-to-min($resp_step_3) {
+    li {
       width: 25%;
     }
   }
@@ -1097,6 +1294,10 @@ $tab_h: 113px;
 
   li {
     margin-bottom: 20px;
+    float: left;
+    width: 50%;
+    padding-right: 15px;
+    padding-top: 25px;
   }
 
   @include respond-to-min($resp_step_2) {
@@ -1104,9 +1305,6 @@ $tab_h: 113px;
     margin: 0 auto 137px;
 
     li {
-      float: left;
-      width: 50%;
-      padding-top: 25px;
       padding-left: 75px;
       margin-bottom: 30px;
     }
@@ -1143,9 +1341,9 @@ $tab_h: 113px;
   padding-top: 50px;
 
   .callback_holder {
-    margin-top: -150px;
-    position: relative;
-    z-index: 2;
+    //margin-top: -150px;
+    //position: relative;
+    //z-index: 2;
   }
 
   @include respond-to-min($resp_step_1) {
@@ -1265,10 +1463,10 @@ $tab_h: 113px;
 .map_info {
   float: left;
   background: #fff;
-  padding: 25px;
+  padding: 10px;
   margin-top: 50px;
-  width: 80%;
-  max-width: 310px;
+  width: 320px;
+  max-width: 100%;
 
   p {
     line-height: 1.7;
@@ -1286,10 +1484,10 @@ $tab_h: 113px;
 }
 
 .map_contacts {
-  font: 18px $LatoBold;
+  font: 16px $LatoBold;
 
   li {
-    margin-top: 10px;
+    margin-top: 5px;
   }
 
   @include respond-to-min($resp_step_1) {
@@ -1305,6 +1503,12 @@ $tab_h: 113px;
 
     li {
       margin-top: 50px;
+    }
+  }
+
+  @include respond-to-max($resp_step_2) {
+    br {
+      display: none;
     }
   }
 }
@@ -1386,8 +1590,12 @@ $tab_h: 113px;
 
 .label_v1 {
   text-align: right;
-  font-size: 16px;
-  line-height: 1.6;
+  line-height: 1.4;
+
+  @include respond-to-min($resp_step_1) {
+    font-size: 16px;
+    line-height: 1.6;
+  }
 }
 
 .select_box_v1 {
@@ -1437,7 +1645,7 @@ $tab_h: 113px;
     .select2-selection--single {
       @include transition_all(border .3s, color .3s, background .3s);
       background: #fafafa;
-      border-radius: 0;
+      border-radius: 2px;
       border: 2px solid transparent;
       height: 48px;
       box-shadow: none;
@@ -1475,14 +1683,6 @@ $tab_h: 113px;
 
       b {
         display: none;
-      }
-
-      @include respond-to-max($resp_step_1) {
-        &:before {
-          margin-top: -12px;
-          font-size: 16px;
-          right: 16px;
-        }
       }
     }
   }
@@ -1547,6 +1747,60 @@ $tab_h: 113px;
       color: #fff;
       background: rgba(227, 227, 227, .2);
     }
+
+    .chart_toggle_list & {
+      padding-left: 38px;
+      color: #141210;
+      font: 14px/24px $LatoRegular;
+    }
+
+    .line_0 & {
+      &:before {
+        background-color: #0caea7;
+      }
+    }
+
+    .line_1 & {
+      &:before {
+        background-color: #63a945;
+      }
+    }
+
+    .line_2 & {
+      &:before {
+        background-color: #ad80d9;
+      }
+    }
+
+    .line_3 & {
+      &:before {
+        background-color: #00758f;
+      }
+    }
+
+    .line_4 & {
+      &:before {
+        background-color: #4260c3;
+      }
+    }
+
+    .line_5 & {
+      &:before {
+        background-color: #ebb9df;
+      }
+    }
+
+    .line_6 & {
+      &:before {
+        background-color: #84e2ff;
+      }
+    }
+
+    .line_7 & {
+      &:before {
+        background-color: #9ea900;
+      }
+    }
   }
 
   .inp_hidden:checked + .check_text {
@@ -1603,6 +1857,10 @@ $tab_h: 113px;
     font-size: 16px;
     line-height: 20px;
     text-align: center;
+
+    @include respond-to-max($resp_step_1) {
+      padding: 10px;
+    }
   }
 }
 
@@ -1611,7 +1869,7 @@ $tab_h: 113px;
 
   &.action_btn {
     text-align: center;
-    border-radius: 4px;
+    border-radius: 2px;
     display: block;
     width: 100%;
     font-size: 16px;
@@ -1708,7 +1966,9 @@ $tab_h: 113px;
 }
 
 .footer_contacts {
+  @extend %clearfix;
   padding-top: 18px;
+  position: relative;
 
   p {
     margin-bottom: 16px;
@@ -1718,6 +1978,17 @@ $tab_h: 113px;
     float: right;
     width: 22.2%;
   }
+
+  @include respond-to-max($resp_step_2) {
+    padding-left: 30px;
+    padding-right: 120px;
+
+    p {
+      float: left;
+      padding-left: 20px;
+      padding-top: 5px;
+    }
+  }
 }
 
 .copyright {
@@ -1725,11 +1996,21 @@ $tab_h: 113px;
   @include respond-to-min($resp_step_2) {
     padding-top: 20px;
   }
+
+  @include respond-to-max($resp_step_2) {
+    min-width: 220px;
+  }
 }
 
 .dev_block {
   opacity: .3;
   float: right;
+
+  @include respond-to-max($resp_step_2) {
+    clear: both;
+    float: none;
+    padding-top: 25px;
+  }
 }
 
 .lang_block {
@@ -1746,6 +2027,12 @@ $tab_h: 113px;
   @include respond-to-min($resp_step_2) {
     margin-bottom: 42px;
   }
+
+  @include respond-to-max($resp_step_2) {
+    position: absolute;
+    top: 18px;
+    left: 0;
+  }
 }
 
 .footer_logo {
@@ -1753,7 +2040,6 @@ $tab_h: 113px;
   vertical-align: top;
   width: 107px;
   height: 27px;
-  margin-top: 25px;
 
   img {
     display: block;
@@ -1762,6 +2048,12 @@ $tab_h: 113px;
 
   @include respond-to-min($resp_step_2) {
     margin-top: 90px;
+  }
+
+  @include respond-to-max($resp_step_2) {
+    position: absolute;
+    top: 18px;
+    right: 0;
   }
 }
 
@@ -1842,3 +2134,14 @@ $tab_h: 113px;
   }
 }
 
+.fadeMeUp {
+  @include transition_all(transform .6s, opacity .6s);
+  @include transform_translate(0, 150px);
+  will-change: transform;
+  opacity: 0;
+
+  &.fade_up {
+    @include transform_translate(0, 0);
+    opacity: 1;
+  }
+}
