@@ -10,6 +10,13 @@ var all_pins = [],
     scaleControl: true
   },
   gmap,
+  map_offices = [
+    {lt: 59.931915, lg: 30.401380}, // SPb
+    {lt: 55.747233, lg: 37.539156}, // MSK
+    {lt: 56.846286, lg: 60.588952}, // Eburg
+    {lt: 54.717821, lg: 20.497307}, // Kenig
+    {lt: 57.146477, lg: 65.557076} // Tumen
+  ],
   center,
   body_var,
   mainSlider;
@@ -27,16 +34,22 @@ function loadMap() {
 
   // без таймаута не работает :(
 
+  var lt = map_offices[0].lt;
+  var lg = map_offices[0].lg;
+
   setTimeout(function () {
-    center = new google.maps.LatLng(47.301969, 39.715053);
+    center = new google.maps.LatLng(lt, lg);
     gmap = new google.maps.Map(document.getElementById("qbf_map"), mapProp);
     gmap.setCenter(center);
 
-    createPin(gmap, 'KSK', {
-      lat: 47.301969,
-      lng: 39.715053
-    });
+    for (var i = 0; i < map_offices.length; i++) {
+      var office = map_offices[i];
 
+      createPin(gmap, 'QBF', {
+        lat: office.lt,
+        lng: office.lg
+      }, 'i/pin.png');
+    }
   }, 0);
 }
 
@@ -303,7 +316,7 @@ function initChart() {
     console.log(d3.csvParseRows(text));
     console.log(d3.csvFormatRows(d3.csvParseRows(text)));
   });
-  
+
   d3.csv("data/chart_3.csv", function (prices) {
     //prices is an array of json objects containing the data in from the csv
     console.log("prices:", prices);
@@ -354,6 +367,7 @@ function initChart() {
     //  console.log("price:", p, price);
     //  return {"month": month, "value": price};
     //});
+    //
     //
     //console.log("data", data);
 
@@ -425,6 +439,17 @@ $(function ($) {
     }
 
     return false;
-  });
+  }).delegate('.officeSwitch', 'change', function () {
+    var chck = $(this);
 
+    if (chck.prop('checked')) {
+      var ind = +chck.attr('value');
+      var office = map_offices[ind];
+
+      $('.officeAddr').eq(ind).show().siblings().hide();
+      
+      center = new google.maps.LatLng(office.lt, office.lg);
+      gmap.setCenter(center);
+    }
+  });
 });

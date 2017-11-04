@@ -40,6 +40,31 @@ mixin header()
           a.btn_v1.cabinet_btn.green_btn(href='#')
             span.fw_b Личный кабинет
             
+mixin callback_holder()
+  .callback_holder
+    .callback_info
+      h3.callback_title Получите 
+      h4.callback_tip персональную консультацию по стратегиям.
+      p Мы перезвоним вам в течение 20-ти минут.
+
+    .callback_form
+      form(action='#')
+        .f_cell
+          .input_w
+            input.f_input_v1(placeholder='Как вас зовут')
+        .f_cell
+          .input_w
+            input.f_input_v1(placeholder='Телефон или почта')
+  
+        .f_cell
+          label.check_v1
+            input.inp_hidden(type='checkbox')
+            span.check_text Я даю свое согласие на обработку персональных данных
+  
+        .f_cell
+          button.btn_v2.callback_btn.gray_btn
+            span.fw_b Получить консультацию
+
 mixin slider_form()
   form(action='#')
     .f_cell
@@ -108,5 +133,5 @@ mixin scripts()
     script(src='js/select2.js')
     script(src='js/d3.v4.min.js')
     script(src='js/script.js')
-    //script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCl7THpWflv0u70jhfuU4T6KbuNy0fuxME&callback=loadMap')
+    script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCl7THpWflv0u70jhfuU4T6KbuNy0fuxME&callback=loadMap')
     

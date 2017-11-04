@@ -120,29 +120,8 @@ html(lang='ru')
                 
               p Идеи актуальны по состоянию на I полугодие 2017 года.
 
-            .callback_holder
-              .callback_info
-                h3.callback_title Получите 
-                h4.callback_tip персональную консультацию по стратегиям.
-                p Мы перезвоним вам в течение 20-ти минут.
-              .callback_form
-                form(action='#')
-                  .f_cell
-                    .input_w
-                      input.f_input_v1(placeholder='Как вас зовут')
-                  .f_cell
-                    .input_w
-                      input.f_input_v1(placeholder='Телефон или почта')
-                    
-                  .f_cell
-                    label.check_v1
-                      input.inp_hidden(type='checkbox')
-                      span.check_text Я даю свое согласие на обработку персональных данных
-                    
-                  .f_cell
-                    button.btn_v2.callback_btn.gray_btn
-                      span.fw_b Получить консультацию
-                
+            +callback_holder()
+              
             .news_holder
               ul.news_list
                 li
@@ -209,27 +188,219 @@ html(lang='ru')
                     p С 2008 года инвесторы компании получают доход, за всю историю не было ни одного убыточного года.
                     
                     
-          .recognition_holder.clearfix
+          .recognition_section: .recognition_holder
             .recognition_block
-              .recognition_title Профессиональное признание
+              h3.recognition_title Профессиональное признание
                 
               ul.recognition_list
-                li: .recognition_item: img(src='i/confession_1.png')
-                li: .recognition_item: img(src='i/confession_2.png')
-                li: .recognition_item: img(src='i/confession_2.png')
-                li: .recognition_item: img(src='i/confession_2.png')
-                li: .recognition_item: img(src='i/confession_3.png')
-                li: .recognition_item: img(src='i/confession_4.png')
-                li: .recognition_item: img(src='i/confession_4.png')
-              
+                li: .recognition_item
+                  .recognition_img
+                    img(src='i/confession_1.png')
+                  p Лучший юридический департамент 2016
+                li: .recognition_item
+                  .recognition_img
+                    img(src='i/confession_2.png')
+                  p Лучший инвестиционный консультант 2016
+                li: .recognition_item
+                  .recognition_img
+                    img(src='i/confession_2.png')
+                  p Лучшая инвестиционная компания 2014–2016
+                li: .recognition_item
+                  .recognition_img
+                    img(src='i/confession_2.png')
+                  p QBFAsset Management «Старт года»
+                li: .recognition_item
+                  .recognition_img
+                    img(src='i/confession_3.png')
+                  p HR рейтинг привлекательности работодателя — A.HR, 2015
+                li: .recognition_item
+                  .recognition_img
+                    img(src='i/confession_4.png')
+                  p HR рейтинг привлекательности работодателя — A.HR, 2014
+                li: .recognition_item
+                  .recognition_img
+                    img(src='i/confession_4.png')
+                  p Лауреат Финансовая элита России 2017
+                  
+              ul.diplomas_list
+                +loop_while(3)
+                  li
+                    .diploma_img
+                      img(src='i/diploma.jpg')
+                  
             .charity_block
-              .recognition_title Благотворительность
+              h3.recognition_title Благотворительность
                     
-                    
+              p Благотворительная инициатива QBF направлена на привлечение средств инвесторов, заинтересованных в развитии своего региона.
                       
+              ul.charity_list
+                li
+                  .charity_item
+                    .charity_img
+                      img(src='i/charity_1.png')
+                    .charity_caption Верю в чудо
+                    p Калининград 
+                    p 
+                      a.charity_link(href='#') www.deti39.com
+                li
+                  .charity_item
+                    .charity_img
+                      img(src='i/charity_2.png')
+                    .charity_caption Свои дети
+                    p Екатеринбург
+                    p 
+                      a.charity_link(href='#') www.svoi-deti.ru
+                li
+                  .charity_item
+                    .charity_img
+                      img(src='i/charity_3.png')
+                    .charity_caption Сотвори из жизни шедевр
+                    p Тюмень 
+                    p 
+                      a.charity_link(href='#') fondshedevr.ru
+                li
+                  .charity_item
+                    .charity_img
+                      img(src='i/charity_4.png')
+                    .charity_caption Острова
+                    p Санкт-Петербург
+                    p 
+                      a.charity_link(href='#') www.ostrovaru.com
+              
+              .charity_footer: p Раскрытие информации
+              
+          .join_section
+            .section_inner
+              h3.join_title 
+                span Начните инвестировать сейчас<br>
+                span.fw_b вместе с QBF
+            
+            .join_mountain
+              .join_logo
+                img(src='i/logo3.png')
+              img(src='i/mountain.png')
+              
+              .section_inner
+                +callback_holder()
+                
+          .contact_section
+            .section_inner
+              h3.contact_title Контакты
+              
+              ul.office_switcher
+                li: label.check_v2
+                  input.inp_hidden.officeSwitch(type='radio' name='office' checked value=0)
+                  span.check_text: span Санкт-Петербург
+                li: label.check_v2
+                  input.inp_hidden.officeSwitch(type='radio' name='office' value=1)
+                  span.check_text: span Москва
+                li: label.check_v2
+                  input.inp_hidden.officeSwitch(type='radio' name='office' value=2)
+                  span.check_text: span Екатеринбург
+                li: label.check_v2
+                  input.inp_hidden.officeSwitch(type='radio' name='office' value=3)
+                  span.check_text: span Калининград
+                li: label.check_v2
+                  input.inp_hidden.officeSwitch(type='radio' name='office' value=4)
+                  span.check_text: span Тюмень
+                  
+          .map_holder
+            #qbf_map.map_block
+                
+            .section_inner
+              .map_info
+                .office_address.officeAddr
+                  p 195112, г.Санкт-Петербург<br>Малоохтинский проспект, д. 64,<br>литера Б<br>БЦ «Санкт-Петербург Плаза»
+                  ul.map_contacts
+                    li: span +7 (812) 407-21-12
+                    <br>
+                    li: a.map_link(href='mailto:region@qbfin.ru') region@qbfin.ru
+                    
+                .office_address.officeAddr(style='display:none')
+                  p 123317, Москва Пресненская набережная, д. 8, стр.1 ММДЦ «Москва-Сити»
 
+                  ul.map_contacts
+                    li: span +7 (495) 988 98 21
+                    <br>
+                    li: a.map_link(href='mailto:invest@qbfin.ru') invest@qbfin.ru
+                    
+                .office_address.officeAddr(style='display:none')
+                  p 620014, Екатеринбург ул. Бориса Ельцина, 1а БЦ «Президент»
+  
+                  ul.map_contacts
+                    li: span +7 (343) 312 22 00
+                    <br>
+                    li: a.map_link(href='mailto:invest.ekb@qbfin.ru') invest.ekb@qbfin.ru
+                    
+                .office_address.officeAddr(style='display:none')
+                  p 236001, Калининград, бизнес-центр «Морской» Театральная улица, 35, этаж 8
+                  ul.map_contacts
+                    li: span +7 (4012) 720 317
+                    <br>
+                    li: a.map_link(href='mailto:invest@qbfin.ru') invest@qbfin.ru
+                    
+                .office_address.officeAddr(style='display:none')
+                  p 625048, Тюмень ул. Максима Горького, д.74 БЦ «Демидов стан»
+                  ul.map_contacts
+                    li: span +7 (3452) 662 502
+                    <br>
+                    li: a.map_link(href='mailto:invest@qbfin.ru') invest@qbfin.ru
+                    
+          .follow_section
+            .section_inner
+              h3.follow_title 
+                span Следите за нами в социальных сетях 
+                span.fw_b  #qbf
+                span.fw_b  #qbfregion
+              
+              ul.widget_holder
+                li
+                  .widget_box
+                    img(src='i/insta.jpg')
+                    .widget_footer
+                      img(src='i/in.png')
+                li
+                  .widget_box
+                    img(src='i/twit.jpg')
+                    .widget_footer
+                      img(src='i/tw.png')
+                li
+                  .widget_box
+                    img(src='i/yt.png')
+                    
       .footer
-        
-        
-        
-    +scripts()
+        .section_inner.clearfix
+          .footer_contacts
+            .lang_block
+              img(src='i/flag.png')
+              
+            p 
+              a.info_link(href='#') Раскрытие информации
+            
+            p 
+              a.info_link.fw_bl(href='#') qbfin.ru
+              
+            p.copyright © ООО ИК «КьюБиЭф» 2017. 
+              
+            a.footer_logo(href='#')
+              img(src='svg/logo.svg')
+            
+          .footer_info
+            p Целевая доходность является ориентировочной, определена в рамках инвестиционного горизонта на основании ожиданий ООО ИК "КьюБиЭф" по получению потенциального дохода от совершения определенных операций с отдельными видами финансовых инструментов.
+  
+            p ООО ИК «КьюБиЭф» (ОГРН 5087746335551, ИНН 7733673955). Лицензия на осуществление брокерской деятельности № 077-12805-100000 выдана ФСФР России 24 декабря 2009 года без ограничения срока действия, лицензия на осуществление дилерской деятельности № 077-12816-010000 выдана ФСФР России 24 декабря 2009 года без ограничения срока действия лицензия на осуществление деятельности по управлению ценными бумагами № 077-12828-001000 выдана ФСФР России 24 декабря 2009 года без ограничения срока действия.
+  
+            p Все материалы представлены на настоящем веб-сайте исключительно в информационных целях, без учета инвестиционных целей, и/или финансового положения или средств конкретных лиц.
+    
+            p Совершение операций на рынке ценных бумаг, торговля на валютном рынке и на рынке производных финансовых инструментов сопряжены со значительными рисками. <br>Перед принятием инвестиционного решения, или совершением сделки, инвестору необходимо тщательно взвесить свое финансовое положение и проконсультироваться со своим финансовым советником (советниками), чтобы получить полное представление о возможных рисках.
+    
+            p ООО ИК Кьюбиэф РФ № 045-12828-001000
+            
+            .footer_attention
+              .fl Не является публичной офертой 
+              
+              .dev_block Разработка сайта — goga.spb.ru
+              
+
+
++scripts()
