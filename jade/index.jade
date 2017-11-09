@@ -18,46 +18,49 @@ html(lang='ru')
                   +slide('i/manager_2.png')
                   +slide('i/manager_3.png')
                   +slide('i/manager_4.png')
-                        
+
                 .sliderDots.slider_dots
-                
+
               .get_plan_form
                 +slider_form()
-                
+
           .strategy_section
             .section_inner.clearfix
               h2.section_title Стратегии, проверенные временем
-                
+
               .tabs
-                .tab_control.tabControl.selected.fadeMeUp
+                .tab_control.tabControl.selected.fadeMeUp(data-default='0')
                   img(src='i/strategy_1.jpg')
                   span.strategy_name Средневзвешенная
+                .tab_control.tabControl.fadeMeUp(data-default='1')
+                  img(src='i/strategy_2.jpg')
+                  span.strategy_name Консервативная
+
+                .tab_control.tabControl.fadeMeUp(data-default='2')
+                  img(src='i/strategy_3.jpg')
+                  span.strategy_name Высокодоходная
                 .tab_unit.selected.fadeMeUp
                   .tab_content
                     .chart_holder
                       #main_chart.chart_block
-                      
+
                     .area_chart_holder
                       #area_chart.chart_block
-                        
+
                     .chart_footer
                       .chart_controls
                         ul.chart_toggle_list.chartToggleList
-                          li.line_0: label.check_v1
-                              input.inp_hidden.chartToggle(type='checkbox' data-chart='.graph_0' checked)
-                              span.check_text Средневзвешенная
-                              
-                .tab_control.tabControl.fadeMeUp
-                  img(src='i/strategy_2.jpg')
-                  span.strategy_name Консервативная
-                .tab_unit.fadeMeUp
-                  .tab_content 2
-                .tab_control.tabControl.fadeMeUp
-                  img(src='i/strategy_3.jpg')
-                  span.strategy_name Высокодоходная
-                .tab_unit.fadeMeUp
-                  .tab_content 3
-                    
+                          li.line_0
+                            label.check_v1.chartLabel
+                              input.inp_hidden.chartToggle(type='checkbox' data-chart='.st_0' checked)
+                              span.check_text: span Средневзвешенная
+                            label.check_v1.chartLabel(style='display:none;')
+                              input.inp_hidden.chartToggle(type='checkbox' data-chart='.st_1' checked)
+                              span.check_text: span Консервативная
+                            label.check_v1.chartLabel(style='display:none;')
+                              input.inp_hidden.chartToggle(type='checkbox' data-chart='.st_2' checked)
+                              span.check_text: span Высокодоходная
+
           .features_section
             .section_inner
               ul.features_list.fadeMeUp
@@ -70,7 +73,7 @@ html(lang='ru')
                       span.fz_20 от
                       span.fz_50  1 800
                       span.fz_20  тыс. Р
-                    
+
                 li
                   .feature_item
                     .feature_img
@@ -79,7 +82,7 @@ html(lang='ru')
                     .feature_tip
                       span.fz_50  12
                       span.fz_20  мес
-                      
+
                 li
                   .feature_item
                     .feature_img
@@ -88,7 +91,7 @@ html(lang='ru')
                     .feature_tip
                       span.fz_50  16-20
                       span.fz_20  %
-                    
+
                 li
                   .feature_item
                     .feature_img
@@ -97,7 +100,7 @@ html(lang='ru')
                     .feature_tip
                       span.fz_50  20
                       span.fz_20  дней
-                    
+
                 li
                   .feature_item
                     .feature_img
@@ -106,103 +109,131 @@ html(lang='ru')
                     .feature_tip
                       span.fz_50  30
                       span.fz_20  %
-                      
+
           .section_inner
             .stock_block
               .stock_caption.fadeMeUp Акции американских эмитентов — основной инструмент средневзвешенного портфеля.
-                
+
               .stock_box.fadeMeUp
                 p В рамках портфеля реализуются стратегии с оптимальным соотношением доходности и риска. В результате рост стоимости портфеля должен опередить динамику индекса S&P500.
-                      
+
               .stock_box.fadeMeUp
                 p Структура портфеля позволяет сохранять высокий уровень надежности и ликвидности инвестиций практически при любой рыночной конъюнктуре.
-                      
+
             .drivers_block
               .drivers_caption.fadeMeUp Драйверы роста
-                
+
               ul.drivers_list
-                li.fadeMeUp: .driver_img: img(src='i/driver_1.png')
-                li.fadeMeUp: .driver_img: img(src='i/driver_2.png')
-                li.fadeMeUp: .driver_img: img(src='i/driver_3.png')
-                li.fadeMeUp: .driver_img: img(src='i/driver_4.png')
-                li.fadeMeUp: .driver_img: img(src='i/driver_5.png')
-                li.fadeMeUp: .driver_img: img(src='i/driver_6.png')
-                li.fadeMeUp: .driver_img: img(src='i/driver_7.png')
-                
+                li.fadeMeUp: .driver_img
+                  img(src='i/driver_1.png')
+                  .driver_popup
+                    h3 Apple Inc. – long
+                    p Apple Inc. – американский производитель персональных и планшетных компьютеров, аудиоплееров, телефонов и программного обеспечения. Основным продуктом компании является линейка смартфонов iPhone, продажи которых в 2016 году достигли 207 млн. шт. В начале сентября компания Apple Inc. проведет презентацию нового iPhone, также инвесторы ждут от корпорации презентации и других технологических новинок.
+                li.fadeMeUp: .driver_img
+                  img(src='i/driver_2.png')
+                  .driver_popup
+                    h3 General Motors Company – long
+                    p General Motors Company – один из старейших автоконцернов в США, владеющий такими автомобильными брендами как: Buick, Cadillac, Chevrolet, GMC, Holden, Opel и Vauxhall. Финансовые результаты компании в 2016 году и I квартале 2017 года существенно улучшились благодаря подъему продаж в Североамериканском регионе из-за снижения присутствия на рынке автомобилей Volkswagen. Одновременно с этим, компания GM ведет разработку собственного электрокара, а электромобили стремительно набирают популярность в США. В дополнение к данным факторам, котировки корпорации поддержит масштабная программа выкупа акций на общую сумму $14 млрд.
+                li.fadeMeUp: .driver_img
+                  img(src='i/driver_3.png')
+                  .driver_popup
+                    h3 The Walt Disney Company – long
+                    p The Walt Disney Corporation – американская компания, которая является одним из мировых лидеров индустрии развлечений. Бизнес корпорации включает кино- и анимационную студию, тематические парки, аквапарки и телерадиовещание. Ключевыми драйверами для покупки акций компании выступают расширение индустрии развлечений и масс-меда, успехи фильмов мировых франшиз, а также результаты от открытия нового тематического парка развлечений в Шанхае.
+                li.fadeMeUp: .driver_img
+                  img(src='i/driver_4.png')
+                  .driver_popup
+                    h3 Constellation Brands Inc. – long
+                    p Constellation Brands Inc. – американский производитель пивных напитков и вина, владеющий одними из самых популярных в США брендов пива: Corona и Modelo. Компания активно наращивает долю рынка в ключевых сегментах. Способствует этому агрессивная продуктовая политика: менеджмент активно покупает местных производителей крафтового пива, расширяя продуктовую линейку. Помимо улучшения показателей прибыли, корпорация объявила о начале перехода с этапа рыночной экспансии на увеличение рентабельности бизнеса. В совокупности данные факторы делают бумаги корпорации привлекательными для покупки. 
+                li.fadeMeUp: .driver_img
+                  img(src='i/driver_5.png')
+                  .driver_popup
+                    h3 McDonald’s Corp. – short
+                    p McDonald`s Inc. – это одна из крупнейших международных сетей быстрого питания, которая имеет рестораны в более чем 120 странах. Из 36,5 тыс. ресторанов более 30 тыс. работают по франшизе. Мы ожидаем, что пересмотр торговых соглашений внутри ЕС может спровоцировать увеличение издержек компании и сокращение рентабельности бизнеса, к тому же в Европе и США растет популярность здорового питания, в связи с чем сеть McDonald`s будет снижать темпы роста. 
+                li.fadeMeUp: .driver_img
+                  img(src='i/driver_6.png')
+                  .driver_popup
+                    h3 Tableau Software, Inc. – short
+                    p Tableau Software Inc. занимается разработкой программного обеспечения для бизнес- аналитики с 2003 года для всех основных современных платформ, от мобильного телефона до персонального компьютера. Темпы роста выручки компании снизились с 70% г/г в 2014 до 20% г/г в 2016 году после прохождения активного этапа подъема популярности сервиса. По нашим прогнозам, темпы роста выручки корпорации продолжат снижаться в 2017 году на фоне выхода на рынок Big Data компании Amazon и улучшения аналогичных сервисов у конкурентов IBM, Microsoft, Oralce. 
+                li.fadeMeUp: .driver_img
+                  img(src='i/driver_7.png')
+                  .driver_popup
+                    h3 Alphabet Inc. – long
+                    p Alphabet Inc. – американский холдинг, которому принадлежит поисковая система Google, видеохостинг YouTube, операционная система для смартфонов Android и др. Корпорация была образована в октябре 2015 года путем реорганизации компании Google Inc. Инвестиционная привлекательность бумаг выросла на фоне ожидаемого выхода сервиса YouTube в прибыль. Повышение доходов планируется за счет запуска в апреле платной стриминговой платформы YouTubeTV, уникальность которой заключается в возможности просмотра платных кабельных каналов для ТВ: ABC, CBS, NBC и Fox, ранее требовавших отдельных подписок.
+
               p.fadeMeUp Идеи актуальны по состоянию на I полугодие 2017 года.
 
-            +callback_holder()
-              
+            +callback_holder(true)
+
             .news_holder
               ul.news_list
                 li.fadeMeUp
                   .news_unit
-                    h3.news_title Рынки сегодня 
-                    h4.news_review Российская отрасль генерации электроэнергии 
-                    
-                    .news_img
+                    h3.news_title: a(href='article.html') Рынки сегодня
+                    h4.news_review: a(href='article.html') Российская отрасль генерации электроэнергии
+
+                    a.news_img(href='article.html')
                       img(src='i/news_1.jpg')
                       time.news_date(datetime="2017-06-10") 06.10.2017
-                      
+
                     p В четверг, 5 октября, ключевые американские фондовые индексы завершили торговую сессию в зеленой зоне. Инвесторы отыгрывали каскад данных макроэкономической статистики по США, а также финансовые результаты компании Constellation Brands
-              
+
                 li.fadeMeUp
                   .news_unit
-                    h3.news_title Обзоры
-                    h4.news_review Япония и США – иена и доллар 
-                    
-                    .news_img
+                    h3.news_title: a(href='article.html') Обзоры
+                    h4.news_review: a(href='article.html') Япония и США – иена и доллар
+
+                    a.news_img(href='article.html')
                       img(src='i/news_2.jpg')
                       time.news_date(datetime="2017-06-10") 06.10.2017
-                      
-                    p В 1960 году Япония и США подписали «Договор о взаимном сотрудничестве и гарантии безопасности», с которого, по сути, начался длительный период весьма тесных отношении между странами не только в военных вопросах, но и в вопросах экономического развития 
-            
+
+                    p В 1960 году Япония и США подписали «Договор о взаимном сотрудничестве и гарантии безопасности», с которого, по сути, начался длительный период весьма тесных отношении между странами не только в военных вопросах, но и в вопросах экономического развития
+
             .mission_holder
               .mission_block
-                h3.mission_title.fadeMeUp Мы защищаем капиталы с&nbsp;2008 года и показываем положительный результат. 
+                h3.mission_title.fadeMeUp Мы защищаем капиталы с&nbsp;2008 года и показываем положительный результат.
                 p.fadeMeUp Компания не собирается останавливаться на достигнутом — нас ждут новые рынки, новые возможности и сердца новых клиентов.
 
                 p.fadeMeUp Мы принимаем на себя разумные риски и дает возможность бизнесу любого масштаба расти и развиваться.
-                
+
               .mission_image
                 .mission_image_w.fadeMeUp
                   img(src='i/plane.jpg')
-              
+
             .benefits_holder
               ul.benefits_list
                 li
-                  .benefit_item
-                    .benefit_img.fadeMeUp
+                  .benefit_item.fadeMeUp
+                    .benefit_img
                       img(src='svg/service.svg')
                     h4.benefits_caption.fadeMeUp Сервис
-                    p.fadeMeUp У каждого инвестора компании целый штат специалистов, который решает задачу индивидуально и эффективно.
-                    
+                    p У каждого инвестора компании целый штат специалистов, который решает задачу индивидуально и эффективно.
+
                 li
-                  .benefit_item
-                    .benefit_img.fadeMeUp
+                  .benefit_item.fadeMeUp
+                    .benefit_img
                       img(src='svg/analysts.svg')
                     h4.benefits_caption.fadeMeUp Аналитики
-                    p.fadeMeUp Специалисты аналитического отдела заслужили доверие не только клиентов, но и профессионалов в области. На рынке к нам прислушиваются и ценят мнение.
-                    
+                    p Специалисты аналитического отдела заслужили доверие не только клиентов, но и профессионалов в области. На рынке к нам прислушиваются и ценят мнение.
+
                 li
-                  .benefit_item
-                    .benefit_img.fadeMeUp
+                  .benefit_item.fadeMeUp
+                    .benefit_img
                       img(src='svg/honesty.svg')
                     h4.benefits_caption.fadeMeUp Честность
-                    p.fadeMeUp Мы предлагаем клиентам, партнерам и инвесторам прозрачные условия сотрудничества. Совместная работа означает доверие.
-                    
+                    p Мы предлагаем клиентам, партнерам и инвесторам прозрачные условия сотрудничества. Совместная работа означает доверие.
+
                 li
-                  .benefit_item
-                    .benefit_img.fadeMeUp
+                  .benefit_item.fadeMeUp
+                    .benefit_img
                       img(src='svg/incomes.svg')
                     h4.benefits_caption.fadeMeUp Доходность 10 лет
-                    p.fadeMeUp С 2008 года инвесторы компании получают доход, за всю историю не было ни одного убыточного года.
-                    
-                    
+                    p С 2008 года инвесторы компании получают доход, за всю историю не было ни одного убыточного года.
+
+
           .recognition_section: .recognition_holder
             .recognition_block
               h3.recognition_title.fadeMeUp Профессиональное признание
-                
+
               ul.recognition_list
                 li.fadeMeUp: .recognition_item
                   .recognition_img
@@ -232,26 +263,32 @@ html(lang='ru')
                   .recognition_img
                     img(src='i/confession_4.png')
                   p Лауреат Финансовая элита России 2017
-                  
-              ul.diplomas_list
-                +loop_while(3)
+
+              ul.diplomas_list.diplomaList
+                +loop_while(1)
                   li
-                    .diploma_img.fadeMeUp
+                    .diploma_img.fadeMeUp: a.diploma_link.diplomaLink(href='i/lic_1.jpg' data-fancybox="gallery")
                       img(src='i/diploma.jpg')
-                  
+                  li
+                    .diploma_img.fadeMeUp: a.diploma_link.diplomaLink(href='i/lic_2.jpg' data-fancybox="gallery")
+                      img(src='i/diploma.jpg')
+                  li
+                    .diploma_img.fadeMeUp: a.diploma_link.diplomaLink(href='i/lic_3.jpg' data-fancybox="gallery")
+                      img(src='i/diploma.jpg')
+
             .charity_block
               h3.recognition_title.fadeMeUp Благотворительность
-                    
+
               p.fadeMeUp Благотворительная инициатива QBF направлена на привлечение средств инвесторов, заинтересованных в развитии своего региона.
-                      
+
               ul.charity_list
                 li.fadeMeUp
                   .charity_item
                     .charity_img
                       img(src='i/charity_1.png')
                     .charity_caption Верю в чудо
-                    p Калининград 
-                    p 
+                    p Калининград
+                    p
                       a.charity_link(href='#') www.deti39.com
                 li.fadeMeUp
                   .charity_item
@@ -259,15 +296,15 @@ html(lang='ru')
                       img(src='i/charity_2.png')
                     .charity_caption Свои дети
                     p Екатеринбург
-                    p 
+                    p
                       a.charity_link(href='#') www.svoi-deti.ru
                 li.fadeMeUp
                   .charity_item
                     .charity_img
                       img(src='i/charity_3.png')
                     .charity_caption Сотвори из жизни шедевр
-                    p Тюмень 
-                    p 
+                    p Тюмень
+                    p
                       a.charity_link(href='#') fondshedevr.ru
                 li.fadeMeUp
                   .charity_item
@@ -275,29 +312,29 @@ html(lang='ru')
                       img(src='i/charity_4.png')
                     .charity_caption Острова
                     p Санкт-Петербург
-                    p 
+                    p
                       a.charity_link(href='#') www.ostrovaru.com
-              
-              .charity_footer: p.fadeMeUp Раскрытие информации
-              
+
+              .charity_footer: p.fadeMeUp: a(href='info.html') Раскрытие информации
+
           .join_section
             .section_inner
               h3.join_title.fadeMeUp
                 span Начните инвестировать сейчас<br>
                 span.fw_b вместе с QBF
-            
+
             .join_mountain
               .join_logo.fadeMeUp
                 img(src='i/logo3.png')
               img(src='i/mountain.png')
-              
+
               .section_inner
-                +callback_holder()
-                
+                +callback_holder(true)
+
           .contact_section
             .section_inner
               h3.contact_title.fadeMeUp Контакты
-              
+
               ul.office_switcher.fadeMeUp
                 li: label.check_v2
                   input.inp_hidden.officeSwitch(type='radio' name='office' checked value=0)
@@ -314,10 +351,10 @@ html(lang='ru')
                 li: label.check_v2
                   input.inp_hidden.officeSwitch(type='radio' name='office' value=4)
                   span.check_text: span Тюмень
-                  
+
           .map_holder
             #qbf_map.map_block
-                
+
             .section_inner
               .map_info.fadeMeUp
                 .office_address.officeAddr
@@ -326,7 +363,7 @@ html(lang='ru')
                     li: span +7 (812) 407-21-12
                     <br>
                     li: a.map_link(href='mailto:region@qbfin.ru') region@qbfin.ru
-                    
+
                 .office_address.officeAddr(style='display:none')
                   p 123317, Москва Пресненская набережная, д. 8, стр.1 ММДЦ «Москва-Сити»
 
@@ -334,36 +371,36 @@ html(lang='ru')
                     li: span +7 (495) 988 98 21
                     <br>
                     li: a.map_link(href='mailto:invest@qbfin.ru') invest@qbfin.ru
-                    
+
                 .office_address.officeAddr(style='display:none')
                   p 620014, Екатеринбург ул. Бориса Ельцина, 1а БЦ «Президент»
-  
+
                   ul.map_contacts
                     li: span +7 (343) 312 22 00
                     <br>
                     li: a.map_link(href='mailto:invest.ekb@qbfin.ru') invest.ekb@qbfin.ru
-                    
+
                 .office_address.officeAddr(style='display:none')
                   p 236001, Калининград, бизнес-центр «Морской» Театральная улица, 35, этаж 8
                   ul.map_contacts
                     li: span +7 (4012) 720 317
                     <br>
                     li: a.map_link(href='mailto:invest@qbfin.ru') invest@qbfin.ru
-                    
+
                 .office_address.officeAddr(style='display:none')
                   p 625048, Тюмень ул. Максима Горького, д.74 БЦ «Демидов стан»
                   ul.map_contacts
                     li: span +7 (3452) 662 502
                     <br>
                     li: a.map_link(href='mailto:invest@qbfin.ru') invest@qbfin.ru
-                    
+
           .follow_section
             .section_inner
               h3.follow_title.fadeMeUp
-                span Следите за нами в социальных сетях 
+                span Следите за нами в социальных сетях
                 span.fw_b  #qbf
                 span.fw_b  #qbfregion
-              
+
               ul.widget_holder
                 li
                   .widget_box
@@ -388,30 +425,30 @@ html(lang='ru')
             p
               a.info_link(href='#') Раскрытие информации
 
-            p 
+            p
               a.info_link.fw_bl(href='#') qbfin.ru
 
             p.copyright © ООО ИК «КьюБиЭф» 2017.
 
             a.footer_logo(href='#')
               img(src='svg/logo.svg')
-            
+
           .footer_info.fadeMeUp
             p Целевая доходность является ориентировочной, определена в рамках инвестиционного горизонта на основании ожиданий ООО ИК "КьюБиЭф" по получению потенциального дохода от совершения определенных операций с отдельными видами финансовых инструментов.
-  
+
             p ООО ИК «КьюБиЭф» (ОГРН 5087746335551, ИНН 7733673955). Лицензия на осуществление брокерской деятельности № 077-12805-100000 выдана ФСФР России 24 декабря 2009 года без ограничения срока действия, лицензия на осуществление дилерской деятельности № 077-12816-010000 выдана ФСФР России 24 декабря 2009 года без ограничения срока действия лицензия на осуществление деятельности по управлению ценными бумагами № 077-12828-001000 выдана ФСФР России 24 декабря 2009 года без ограничения срока действия.
-  
+
             p Все материалы представлены на настоящем веб-сайте исключительно в информационных целях, без учета инвестиционных целей, и/или финансового положения или средств конкретных лиц.
-    
+
             p Совершение операций на рынке ценных бумаг, торговля на валютном рынке и на рынке производных финансовых инструментов сопряжены со значительными рисками. <br>Перед принятием инвестиционного решения, или совершением сделки, инвестору необходимо тщательно взвесить свое финансовое положение и проконсультироваться со своим финансовым советником (советниками), чтобы получить полное представление о возможных рисках.
-    
+
             p ООО ИК Кьюбиэф РФ № 045-12828-001000
-            
+
             .footer_attention
               .fl Не является публичной офертой
 
               .dev_block Разработка сайта — goga.spb.ru
-      
-  +scripts()
 
-          
+    +popup()
+                
+  +scripts(true)

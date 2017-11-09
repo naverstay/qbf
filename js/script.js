@@ -1,3 +1,19 @@
+Array.prototype.indexOf || (Array.prototype.indexOf = function (d, e) {
+  var a;
+  if (null == this) throw new TypeError('"this" is null or not defined');
+  var c = Object(this),
+    b = c.length >>> 0;
+  if (0 === b) return -1;
+  a = +e || 0;
+  Infinity === Math.abs(a) && (a = 0);
+  if (a >= b) return -1;
+  for (a = Math.max(0 <= a ? a : b - Math.abs(a), 0); a < b;) {
+    if (a in c && c[a] === d) return a;
+    a++
+  }
+  return -1
+});
+
 var all_pins = [],
   map_timer,
   all_tooltips = [],
@@ -23,6 +39,7 @@ var all_pins = [],
   body_var,
   chart_data,
   area_data,
+  strategy_data,
   mainSlider;
 
 function docScrollTo(pos, speed, callback) {
@@ -160,14 +177,15 @@ function initMainSlider() {
 
   mainSlider = $('.mainSlider').slick({
     //variableWidth: true,
+    fade: true,
     dots: true,
     mobileFirst: true,
     infinite: true,
     arrows: false,
     swipe: true,
     accessibility: false,
-    autoplay: false,
-    autoplaySpeed: 3000,
+    autoplay: true,
+    autoplaySpeed: 5000,
     //centerMode: true,
     //variableWidth: true,
     speed: 600,
@@ -246,6 +264,14 @@ function plural(n, str1, str2, str5) {
   return n + ' ' + ((((n % 10) === 1) && ((n % 100) !== 11)) ? (str1) : (((((n % 10) >= 2) && ((n % 10) <= 4)) && (((n % 100) < 10) || ((n % 100) >= 20))) ? (str2) : (str5)))
 }
 
+function formatResultSelection(rslt, e, r) {
+  return rslt.text;
+}
+
+function formatResult(rslt) {
+  return rslt.text;
+}
+
 function initSelect() {
   $.fn.select2.amd.define('select2/i18n/ru', [], function () {
     // Russian
@@ -291,9 +317,11 @@ function initSelect() {
     allowClear: false,
     minimumResultsForSearch: Infinity,
     containerCssClass: "select_c2"
+    //templateResult: formatResult,
+    //templateSelection: formatResultSelection
   };
 
-  $('.select2').each(function (ind) {
+  $('.select2').each(function () {
     var $slct = $(this),
       cls = $slct.attr('data-select-class') || '',
       opt = {
@@ -316,93 +344,143 @@ function adjustTextLabels(selection) {
 }
 
 function loadAreaChart() {
-  var svg_holder = $("#area_chart");
-  var svg = d3.select("#area_chart").append("svg"),
-    margin = {top: 0, right: 0, bottom: 0, left: 0}
-    , width = svg_holder.width() - margin.left - margin.right // Use the window's width 
-    , height = svg_holder.height() - margin.top - margin.bottom, // Use the window's height
-    g = svg
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
-      .append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+  var area_holder = $("#area_chart");
+  var area_svg = d3.select("#area_chart").append("svg"),
+    area_margin = {top: 0, right: 0, bottom: 0, left: 0}
+    , area_width = area_holder.width() - area_margin.left - area_margin.right // Use the window's width
+    , area_height = area_holder.height() - area_margin.top - area_margin.bottom, // Use the window's height
+    area_g = area_svg
+      .attr("width", area_width + area_margin.left + area_margin.right)
+      .attr("height", area_height + area_margin.top + area_margin.bottom)
+      .append("g").attr("transform", "translate(" + area_margin.left + "," + area_margin.top + ")");
 
-  var x = d3.scaleTime()
-    .rangeRound([0, width]);
+  var area_x = d3.scaleTime()
+    .rangeRound([0, area_width]);
 
-  var y = d3.scaleLinear()
-    .rangeRound([height, 0]);
+  var area_y = d3.scaleLinear()
+    .rangeRound([area_height, 0]);
 
   var area = d3.area()
     .x(function (d) {
-      return x(d.date);
+      return area_x(d.date);
     })
     .y1(function (d) {
-      return y(d.val);
+      return area_y(d.val);
     });
 
-  x.domain(d3.extent(area_data, function (d) {
+  var strategies = chart_data.columns.slice(1, 4).map(function (id) {
+    return {
+      id: id,
+      values: chart_data.map(function (d) {
+        return {date: d.date, val: d[id]};
+      })
+    };
+  });
+
+  area_x.domain(d3.extent(chart_data, function (d) {
     return d.date;
   }));
-  y.domain([0, d3.max(area_data, function (d) {
-    return d.val;
-  })]);
 
-  area.y0(y(0));
+  area_y.domain([
+    d3.min(strategies, function (c) {
+      return d3.min(c.values, function (d) {
+        return d.val;
+      });
+    }),
+    d3.max(strategies, function (c) {
+      return d3.max(c.values, function (d) {
+        return d.val;
+      });
+    })
+  ]);
 
-  g.append("path")
-    .datum(area_data)
+  area.y0(area_y(0));
+
+  var area_graph = area_g.selectAll(".graph")
+    .data(strategies)
+    .enter().append("g")
     .attr("fill", "rgba(12,174,167,.29)")
     .attr("d", area);
 
-  g.append("g")
+  area_graph.append("path")
+    .attr("d", function (d) {
+      return area(d.values);
+    })
+    .attr("class", function (d, i) {
+      return 'area area_' + (i >= 3 ? (i - 2) : 0);
+    });
+
+  area_g.append("g")
     .attr("class", "axis axis--x")
-    .attr("transform", "translate(0," + height + ")")
+    .attr("transform", "translate(0," + area_height + ")")
     .call(
-      d3.axisBottom(x)
+      d3.axisBottom(area_x)
         .ticks(5)
-        .tickSize(-height)
+        .tickSize(-area_height)
     ).call(adjustTextLabels);
 
-}
-
-function initAreaChart() {
-  var parseTime = d3.timeParse("%d/%m/%Y");
-
-  function type(d, _, columns) {
-    d.date = parseTime(d.date);
-    for (var i = 1, n = columns.length, c; i < n; ++i) {
-      d[c = columns[i]] = +(d[c]).replace(/,/, '.');
-    }
-    return d;
-  }
-
-  d3.csv("data/chart_5.csv", type, function (error, data) {
-    if (error) throw error;
-
-    area_data = data;
-
-    loadAreaChart();
-  });
 }
 
 function loadChart() {
   var chartToggleList = $(".chartToggleList");
   var updateLegend = !(chartToggleList.children().length > 2);
-  var svg_holder = $("#main_chart");
-  var svg = d3.select("#main_chart").append("svg");
+  var main_holder = $("#main_chart");
+  var main_svg = d3.select("#main_chart").append("svg");
 
   var margin = {top: 20, right: 0, bottom: 50, left: 50}
-    , width = svg_holder.width() - margin.left - margin.right // Use the window's width 
-    , height = svg_holder.height() - margin.top - margin.bottom; // Use the window's height
+    , width = main_holder.width() - margin.left - margin.right // Use the window's width
+    , height = main_holder.height() - margin.top - margin.bottom; // Use the window's height
 
-  var g = svg
+  var g = main_svg
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
   var x = d3.scaleTime().range([0, width]),
-    y = d3.scaleLinear().range([height, 0]),
-    z = d3.scaleOrdinal(d3.schemeCategory10);
+    y = d3.scaleLinear().range([height, 0]);
+
+  var area_holder = $("#area_chart");
+  var area_svg = d3.select("#area_chart").append("svg"),
+    area_margin = {top: 0, right: 0, bottom: 0, left: 0}
+    , area_width = area_holder.width() - area_margin.left - area_margin.right // Use the window's width
+    , area_height = area_holder.height() - area_margin.top - area_margin.bottom, // Use the window's height
+    area_g = area_svg
+      .attr("width", area_width + area_margin.left + area_margin.right)
+      .attr("height", area_height + area_margin.top + area_margin.bottom)
+      .append("g").attr("transform", "translate(" + area_margin.left + "," + area_margin.top + ")");
+
+  var x2 = d3.scaleTime()
+    .rangeRound([0, area_width]);
+
+  var y2 = d3.scaleLinear()
+    .rangeRound([area_height, 0]);
+
+  var area = d3.area()
+    .x(function (d) {
+      return x2(d.date);
+    })
+    .y1(function (d) {
+      return y2(d.val);
+    });
+
+  var xAxis = d3.axisBottom(x),
+    xAxis2 = d3.axisBottom(x2)
+      .ticks(5)
+      .tickSize(-area_height),
+    yAxis = d3.axisLeft(y)
+      .ticks(5)
+      .tickSize(-width)
+      .tickFormat(d3.format(",.0%"));
+
+  var brush = d3.brushX()
+    .extent([[0, 0], [area_width, area_height]])
+    .on("brush end", brushed);
+
+  var zoom = d3.zoom()
+    .scaleExtent([1, Infinity])
+    .translateExtent([[0, 0], [width, height]])
+    .extent([[0, 0], [width, height]])
+    .on("zoom", zoomed);
 
   var line = d3.line()
     .curve(d3.curveLinear)
@@ -439,29 +517,70 @@ function loadChart() {
     })
   ]);
 
-  z.domain(percents.map(function (c) {
-    return c.id;
+  var strategies = chart_data.columns.slice(1, 4).map(function (id) {
+    return {
+      id: id,
+      values: chart_data.map(function (d) {
+        return {date: d.date, val: d[id]};
+      })
+    };
+  });
+
+  x2.domain(d3.extent(chart_data, function (d) {
+    return d.date;
   }));
+
+  y2.domain([
+    d3.min(strategies, function (c) {
+      return d3.min(c.values, function (d) {
+        return d.val;
+      });
+    }),
+    d3.max(strategies, function (c) {
+      return d3.max(c.values, function (d) {
+        return d.val;
+      });
+    })
+  ]);
+
+  area.y0(y2(0));
+
+  var area_graph = area_g.selectAll(".graph")
+    .data(strategies)
+    .enter().append("g")
+    .attr("class", function (d, i) {
+      return 'graph st st_' + i;
+    })
+    .attr("style", function (d, i) {
+      return (i === 1 || i === 2 ? 'display:none' : '');
+    })
+    .attr("fill", "rgba(12,174,167,.29)")
+    .attr("d", area);
+
+  area_graph.append("path")
+    .attr("d", function (d) {
+      return area(d.values);
+    });
+
+  area_g.append("g")
+    .attr("class", "axis axis--x")
+    .attr("transform", "translate(0," + area_height + ")")
+    .call(xAxis2).call(adjustTextLabels);
 
   g.append("g")
     .attr("class", "axis axis--x")
     .attr("transform", "translate(0," + height + ")")
-    .call(d3.axisBottom(x));
+    .call(xAxis);
 
   g.append("g")
     .attr("class", "axis axis--y")
-    .call(
-      d3.axisLeft(y)
-        .ticks(5)
-        .tickSize(-width)
-        .tickFormat(d3.format(",.0%"))
-    );
+    .call(yAxis);
 
   var graph = g.selectAll(".graph")
     .data(percents)
     .enter().append("g")
     .attr("class", function (d, i) {
-      return 'graph graph_' + i;
+      return 'graph ' + (i >= 3 ? 'graph_' + (i - 2) : 'st st_' + i) + (i === 1 || i === 2 ? ' hide' : '');
     });
 
   graph.append("path")
@@ -470,29 +589,90 @@ function loadChart() {
     })
     .attr("class", function (d, i) {
 
-      if (updateLegend) {
-        chartToggleList.append($('<li class="line_' + (i + 1) + '"><label class="check_v1"><input class="inp_hidden chartToggle" type="checkbox" data-chart=".graph_' + (i + 1) + '" checked=""><span class="check_text">' + d.id + '</span></label></li>'));
+      if (updateLegend && i >= 3) {
+        chartToggleList.append($('<li class="line_' + (i - 2) + '"><label class="check_v1"><input class="inp_hidden chartToggle" type="checkbox" data-chart=".graph_' + (i - 2) + '" checked=""><span class="check_text"><span>' + d.id + '</span></span></label></li>'));
       }
 
-      return 'line line_' + i;
+      return 'line line_' + (i >= 3 ? (i - 2) : 0);
     });
 
   graph.selectAll(".dot")
     .data(function (d) {
       return d.values;
     })
-    .enter().append("circle") // Uses the enter().append() method
+    .enter().append("circle")
     .attr("class", function (d, i) {
       return 'dot';
       //return (i % 10) ? 'dot hide' : 'dot';
-    }) // Assign a class for styling
+    })
     .attr("cx", function (d) {
       return x(d.date);
     })
     .attr("cy", function (d, i) {
       return y(d.val);
     })
-    .attr("r", 5);
+    .attr("r", 3);
+
+  area_svg.append("g")
+    .attr("class", "brush")
+    .call(brush)
+    .call(brush.move, x.range());
+
+  main_svg.append("rect")
+    .attr("class", "zoom")
+    .attr("width", width)
+    .attr("height", height)
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+    .call(zoom);
+
+  function brushed() {
+    if (d3.event.sourceEvent && d3.event.sourceEvent.type === "zoom") return; // ignore brush-by-zoom
+    var s = d3.event.selection || x2.range();
+    x.domain(s.map(x2.invert, x2));
+
+    main_svg.selectAll(".line").attr("d", function (d) {
+      return line(d.values);
+    });
+
+    main_svg.selectAll(".dot")
+      .attr("cx", function (d) {
+        return x(d.date);
+      })
+      .attr("cy", function (d, i) {
+        return y(d.val);
+      });
+
+    main_svg.select(".axis--x").call(xAxis);
+    main_svg.select(".zoom").call(zoom.transform, d3.zoomIdentity
+      .scale(area_width / (s[1] - s[0]))
+      .translate(-s[0], 0));
+  }
+
+  function zoomed() {
+    if (d3.event.sourceEvent && d3.event.sourceEvent.type === "brush") return; // ignore zoom-by-brush
+    var t = d3.event.transform;
+    x.domain(t.rescaleX(x2).domain());
+
+    //svg.select(".graph").attr("d", area);
+    main_svg.select(".axis--x").call(xAxis);
+
+    main_svg.selectAll(".line").attr("d", function (d) {
+      return line(d.values);
+    });
+
+    main_svg.selectAll(".dot")
+      .attr("cx", function (d) {
+        return x(d.date);
+      })
+      .attr("cy", function (d, i) {
+        return y(d.val);
+      });
+
+    area_svg.select(".brush").call(brush.move, x.range().map(t.invertX, t));
+  }
+
+  $('.tabControl.selected').click();
+
 }
 
 function initChart() {
@@ -506,7 +686,7 @@ function initChart() {
     return d;
   }
 
-  d3.csv("data/chart_4.csv", type, function (error, data) {
+  d3.tsv("data/all.tsv", type, function (error, data) {
     if (error) throw error;
 
     chart_data = data;
@@ -548,7 +728,114 @@ function updateGraph() {
 
   loadChart();
 
-  loadAreaChart();
+  //loadAreaChart();
+}
+
+function toggleChart(chck) {
+  var chrt = d3.selectAll('#main_chart .graph' + chck.attr('data-chart'));
+  chrt.classed('hide', !chck.prop('checked'));
+}
+
+function defProp(chck) {
+  var def = $('.tabControl.selected').attr('data-default'), index = $('.chartToggle').index(chck);
+
+  if (def && def.length) {
+    var arr = def.split(',');
+
+    if (chck.prop('checked')) {
+      arr.push(index);
+    } else {
+      var find = arr.indexOf(index + '');
+
+      if (find > -1) {
+        arr.splice(find, 1);
+      }
+    }
+  }
+
+  $('.tabControl.selected').attr('data-default', arr.join(','));
+}
+
+function initValidation() {
+  $('.validateMe').each(function (ind) {
+    var f = $(this);
+
+    f.validationEngine({
+      binded: true,
+      scroll: false,
+      showPrompts: true,
+      showArrow: false,
+      addSuccessCssClassToField: 'success',
+      addFailureCssClassToField: 'error',
+      parentFieldClass: '.formCell',
+      // parentFormClass: '.order_block',
+      promptPosition: "centerRight",
+      //doNotShowAllErrosOnSubmit: true,
+      //focusFirstField          : false,
+      autoHidePrompt: true,
+      autoHideDelay: 3000,
+      autoPositionUpdate: false,
+      prettySelect: true,
+      //useSuffix                : "_VE_field",
+      addPromptClass: 'relative_mode one_msg',
+      showOneMessage: false
+    });
+  });
+}
+
+
+function findStrategy(btn) {
+
+  //ERRORS
+  var error = false;
+
+
+  //GET DATA
+  var age = $('.strategyForm [name="age"]').val();
+  var sum = $('.strategyForm [name="sum"]').val();
+  var period = $('.strategyForm [name="period"]').val();
+  var risk = $('.strategyForm [name="risk"]').val();
+
+  var result = "";
+
+
+  //CALC
+
+  if ((age === 3) && (sum === 3) && (period === 3) && (risk === 1)) {
+    result = 'Консервативная стратегия';
+    $('#st_1').css({'display': 'block'});
+  } else if ((age === 2) && (sum === 1) && (period === 1) && (risk === 4)) {
+    result = 'Высокодоходная стратегия';
+    $('#st_3').css({'display': 'block'});
+  } else {
+    result = 'Средневзвешенная стратегия';
+    $('#st_2').css({'display': 'block'});
+  }
+
+  btn.addClass('_loading');
+
+  setTimeout(function () {
+    $('.calcResult').show();
+
+    $('.strategyName').html(result);
+
+    btn.removeClass('_loading');
+
+  }, 2000);
+}
+
+function initFancybox() {
+  $('.diplomaList').lightGallery({
+    selector: '.diplomaLink',
+    speed: 200,
+    thumbnail: true,
+    zoom: true,
+    dynamic: false,
+    download: false,
+    scale: .5,
+    enableZoomAfter: 0,
+    actualSize: true
+  });
 }
 
 $(function ($) {
@@ -558,19 +845,59 @@ $(function ($) {
 
   initSelect();
 
+  initValidation();
+
   //confirmDialogDefaults();
 
   initMainSlider();
 
   initChart();
 
-  initAreaChart();
+  initFancybox();
 
-  body_var.delegate('.chartToggle', 'change', function () {
-    var chck = $(this), chrt = $('.graph' + chck.attr('data-chart'));
-    chrt.toggle(chck.prop('checked'));
+  body_var.delegate('.select2', 'change', function (e) {
+    $(this).validationEngine('validate');
+
+  }).delegate('.strategyForm', 'submit', function (e) {
+    e.preventDefault();
+
+    if ($(this).validationEngine('validate')) {
+      findStrategy($('.strategyBtn'));
+    }
+
+  }).delegate('.popupClose', 'click', function () {
+    $('.calcResult').hide();
+    return false;
+  }).delegate('.infoBtn', 'click', function () {
+    $(this).closest('.info_unit').toggleClass('_opened');
+    return false;
+  }).delegate('.chartToggle', 'change', function () {
+    var chck = $(this);
+
+    toggleChart(chck);
+
+    defProp(chck);
+
   }).delegate('.tabControl', 'click', function () {
-    $(this).siblings().removeClass('selected').end().next('.tab_unit').andSelf().addClass('selected');
+    var tab = $(this), chck = $('.chartLabel').eq(tab.index()).find('input'),
+      def_check = tab.attr('data-default');
+
+    tab.siblings('.tabControl').removeClass('selected').end().addClass('selected');
+
+    $('.chartLabel').eq(tab.index()).show().siblings().hide();
+
+    d3.selectAll('#main_chart ' + chck.attr('data-chart')).classed('hide', !chck.prop('checked'));
+
+    $('.st').hide().filter(chck.attr('data-chart')).show();
+
+    if (def_check && def_check.length) {
+      var arr = def_check.split(',');
+
+      $('.chartToggle').each(function (ind) {
+        toggleChart($(this).prop('checked', arr.indexOf(ind + '') > -1));
+      });
+    }
+
     return false;
   }).delegate('.scrollTo', 'click', function () {
     var target = $($(this).attr('href'));

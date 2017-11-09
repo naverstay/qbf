@@ -249,7 +249,7 @@
 
             if (options.notEmpty == true){
 
-                if(field.val().length > 0){
+                if(field.val() && field.val().length > 0){
                     // validate the current field
                     window.setTimeout(function() {
                         methods._validateField(field, options);

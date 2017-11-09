@@ -9,10 +9,10 @@ mixin dev_head(page_title)
         meta(name="format-detection", content="telephone=no")
         //-style
             include ../styles/main_global.css
+        link(rel='stylesheet', href="lightGallery-master/dist/css/lg-fb-comment-box.css", media='all')
+        link(rel='stylesheet', href="lightGallery-master/dist/css/lg-transitions.css", media='all')
+        link(rel='stylesheet', href="lightGallery-master/dist/css/lightgallery.css", media='all')
         link(rel='stylesheet', href='styles/main_global.css', media='all')
-        link(href='http://fonts.googleapis.com/css?family=Open+Sans:400,600&subset=latin,cyrillic', rel='stylesheet')
-        link(href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,400italic&subset=latin,cyrillic', rel='stylesheet')
-
 
 mixin loop_while(counter)
     -i=0;
@@ -30,24 +30,24 @@ mixin header()
         li.menu_item
           a.btn_v1.cabinet_btn.green_btn(href='#')
             span.fw_b Личный кабинет
-            
+
       .logo_block
-        a.logo(href='#')
+        a.logo(href='index.html')
           img(src='svg/qbf_logo.svg' width=145 height=37)
 
       .phone_block
         a.callback_link(href='tel:+78124072112')
           span.i-phone
           span.fw_b.link_text +7 (812) 407-21-12
-            
-mixin callback_holder()
+
+mixin callback_holder(anim)
   .callback_holder
     .callback_info
-      h3.callback_title.fadeMeUp Получите 
-      h4.callback_tip.fadeMeUp персональную консультацию по стратегиям.
-      p.fadeMeUp Мы перезвоним вам в течение 20-ти минут.
+      h3.callback_title(class = anim ? 'fadeMeUp' : '') Получите
+      h4.callback_tip(class = anim ? 'fadeMeUp' : '') персональную консультацию по стратегиям.
+      p(class = anim ? 'fadeMeUp' : '') Мы перезвоним вам в течение 20-ти минут.
 
-    .callback_form.fadeMeUp
+    .callback_form(class = anim ? 'fadeMeUp' : '')
       form(action='#')
         .f_cell
           .input_w
@@ -55,62 +55,123 @@ mixin callback_holder()
         .f_cell
           .input_w
             input.f_input_v1(placeholder='Телефон или почта')
-  
+
         .f_cell
           label.check_v1
             input.inp_hidden(type='checkbox')
             span.check_text Я даю свое согласие на обработку персональных данных
-  
+
         .f_cell
           button.btn_v2.callback_btn.gray_btn
             span.fw_b Получить консультацию
 
+mixin info_table()
+  +loop_while(2)
+    .info_table._odd
+      .info_cell._col_1
+        p
+          b Филиал в городе Белгород
+      .info_cell._col_2
+        p
+          b Наименование филиала в г. Белгород:
+          | Филиал общества с ограниченной ответственностью Инвестиционная Компания «КьюБиЭф» в г. Белгород.
+        p
+          b Адрес филиала:
+          | Российская Федерация, 308000, Белгородская область, г. Белгород, Пр-кт Славы, д. 28.
+        p
+          b тел: +7 (4722) 25 73 25
+          b e-mail: belgorod@qbfin.ru
+      .info_cell._col_3
+        p
+          b Дата публикации:
+          br
+          | 20.05.2016
+      .info_cell._col_4
+        p
+          b Срок доступа к информации:
+          br
+          | Бессрочно
+        p
+          b Период актуальности:
+          br
+          | актуально в настоящее время
+
+    .info_table._even
+      .info_cell._col_1
+        p
+          b Филиал в городе Белгород
+      .info_cell._col_2
+        p
+          b Наименование филиала в г. Белгород:
+          | Филиал общества с ограниченной ответственностью Инвестиционная Компания «КьюБиЭф» в г. Белгород.
+          br
+          b Адрес филиала:
+          | Российская Федерация, 308000, Белгородская область, г. Белгород, Пр-кт Славы, д. 28.
+          br
+          b тел: +7 (4722) 25 73 25
+          b e-mail: belgorod@qbfin.ru
+      .info_cell._col_3
+        p
+          b Дата публикации:
+          br
+          | 20.05.2016
+      .info_cell._col_4
+        p
+          b Срок доступа к информации:
+          br
+          | Бессрочно
+          b Период актуальности:
+          br
+          | актуально в настоящее время
+
+
 mixin slider_form()
-  form(action='#')
+  form.strategyForm.validateMe(action='#')
     .f_cell
       .fl: .dm
         label.label_v1 Ваш возраст
       .input_w.fr.select_box_v1
-        select.select2()
-          option 21-25
-          option 26-30
-          option 31-35
-          option 36-40
+        select.select2(class='validate[required]' data-placeholder='выберите из списка' name='age')
+          option(disabled selected value=0)
+          option(value=1) от 18 до 30
+          option(value=2) от 30 до 50
+          option(value=3) более 50
 
     .f_cell
       .fl: .dm
         label.label_v1 Я готов инвестировать
       .input_w.fr.select_box_v1
-        select.select2()
-          option 21-25
-          option 26-30
-          option 31-35
-          option 36-40
+        select.select2(class='validate[required]' data-placeholder='выберите из списка' name='sum')
+          option(disabled selected value=0)
+          option(value=1) до 1 млн.
+          option(value=2) от 1 до 5 млн
+          option(value=3) более 5 млн
 
     .f_cell
       .fl: .dm
         label.label_v1 На срок
       .input_w.fr.select_box_v1
-        select.select2()
-          option 21-25
-          option 26-30
-          option 31-35
-          option 36-40
+        select.select2(class='validate[required]' data-placeholder='выберите из списка' name='period')
+          option(disabled selected value=0)
+          option(value=1) менее 3 лет
+          option(value=2) 3-5 лет
+          option(value=3) более 5 лет
 
     .f_cell
       .fl: .dm
         label.label_v1 Риск
       .input_w.fr.select_box_v1
-        select.select2()
-          option 21-25
-          option 26-30
-          option 31-35
-          option 36-40
+        select.select2(class='validate[required]' data-placeholder='выберите из списка' name='risk')
+          option(disabled selected value=0)
+          option(value=1) 0-10%
+          option(value=2) 10%
+          option(value=3) 25%
+          option(value=4) 50%
 
     .f_cell
       .input_w.fr.select_box_v1
-        button.btn_v2.green_btn_2.action_btn
-          span.fw_b Получить фин.план 
+        button.btn_v2.green_btn_2.action_btn.strategyBtn
+          span.fw_b Получить фин.план
 
 mixin slide(img)
   .slide
@@ -127,11 +188,87 @@ mixin slide(img)
       .quote_author_post руководитель клиентского офиса г. Санкт-Петербург
 
 
-mixin scripts()
-    script(src='js/jquery1.10.js')
-    script(src='js/slick.min.js')
-    script(src='js/select2.js')
+mixin popup()
+  .popup_holder.calcResult()
+    .popup
+      span.popup_close.popupClose
+
+      .popup_caption Финансовый план
+
+      .calc_strategy.strategyName
+
+      ul#st_1.strategy_charts
+        li
+          .strategy_chart
+            img(src='i/pie_1.jpg')
+          .strategy_legend
+            span.legend_item._gray Облигации
+            span.legend_item._blue Опционы
+
+          ul.strategy_features
+            li Облигация — это займ, который выдается на определённый срок под определённый процент.
+            li Опцион — право  купить или продать по заранее оговоренной цене в оговорённой срок
+
+        li
+          .strategy_chart
+            img(src='i/st_1.jpg')
+          .strategy_legend
+            p &mdash; Доходность стратегии с 2014 года, %
+
+          .strategy_tip * доходность стратегии с 2008 по запросу
+
+      ul#st_2.strategy_charts
+        li
+          .strategy_chart
+            img(src='i/pie_2.jpg')
+          .strategy_legend
+            span.legend_item._gray Финансовые инструменты
+            span.legend_item._blue Валюта
+            span.legend_item._green Недвижимость
+
+          ul.strategy_features
+            li Валюта — обеспечение защиты капитала от изменения курсовых разниц
+            li Недвижимость — покупка жилой недвижимости в России на ранних стадиях и перепродажа после завершения строительства
+            li Финансовые инструменты — акции и облигации крупнейших корпораций мира в различных странах и секторах экономики.
+
+        li
+          .strategy_chart
+            img(src='i/st_2.jpg')
+          .strategy_legend
+            p &mdash; Доходность стратегии с 2014 года, %
+
+          .strategy_tip * доходность стратегии с 2008 по запросу
+
+      ul#st_3.strategy_charts
+        li
+          .strategy_chart
+            img(src='i/pie_3.jpg')
+          .strategy_legend
+            span.legend_item._gray Валюта
+            span.legend_item._blue Сырье
+
+        li
+          .strategy_chart
+            img(src='i/st_3.jpg')
+          .strategy_legend
+            p &mdash; Доходность стратегии с 2014 года, %
+
+          .strategy_tip * доходность стратегии с 2008 по запросу
+
+      .popup_tip Рассчитанный финансовый план не является окончательным и может быть изменен после персональной консультации.
+
+      +callback_holder()
+
+mixin scripts(index)
+  script(src='js/jquery1.10.js')
+  script(src='js/select2.js')
+  - if (index)
     script(src='js/d3.v4.min.js')
-    script(src='js/script.js')
+    script(src='js/slick.min.js')
+    script(src='js/jquery.validationEngine.js')
+    script(src='js/jquery.validationEngine-ru.js')
+    script(src='lightGallery-master/dist/js/lightgallery-all.js')
+  script(src='js/script.js')
+  - if (index)
     script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCl7THpWflv0u70jhfuU4T6KbuNy0fuxME&callback=loadMap')
-    
+

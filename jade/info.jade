@@ -1,0 +1,135 @@
+include mixins.pug
+doctype html
+html(lang='ru')
+  +dev_head('QBF info')
+
+  body
+    .wrapper
+      .base
+        +header()
+
+        div.main_content
+          .section_inner
+            .info_block
+              h2.info_title Раскрытие информации
+            
+              ul.info_holder
+                li
+                  .info_unit
+                    .info_caption
+                      span Общая информация
+                        
+                li
+                  .info_unit
+                    .info_caption
+                      span Участие в СРО
+                      a.info_btn.infoBtn(href='#')
+                    .info_box
+                      +info_table()
+                li
+                  .info_unit
+                    .info_caption
+                      span Свидетельства
+                      a.info_btn.infoBtn(href='#')
+                    .info_box
+                      p 123
+                li
+                  .info_unit
+                    .info_caption
+                      span Филиалы и представительства
+                      a.info_btn.infoBtn(href='#')
+                    .info_box
+                      +info_table()
+                li
+                  .info_unit
+                    .info_caption
+                      span Образцы договоров
+                      a.info_btn.infoBtn(href='#')
+                    .info_box
+                      p 123
+                li
+                  .info_unit
+                    .info_caption
+                      span Используемые системы ЭДО
+                      a.info_btn.infoBtn(href='#')
+                    .info_box
+                      +info_table()
+                li
+                  .info_unit
+                    .info_caption
+                      span Судебные споры
+                      a.info_btn.infoBtn(href='#')
+                    .info_box
+                      p 123
+                li
+                  .info_unit
+                    .info_caption
+                      span Брокерская деятельность
+                      a.info_btn.infoBtn(href='#')
+                    .info_box
+                      +info_table()
+                li
+                  .info_unit
+                    .info_caption
+                      span Отчётность
+                      a.info_btn.infoBtn(href='#')
+                    .info_box
+                      p 123
+                li
+                  .info_unit
+                    .info_caption
+                      span Информация о лицензиях
+                      a.info_btn.infoBtn(href='#')
+                    .info_box
+                      p 123
+                li
+                  .info_unit
+                    .info_caption
+                      span Деятельность по управлению ценными бумагами
+                      a.info_btn.infoBtn(href='#')
+                    .info_box
+                      +info_table()
+                li
+                  .info_unit
+                    .info_caption
+                      span Квалифицированые инвесторы
+                      a.info_btn.infoBtn(href='#')
+                    .info_box
+                      p 123
+                      
+      .footer
+        .section_inner.clearfix
+          .footer_contacts.fadeMeUp
+            .lang_block
+              img(src='i/flag.png')
+
+            p
+              a.info_link(href='#') Раскрытие информации
+
+            p 
+              a.info_link.fw_bl(href='#') qbfin.ru
+
+            p.copyright © ООО ИК «КьюБиЭф» 2017.
+
+            a.footer_logo(href='#')
+              img(src='svg/logo.svg')
+            
+          .footer_info.fadeMeUp
+            p Целевая доходность является ориентировочной, определена в рамках инвестиционного горизонта на основании ожиданий ООО ИК "КьюБиЭф" по получению потенциального дохода от совершения определенных операций с отдельными видами финансовых инструментов.
+  
+            p ООО ИК «КьюБиЭф» (ОГРН 5087746335551, ИНН 7733673955). Лицензия на осуществление брокерской деятельности № 077-12805-100000 выдана ФСФР России 24 декабря 2009 года без ограничения срока действия, лицензия на осуществление дилерской деятельности № 077-12816-010000 выдана ФСФР России 24 декабря 2009 года без ограничения срока действия лицензия на осуществление деятельности по управлению ценными бумагами № 077-12828-001000 выдана ФСФР России 24 декабря 2009 года без ограничения срока действия.
+  
+            p Все материалы представлены на настоящем веб-сайте исключительно в информационных целях, без учета инвестиционных целей, и/или финансового положения или средств конкретных лиц.
+    
+            p Совершение операций на рынке ценных бумаг, торговля на валютном рынке и на рынке производных финансовых инструментов сопряжены со значительными рисками. <br>Перед принятием инвестиционного решения, или совершением сделки, инвестору необходимо тщательно взвесить свое финансовое положение и проконсультироваться со своим финансовым советником (советниками), чтобы получить полное представление о возможных рисках.
+    
+            p ООО ИК Кьюбиэф РФ № 045-12828-001000
+            
+            .footer_attention
+              .fl Не является публичной офертой
+
+              .dev_block Разработка сайта — goga.spb.ru
+      
+  +scripts()
+
+          

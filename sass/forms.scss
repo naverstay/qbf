@@ -18,8 +18,6 @@
   .select2-container--default {
     .select2-results > .select2-results__options {
       max-height: 260px;
-      //border: solid #000;
-      //border-width: 0 2px 2px;
     }
 
     .select2-dropdown {
@@ -35,13 +33,11 @@
       color: $default_t_color;
       background: #fff !important;
 
+      &.select2-results__option--highlighted,
       &:hover {
-        color: $gl_green;
+        color: #fff !important;
+        background: $gl_green !important;
       }
-    }
-
-    .select2-container {
-
     }
 
     .select2-selection__rendered {
@@ -65,9 +61,7 @@
       box-shadow: none;
 
       &:hover {
-        //border-color: #000;
         background: $gl_green;
-        //color: #fff;
 
         .select2-selection__placeholder,
         .select2-selection__rendered {

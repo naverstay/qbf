@@ -7,9 +7,10 @@
   left: 0;
   padding: 10px 0;
   line-height: 42px;
+  background: #f4f4f4;
 
   @include respond-to-min($resp_step_2) {
-    padding: 42px 0 25px;
+    padding: 42px 0;
   }
 }
 
@@ -106,3 +107,6 @@
     font-size: 18px;
   }
 }
+
+
+
