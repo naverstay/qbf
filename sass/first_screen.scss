@@ -198,6 +198,53 @@ body {
   }
 }
 
+.slider_controls {
+  @extend %clearfix;
+
+  @include respond-to-min($resp_step_1) {
+    position: absolute;
+    //bottom: 20px;
+    bottom: 5px;
+    left: 0;
+    z-index: 4;
+  }
+}
+
+.slide_control {
+  float: left;
+  width: 40px;
+  height: 40px;
+  position: relative;
+  cursor: pointer;
+  border: 1px solid #dadada;
+
+  &:before {
+    @extend %icon_pseudo;
+    content: $i-chevron-down;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -9px 0 0 -9px;
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
+    line-height: 1;
+    color: #585858;
+  }
+
+  &.slide_next {
+    @include transform_rotate(-90);
+  }
+
+  &.slide_prev {
+    @include transform_rotate(90);
+  }
+
+  + .slide_control {
+    margin-left: -1px;
+  }
+}
+
 .slider_dots {
   text-align: left;
   padding: 20px 0;
@@ -243,10 +290,11 @@ body {
   @include respond-to-min($resp_step_1) {
     position: absolute;
     left: 0;
-    bottom: 80px;
+    //bottom: 80px;
+    bottom: 55px;
+    padding: 0;
     z-index: 3;
   }
-
 }
 
 .slide_caption {
@@ -1535,7 +1583,7 @@ $tab_h: 113px;
 
   img {
     display: block;
-    opacity: .5;
+    opacity: .05;
     max-width: 100%;
   }
 }
@@ -2512,13 +2560,20 @@ $tab_h: 113px;
   left: 0;
   right: 0;
   background: #fff;
-  padding: 20px;
   margin: auto;
   max-height: 96%;
   width: 96%;
-  max-width: 1500px;
+  max-width: 1366px;
   overflow-x: hidden;
   overflow-y: auto;
+}
+
+.popup_inner {
+  padding: 20px;
+
+  @include respond-to-min($resp_step_2) {
+    padding: 20px 65px 60px;
+  }
 }
 
 .popup_close {
@@ -2528,30 +2583,44 @@ $tab_h: 113px;
   top: 20px;
   right: 20px;
   opacity: .5;
+  font-size: 20px;
 
   &:before {
-    font-size: 20px;
     content: $i-close;
   }
 
   &:hover {
     opacity: 1;
   }
+
+  @include respond-to-min($resp_step_2) {
+    top: 25px;
+    right: 23px;
+    font-size: 26px;
+  }
 }
 
 .popup_caption {
-  font-size: 14px;
-  line-height: 18px;
+  font: 20px $LatoBold;
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
+  letter-spacing: .01em;
+
+  @include respond-to-min($resp_step_2) {
+    font-size: 34px;
+  }
 }
 
 .calc_strategy {
   text-align: center;
-  margin: 0 auto 20px;
+  margin: 0 auto 15px;
   padding: 0 0 10px;
-  font-size: 24px;
-  line-height: 24px;
+  font-size: 20px;
+
+  @include respond-to-min($resp_step_2) {
+    font-size: 34px;
+    margin-bottom: 32px;
+  }
 }
 
 .strategy_features {
@@ -2573,7 +2642,16 @@ $tab_h: 113px;
   }
 
   @include respond-to-min($resp_step_2) {
-    margin-bottom: 20px;
+    max-width: 600px;
+    padding-left: 50px;
+    margin-bottom: 50px;
+
+    li {
+      position: relative;
+      padding-left: 25px;
+      margin-top: 10px;
+      line-height: 1.7;
+    }
   }
 }
 
@@ -2581,6 +2659,10 @@ $tab_h: 113px;
   text-align: center;
   margin-bottom: 20px;
   font-family: $LatoBold;
+
+  @include respond-to-min($resp_step_2) {
+    margin-bottom: 25px;
+  }
 }
 
 .legend_item {
@@ -2626,23 +2708,32 @@ $tab_h: 113px;
 }
 
 .popup_tip {
-  font-size: 12px;
-  margin: 30px 0;
+  font-size: 14px;
+  padding: 30px 0;
   text-align: center;
-
-  @include respond-to-min($resp_step_2) {
-    margin: 50px 0;
-  }
+  background: #f2f2f2;
 }
 
 .strategy_charts {
   @extend %clearfix;
   display: none;
-  margin-bottom: 30px;
+  position: relative;
 
-  > li {
+  @include respond-to-min($resp_step_2) {
+    border: solid #dadada;
+    border-width: 1px 0;
 
-    @include respond-to-min($resp_step_2) {
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      border-left: 1px solid #dadada;
+    }
+
+    > li {
       float: left;
       width: 50%;
     }
@@ -2650,6 +2741,7 @@ $tab_h: 113px;
 }
 
 .strategy_chart {
+  padding-top: 20px;
   margin-bottom: 25px;
   text-align: center;
 
@@ -2657,6 +2749,10 @@ $tab_h: 113px;
     display: inline-block;
     vertical-align: top;
     max-width: 100%;
+  }
+
+  @include respond-to-min($resp_step_2) {
+    padding-top: 37px;
   }
 }
 

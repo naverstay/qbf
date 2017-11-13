@@ -7,8 +7,13 @@ mixin dev_head(page_title)
         meta(name="SKYPE_TOOLBAR", content="SKYPE_TOOLBAR_PARSER_COMPATIBLE")
         meta(name="apple-mobile-web-app-capable", content="yes")
         meta(name="format-detection", content="telephone=no")
-        //-style
-            include ../styles/main_global.css
+        link(rel="apple-touch-icon", sizes="180x180", href="apple-touch-icon.png")
+        link(rel="icon", type="image/png", sizes="32x32", href="favicon-32x32.png")
+        link(rel="icon", type="image/png", sizes="16x16", href="favicon-16x16.png")
+        link(rel="manifest", href="manifest.json")
+        link(rel="mask-icon", href="safari-pinned-tab.svg", color="#5bbad5")
+        meta(name="theme-color", content="#ffffff")
+
         link(rel='stylesheet', href="lightGallery-master/dist/css/lg-fb-comment-box.css", media='all')
         link(rel='stylesheet', href="lightGallery-master/dist/css/lg-transitions.css", media='all')
         link(rel='stylesheet', href="lightGallery-master/dist/css/lightgallery.css", media='all')
@@ -173,7 +178,7 @@ mixin slider_form()
         button.btn_v2.green_btn_2.action_btn.strategyBtn
           span.fw_b Получить фин.план
 
-mixin slide(img)
+mixin slide(img, text, author, post)
   .slide
     .slide_photo: .slide_photo_w
       img(src= img)
@@ -182,15 +187,15 @@ mixin slide(img)
       .slide_label как сохранить<br>и защитить капитал
 
       q.slide_quote(cite='#')
-        p С 2008 года QBF преумножает капитал своих клиентов — это неизменно, из года в год, несмотря на все кризисы и волнения на рынках.
+        p= text
 
-      .quote_author_name Голубев Алексей
-      .quote_author_post руководитель клиентского офиса г. Санкт-Петербург
+      .quote_author_name= author
+      .quote_author_post= post
 
 
 mixin popup()
   .popup_holder.calcResult()
-    .popup
+    .popup.mCSB: .popup_inner
       span.popup_close.popupClose
 
       .popup_caption Финансовый план
@@ -262,6 +267,7 @@ mixin popup()
 mixin scripts(index)
   script(src='js/jquery1.10.js')
   script(src='js/select2.js')
+  script(src='js/jquery.mCustomScrollbar.min.js')
   - if (index)
     script(src='js/d3.v4.min.js')
     script(src='js/slick.min.js')

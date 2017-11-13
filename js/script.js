@@ -23,7 +23,45 @@ var all_pins = [],
     scrollwheel: false,
     // navigationControl: false,
     mapTypeControl: false,
-    scaleControl: true
+    scaleControl: true,
+    styles: [
+      {
+        "featureType": "all",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "saturation": "-88"
+          }
+        ]
+      },
+      {
+        "featureType": "all",
+        "elementType": "labels.text",
+        "stylers": [
+          {
+            "saturation": "-62"
+          }
+        ]
+      },
+      {
+        "featureType": "poi.park",
+        "elementType": "geometry.fill",
+        "stylers": [
+          {
+            "color": "#caddda"
+          }
+        ]
+      },
+      {
+        "featureType": "water",
+        "elementType": "geometry.fill",
+        "stylers": [
+          {
+            "lightness": "-3"
+          }
+        ]
+      }
+    ]
   },
   wnd,
   resize_timer,
@@ -174,37 +212,38 @@ function callbackDialog() {
 }
 
 function initMainSlider() {
+  if ($('.mainSlider').length) {
+    mainSlider = $('.mainSlider').slick({
+      //variableWidth: true,
+      fade: true,
+      dots: true,
+      mobileFirst: true,
+      infinite: true,
+      arrows: true,
+      swipe: true,
+      accessibility: false,
+      //autoplay: true,
+      autoplay: false,
+      autoplaySpeed: 5000,
+      //centerMode: true,
+      //variableWidth: true,
+      speed: 600,
+      zIndex: 1,
+      initialSlide: 0,
+      //asNavFor: '.activeTabSlider, .productOptionSlider',
+      //centerPadding: '0',
+      slide: '.mainSlider .slide',
+      appendDots: '.sliderDots',
+      prevArrow: '.sliderControls .slide_prev',
+      nextArrow: '.sliderControls .slide_next',
 
-  mainSlider = $('.mainSlider').slick({
-    //variableWidth: true,
-    fade: true,
-    dots: true,
-    mobileFirst: true,
-    infinite: true,
-    arrows: false,
-    swipe: true,
-    accessibility: false,
-    autoplay: true,
-    autoplaySpeed: 5000,
-    //centerMode: true,
-    //variableWidth: true,
-    speed: 600,
-    zIndex: 1,
-    initialSlide: 0,
-    //asNavFor: '.activeTabSlider, .productOptionSlider',
-    //centerPadding: '0',
-    slide: '.mainSlider .slide',
-    appendDots: '.sliderDots',
-    //prevArrow: '.serviceSlider .slide_prev',
-    //nextArrow: '.serviceSlider .slide_next',
+      //variableWidth: true,
+      slidesToShow: 1,
 
-    //variableWidth: true,
-    slidesToShow: 1,
-
-    slidesToScroll: 1,
-    touchThreshold: 10
-  });
-
+      slidesToScroll: 1,
+      touchThreshold: 10
+    });
+  }
 }
 
 function createPin(target_map, name, latlng, icon, icon_hover, magic_top_offset) {
@@ -676,23 +715,25 @@ function loadChart() {
 }
 
 function initChart() {
-  var parseTime = d3.timeParse("%d/%m/%Y");
+  if ($("#main_chart").length) {
+    var parseTime = d3.timeParse("%d/%m/%Y");
 
-  function type(d, _, columns) {
-    d.date = parseTime(d.date);
-    for (var i = 1, n = columns.length, c; i < n; ++i) {
-      d[c = columns[i]] = +(d[c]).replace(/,/, '.');
+    function type(d, _, columns) {
+      d.date = parseTime(d.date);
+      for (var i = 1, n = columns.length, c; i < n; ++i) {
+        d[c = columns[i]] = +(d[c]).replace(/,/, '.');
+      }
+      return d;
     }
-    return d;
+
+    d3.tsv("data/all.tsv", type, function (error, data) {
+      if (error) throw error;
+
+      chart_data = data;
+
+      loadChart();
+    });
   }
-
-  d3.tsv("data/all.tsv", type, function (error, data) {
-    if (error) throw error;
-
-    chart_data = data;
-
-    loadChart();
-  });
 }
 
 function updateFade() {
@@ -783,6 +824,19 @@ function initValidation() {
   });
 }
 
+function initScrollBars() {
+
+  if ($('.mCSB').length) {
+    $('.mCSB').mCustomScrollbar({
+      documentTouchScroll: true,
+      mouseWheel: {
+        //preventDefault: true
+      },
+      theme: "dark",
+      scrollEasing: "linear"
+    });
+  }
+}
 
 function findStrategy(btn) {
 
@@ -824,18 +878,20 @@ function findStrategy(btn) {
   }, 2000);
 }
 
-function initFancybox() {
-  $('.diplomaList').lightGallery({
-    selector: '.diplomaLink',
-    speed: 200,
-    thumbnail: true,
-    zoom: true,
-    dynamic: false,
-    download: false,
-    scale: .5,
-    enableZoomAfter: 0,
-    actualSize: true
-  });
+function initGallery() {
+  if ($('.diplomaList').length) {
+    $('.diplomaList').lightGallery({
+      selector: '.diplomaLink',
+      speed: 200,
+      thumbnail: true,
+      zoom: true,
+      dynamic: false,
+      download: false,
+      scale: .5,
+      enableZoomAfter: 0,
+      actualSize: true
+    });
+  }
 }
 
 $(function ($) {
@@ -849,11 +905,13 @@ $(function ($) {
 
   //confirmDialogDefaults();
 
+  initScrollBars();
+
   initMainSlider();
 
   initChart();
 
-  initFancybox();
+  initGallery();
 
   body_var.delegate('.select2', 'change', function (e) {
     $(this).validationEngine('validate');
@@ -864,7 +922,11 @@ $(function ($) {
     if ($(this).validationEngine('validate')) {
       findStrategy($('.strategyBtn'));
     }
-
+  }).delegate('.calcResult', 'click', function (e) {
+    if ($(e.target).hasClass('calcResult')) {
+      $(e.target).hide();
+    }
+    return false;
   }).delegate('.popupClose', 'click', function () {
     $('.calcResult').hide();
     return false;
