@@ -2,11 +2,11 @@
 
 @font-face {
   font-family: 'qbf_icons';
-  src:  url('#{$icomoon-font-path}/qbf_icons.eot?qo6jzg');
-  src:  url('#{$icomoon-font-path}/qbf_icons.eot?qo6jzg#iefix') format('embedded-opentype'),
-    url('#{$icomoon-font-path}/qbf_icons.ttf?qo6jzg') format('truetype'),
-    url('#{$icomoon-font-path}/qbf_icons.woff?qo6jzg') format('woff'),
-    url('#{$icomoon-font-path}/qbf_icons.svg?qo6jzg#qbf_icons') format('svg');
+  src:  url('#{$icomoon-font-path}/qbf_icons.eot?x2n8y6');
+  src:  url('#{$icomoon-font-path}/qbf_icons.eot?x2n8y6#iefix') format('embedded-opentype'),
+    url('#{$icomoon-font-path}/qbf_icons.ttf?x2n8y6') format('truetype'),
+    url('#{$icomoon-font-path}/qbf_icons.woff?x2n8y6') format('woff'),
+    url('#{$icomoon-font-path}/qbf_icons.svg?x2n8y6#qbf_icons') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -29,6 +29,16 @@
 .i-info {
   &:before {
     content: $i-info;
+  }
+}
+.i-chevron-thin-right {
+  &:before {
+    content: $i-chevron-thin-right;
+  }
+}
+.i-chevron-thin-left {
+  &:before {
+    content: $i-chevron-thin-left;
   }
 }
 .i-chevron-down {

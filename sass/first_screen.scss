@@ -139,6 +139,10 @@ body {
 .slider_section {
   background: #f4f4f4;
   padding-top: 65px;
+
+  .section_inner {
+    position: relative;
+  }
 }
 
 .main_slider {
@@ -200,13 +204,19 @@ body {
 
 .slider_controls {
   @extend %clearfix;
+  position: relative;
+  z-index: 4;
 
   @include respond-to-min($resp_step_1) {
+    margin-top: -40px;
+  }
+
+  @include respond-to-min($resp_step_3) {
     position: absolute;
-    //bottom: 20px;
-    bottom: 5px;
+    top: 43%;
+    right: 0;
     left: 0;
-    z-index: 4;
+    margin-top: 0;
   }
 }
 
@@ -219,8 +229,8 @@ body {
   border: 1px solid #dadada;
 
   &:before {
+    @include transition_all(color .3s);
     @extend %icon_pseudo;
-    content: $i-chevron-down;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -232,16 +242,58 @@ body {
     color: #585858;
   }
 
+  &:hover {
+    &:before {
+      color: $gl_green;
+    }
+  }
+
   &.slide_next {
-    @include transform_rotate(-90);
+    &:before {
+      content: $i-chevron-thin-right;
+    }
   }
 
   &.slide_prev {
-    @include transform_rotate(90);
+    &:before {
+      content: $i-chevron-thin-left;
+    }
   }
 
   + .slide_control {
     margin-left: -1px;
+  }
+
+  @include respond-to-min($resp_step_2) {
+    position: absolute;
+    top: 0;
+    border: none;
+
+    &:before {
+      font-size: 36px;
+      width: 36px;
+      height: 36px;
+      margin: -18px 0 0 -18px;
+    }
+
+    &.slide_next {
+      right: 0;
+    }
+
+    &.slide_prev {
+      left: 0;
+    }
+  }
+
+  @include respond-to-min($resp_step_3) {
+
+    &.slide_next {
+      right: -110px;
+    }
+
+    &.slide_prev {
+      left: -110px;
+    }
   }
 }
 
@@ -660,6 +712,10 @@ $tab_h: 113px;
   }
 }
 
+.strategy_info {
+  display: none;
+}
+
 .features_section {
   background: #383b41;
   padding: 40px 0 5px;
@@ -670,7 +726,6 @@ $tab_h: 113px;
 }
 
 .features_list {
-  @extend %clearfix;
   margin-left: -20px;
 
   li {
@@ -690,10 +745,12 @@ $tab_h: 113px;
   }
 
   @include respond-to-min($resp_step_3) {
-    margin-right: -10%;
+    @include flex_block(row nowrap, space-between, stretch);
+    margin-right: 0;
 
     li {
-      width: 20%;
+      width: auto;
+      max-width: 25%;
     }
   }
 }
@@ -708,7 +765,8 @@ $tab_h: 113px;
 
   p {
     margin-bottom: 35px;
-    font: 18px $LatoBold;
+    font: 18px/1.25 $LatoBold;
+    min-height: 2.4em;
   }
 
   .fz_20 {
@@ -939,7 +997,11 @@ $tab_h: 113px;
 
   p {
     font: 15px $LatoLight;
-    opacity: .7;
+    margin-bottom: 10px;
+
+    span {
+      opacity: .7;
+    }
   }
 
   @include respond-to-min($resp_step_2) {
@@ -972,6 +1034,11 @@ $tab_h: 113px;
       margin-bottom: 28px;
     }
   }
+}
+
+.respond {
+  color: #fff;
+  display: none;
 }
 
 .callback_title {
@@ -1518,6 +1585,10 @@ $tab_h: 113px;
 
 .charity_link {
   color: $gl_green;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .join_section {
@@ -1730,7 +1801,7 @@ $tab_h: 113px;
   @include respond-to-min($resp_step_2) {
     display: table;
     width: 100%;
-    table-layout: fixed;
+    //table-layout: fixed;
     border-collapse: collapse;
 
     li {
@@ -1761,6 +1832,10 @@ $tab_h: 113px;
   img {
     display: inline-block;
     vertical-align: top;
+    max-width: 100%;
+  }
+
+  iframe {
     max-width: 100%;
   }
 }
@@ -2239,6 +2314,15 @@ $tab_h: 113px;
     clear: both;
     float: none;
     padding-top: 25px;
+  }
+}
+
+.dev_link {
+  @include transition_all(transform .3s);
+  color: $default_t_color;
+
+  &:hover {
+    color: $gl_green;
   }
 }
 

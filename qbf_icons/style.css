@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'qbf_icons';
-  src:  url('fonts/qbf_icons.eot?qo6jzg');
-  src:  url('fonts/qbf_icons.eot?qo6jzg#iefix') format('embedded-opentype'),
-    url('fonts/qbf_icons.ttf?qo6jzg') format('truetype'),
-    url('fonts/qbf_icons.woff?qo6jzg') format('woff'),
-    url('fonts/qbf_icons.svg?qo6jzg#qbf_icons') format('svg');
+  src:  url('fonts/qbf_icons.eot?x2n8y6');
+  src:  url('fonts/qbf_icons.eot?x2n8y6#iefix') format('embedded-opentype'),
+    url('fonts/qbf_icons.ttf?x2n8y6') format('truetype'),
+    url('fonts/qbf_icons.woff?x2n8y6') format('woff'),
+    url('fonts/qbf_icons.svg?x2n8y6#qbf_icons') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -26,6 +26,12 @@
 
 .i-info:before {
   content: "\e903";
+}
+.i-chevron-thin-right:before {
+  content: "\e904";
+}
+.i-chevron-thin-left:before {
+  content: "\e905";
 }
 .i-chevron-down:before {
   content: "\e900";

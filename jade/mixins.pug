@@ -7,11 +7,11 @@ mixin dev_head(page_title)
         meta(name="SKYPE_TOOLBAR", content="SKYPE_TOOLBAR_PARSER_COMPATIBLE")
         meta(name="apple-mobile-web-app-capable", content="yes")
         meta(name="format-detection", content="telephone=no")
-        link(rel="apple-touch-icon", sizes="180x180", href="apple-touch-icon.png")
-        link(rel="icon", type="image/png", sizes="32x32", href="favicon-32x32.png")
-        link(rel="icon", type="image/png", sizes="16x16", href="favicon-16x16.png")
-        link(rel="manifest", href="manifest.json")
-        link(rel="mask-icon", href="safari-pinned-tab.svg", color="#5bbad5")
+        link(rel="apple-touch-icon", sizes="180x180", href="/apple-touch-icon.png")
+        link(rel="icon", type="image/png", sizes="32x32", href="/favicon-32x32.png")
+        link(rel="icon", type="image/png", sizes="16x16", href="/favicon-16x16.png")
+        link(rel="manifest", href="/manifest.json")
+        link(rel="mask-icon", href="/safari-pinned-tab.svg", color="#5bbad5")
         meta(name="theme-color", content="#ffffff")
 
         link(rel='stylesheet', href="lightGallery-master/dist/css/lg-fb-comment-box.css", media='all')
@@ -30,10 +30,10 @@ mixin header()
     .section_inner.clearfix
       ul.main_menu
         li.menu_item
-          a.menu_link(href='www.qbfin.ru')
+          a.menu_link(href='http://qbfin.ru')
             span.link_text www.qbfin.ru
         li.menu_item
-          a.btn_v1.cabinet_btn.green_btn(href='#')
+          a.btn_v1.cabinet_btn.green_btn(href='https://client.qbfin.ru/auth/login')
             span.fw_b Личный кабинет
 
       .logo_block
@@ -50,20 +50,21 @@ mixin callback_holder(anim)
     .callback_info
       h3.callback_title(class = anim ? 'fadeMeUp' : '') Получите
       h4.callback_tip(class = anim ? 'fadeMeUp' : '') персональную консультацию по стратегиям.
-      p(class = anim ? 'fadeMeUp' : '') Мы перезвоним вам в течение 20-ти минут.
+      p(class = anim ? 'fadeMeUp' : ''): span Мы перезвоним вам в течение 20-ти минут.
+      p.respond: span Сообщение отправлено
 
     .callback_form(class = anim ? 'fadeMeUp' : '')
-      form(action='#')
+      form.sendOrder(action='mailer.php' method='post')
         .f_cell
           .input_w
-            input.f_input_v1(placeholder='Как вас зовут')
+            input.f_input_v1(placeholder='Как вас зовут' name='name')
         .f_cell
           .input_w
-            input.f_input_v1(placeholder='Телефон или почта')
+            input.f_input_v1(placeholder='Телефон или почта' name='phone')
 
         .f_cell
           label.check_v1
-            input.inp_hidden(type='checkbox')
+            input.agreement.inp_hidden(type='checkbox' name='agreement')
             span.check_text Я даю свое согласие на обработку персональных данных
 
         .f_cell
@@ -216,7 +217,7 @@ mixin popup()
 
         li
           .strategy_chart
-            img(src='i/st_1.jpg')
+            img(src='i/chart1.jpg')
           .strategy_legend
             p &mdash; Доходность стратегии с 2014 года, %
 
@@ -238,7 +239,7 @@ mixin popup()
 
         li
           .strategy_chart
-            img(src='i/st_2.jpg')
+            img(src='i/chart2.jpg')
           .strategy_legend
             p &mdash; Доходность стратегии с 2014 года, %
 
@@ -254,7 +255,7 @@ mixin popup()
 
         li
           .strategy_chart
-            img(src='i/st_3.jpg')
+            img(src='i/chart3.jpg')
           .strategy_legend
             p &mdash; Доходность стратегии с 2014 года, %
 
@@ -263,6 +264,7 @@ mixin popup()
       .popup_tip Рассчитанный финансовый план не является окончательным и может быть изменен после персональной консультации.
 
       +callback_holder()
+
 
 mixin scripts(index)
   script(src='js/jquery1.10.js')

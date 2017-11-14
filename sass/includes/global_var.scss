@@ -781,6 +781,20 @@ $placeholder_color: #fff;
   }
 }
 
+@mixin keyframe_sub($animation_name) {
+  @-webkit-keyframes #{$animation_name} {
+    @content;
+  }
+
+  @-moz-keyframes #{$animation_name} {
+    @content;
+  }
+
+  @keyframes #{$animation_name} {
+    @content;
+  }
+}
+
 @mixin keyframe($animation_name, $check : false) {
   @if $check == false {
     @if $all == true {
@@ -788,20 +802,6 @@ $placeholder_color: #fff;
     }
   } @else {
     @include keyframe_sub($animation_name);
-  }
-}
-
-@mixin keyframe_sub($animation_name) {
-  @-webkit-keyframes $animation_name {
-    @content;
-  }
-
-  @-moz-keyframes $animation_name {
-    @content;
-  }
-
-  @keyframes $animation_name {
-    @content;
   }
 }
 

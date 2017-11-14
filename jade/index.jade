@@ -13,16 +13,16 @@ html(lang='ru')
             .section_inner.clearfix
               .main_slider
                 .mainSlider
-                  +slide('i/manager_4.png', 'В компании умеют находить решения в самых сложных экономических условиях и защищать интересы вашей семьи, используя максимум инструментов. Например, квантовые инвестиции — это новая реальность премиум класса: быстрее, ярче, доходнее', 'Пахомов Владимир Сергеевич', 'директор филиальной сети')
-                  +slide('i/manager.png', 'С 2008 года QBF приумножает капитал своих клиентов — это неизменно, из года в год, несмотря на все кризисы и волнения на рынках. В результате претензии и недовольство стали для нас чем-то фантастическим', 'Голубев Алексей Сергеевич', 'руководитель клиентского офиса')
-                  +slide('i/manager_3.png', 'Европейский финансовый сервис во всем своем многообразии — это, прежде всего, проверенный временем и миллионами клиентов подход. Никакого экспериментаторства и волюнтаризма — только честность, ответственность и профессионализм', 'Геворгян Геворг Шекспирович', 'руководитель отдела инвестиционных услуг')
-                  +slide('i/manager_2.png', 'Вопрос денег — это вопрос личный, приватный, поэтому защита инвестиций для QBF означает очень деликатный процесс, сопряженный с индивидуальным подходом, предельной честностью и заслуженным доверием', 'Рыков Дмитрий Иванович', 'руководитель филиала Тюмен')
-                  +slide('i/manager_1.png', 'Сформированная за годы работы команда экспертов взаимодействует не с обезличенным вкладчиком, а с живым человеком, капиталы которого надо защитить и приумножить', 'Исхаков Евгений Валерьевич', 'руководитель филиала Екатеринбург')
+                  +slide('i/manager_4.png', 'В компании умеют находить решения в самых сложных экономических условиях и защищать интересы вашей семьи, используя максимум инструментов', 'Пахомов Владимир Сергеевич', 'директор филиальной сети')
+                  +slide('i/manager.png', 'QBF приумножает капитал своих клиентов — это неизменно, из года в год, несмотря на все кризисы и волнения на рынках.', 'Голубев Алексей Сергеевич', 'руководитель клиентского офиса')
+                  +slide('i/manager_3.png', 'Европейский финансовый сервис во всем своем многообразии — это, прежде всего, проверенный временем и тысячами клиентов подход.', 'Геворгян Геворг Шекспирович', 'руководитель отдела инвестиционных услуг')
+                  +slide('i/manager_2.png', 'Вопрос денег — это вопрос личный, приватный, поэтому защита инвестиций для QBF означает очень деликатный процесс, сопряженный с индивидуальным подходом, предельной честностью и заслуженным доверием.', 'Рыков Дмитрий Иванович', 'руководитель филиала Тюмен')
+                  +slide('i/manager_1.png', 'Сформированная за годы работы команда экспертов взаимодействует не с обезличенным вкладчиком, а с живым человеком', 'Исхаков Евгений Валерьевич', 'руководитель филиала Екатеринбург')
 
                 .sliderDots.slider_dots
-                .sliderControls.slider_controls
-                  .slide_prev.slide_control
-                  .slide_next.slide_control
+              .sliderControls.slider_controls
+                .slide_prev.slide_control
+                .slide_next.slide_control
 
               .get_plan_form
                 +slider_form()
@@ -64,107 +64,236 @@ html(lang='ru')
                               input.inp_hidden.chartToggle(type='checkbox' data-chart='.st_2' checked)
                               span.check_text: span Высокодоходная
 
-          .features_section
+          // average
+          .strategy_info.strategyInfo
+            .features_section
+              .section_inner
+                ul.features_list.fadeMeUp
+                  li
+                    .feature_item
+                      .feature_img
+                        img(src='svg/amount.svg')
+                      p Сумма<br>инвестирования
+                      .feature_tip
+                        span.fz_20 от
+                        span.fz_50  1 800
+                        span.fz_20  тыс. Р
+
+                  li
+                    .feature_item
+                      .feature_img
+                        img(src='svg/term.svg')
+                      p Срок<br>инвестирования
+                      .feature_tip
+                        span.fz_50  12
+                        span.fz_20  мес
+
+                  li
+                    .feature_item
+                      .feature_img
+                        img(src='svg/income.svg')
+                      p Целевая<br>доходность
+                      .feature_tip
+                        span.fz_50  16-20
+                        span.fz_20  %
+
+                  li
+                    .feature_item
+                      .feature_img
+                        img(src='svg/liquidity.svg')
+                      p Ликвидность
+                      .feature_tip
+                        span.fz_50  20
+                        span.fz_20  дней
+
+                  li
+                    .feature_item
+                      .feature_img
+                        img(src='svg/remuneration.svg')
+                      p Вознаграждение<br>за успех
+                      .feature_tip
+                        span.fz_50  30
+                        span.fz_20  %
+
             .section_inner
-              ul.features_list.fadeMeUp
-                li
-                  .feature_item
-                    .feature_img
-                      img(src='svg/amount.svg')
-                    p Сумма<br>инвестирования
-                    .feature_tip
-                      span.fz_20 от
-                      span.fz_50  1 800
-                      span.fz_20  тыс. Р
+              .stock_block
+                .stock_caption.fadeMeUp Акции американских эмитентов — основной инструмент средневзвешенного портфеля.
 
-                li
-                  .feature_item
-                    .feature_img
-                      img(src='svg/term.svg')
-                    p Срок<br>инвестирования
-                    .feature_tip
-                      span.fz_50  12
-                      span.fz_20  мес
+                .stock_box.fadeMeUp
+                  p В рамках портфеля реализуются стратегии с оптимальным соотношением доходности и риска. В результате рост стоимости портфеля должен опередить динамику индекса S&P500.
 
-                li
-                  .feature_item
-                    .feature_img
-                      img(src='svg/income.svg')
-                    p Целевая<br>доходность
-                    .feature_tip
-                      span.fz_50  16-20
-                      span.fz_20  %
+                .stock_box.fadeMeUp
+                  p Структура портфеля позволяет сохранять высокий уровень надежности и ликвидности инвестиций практически при любой рыночной конъюнктуре.
 
-                li
-                  .feature_item
-                    .feature_img
-                      img(src='svg/liquidity.svg')
-                    p Ликвидность
-                    .feature_tip
-                      span.fz_50  20
-                      span.fz_20  дней
+              .drivers_block
+                .drivers_caption.fadeMeUp Драйверы роста
 
-                li
-                  .feature_item
-                    .feature_img
-                      img(src='svg/remuneration.svg')
-                    p Вознаграждение<br>за успех
-                    .feature_tip
-                      span.fz_50  30
-                      span.fz_20  %
+                ul.drivers_list
+                  li.fadeMeUp: .driver_img
+                    img(src='i/driver_1.png')
+                    .driver_popup
+                      h3 Apple Inc. – long
+                      p Apple Inc. – американский производитель персональных и планшетных компьютеров, аудиоплееров, телефонов и программного обеспечения. Основным продуктом компании является линейка смартфонов iPhone, продажи которых в 2016 году достигли 207 млн. шт. В начале сентября компания Apple Inc. проведет презентацию нового iPhone, также инвесторы ждут от корпорации презентации и других технологических новинок.
+                  li.fadeMeUp: .driver_img
+                    img(src='i/driver_2.png')
+                    .driver_popup
+                      h3 General Motors Company – long
+                      p General Motors Company – один из старейших автоконцернов в США, владеющий такими автомобильными брендами как: Buick, Cadillac, Chevrolet, GMC, Holden, Opel и Vauxhall. Финансовые результаты компании в 2016 году и I квартале 2017 года существенно улучшились благодаря подъему продаж в Североамериканском регионе из-за снижения присутствия на рынке автомобилей Volkswagen. Одновременно с этим, компания GM ведет разработку собственного электрокара, а электромобили стремительно набирают популярность в США. В дополнение к данным факторам, котировки корпорации поддержит масштабная программа выкупа акций на общую сумму $14 млрд.
+                  li.fadeMeUp: .driver_img
+                    img(src='i/driver_3.png')
+                    .driver_popup
+                      h3 The Walt Disney Company – long
+                      p The Walt Disney Corporation – американская компания, которая является одним из мировых лидеров индустрии развлечений. Бизнес корпорации включает кино- и анимационную студию, тематические парки, аквапарки и телерадиовещание. Ключевыми драйверами для покупки акций компании выступают расширение индустрии развлечений и масс-меда, успехи фильмов мировых франшиз, а также результаты от открытия нового тематического парка развлечений в Шанхае.
+                  li.fadeMeUp: .driver_img
+                    img(src='i/driver_4.png')
+                    .driver_popup
+                      h3 Constellation Brands Inc. – long
+                      p Constellation Brands Inc. – американский производитель пивных напитков и вина, владеющий одними из самых популярных в США брендов пива: Corona и Modelo. Компания активно наращивает долю рынка в ключевых сегментах. Способствует этому агрессивная продуктовая политика: менеджмент активно покупает местных производителей крафтового пива, расширяя продуктовую линейку. Помимо улучшения показателей прибыли, корпорация объявила о начале перехода с этапа рыночной экспансии на увеличение рентабельности бизнеса. В совокупности данные факторы делают бумаги корпорации привлекательными для покупки.
+                  li.fadeMeUp: .driver_img
+                    img(src='i/driver_5.png')
+                    .driver_popup
+                      h3 McDonald’s Corp. – short
+                      p McDonald`s Inc. – это одна из крупнейших международных сетей быстрого питания, которая имеет рестораны в более чем 120 странах. Из 36,5 тыс. ресторанов более 30 тыс. работают по франшизе. Мы ожидаем, что пересмотр торговых соглашений внутри ЕС может спровоцировать увеличение издержек компании и сокращение рентабельности бизнеса, к тому же в Европе и США растет популярность здорового питания, в связи с чем сеть McDonald`s будет снижать темпы роста.
+                  li.fadeMeUp: .driver_img
+                    img(src='i/driver_6.png')
+                    .driver_popup
+                      h3 Tableau Software, Inc. – short
+                      p Tableau Software Inc. занимается разработкой программного обеспечения для бизнес- аналитики с 2003 года для всех основных современных платформ, от мобильного телефона до персонального компьютера. Темпы роста выручки компании снизились с 70% г/г в 2014 до 20% г/г в 2016 году после прохождения активного этапа подъема популярности сервиса. По нашим прогнозам, темпы роста выручки корпорации продолжат снижаться в 2017 году на фоне выхода на рынок Big Data компании Amazon и улучшения аналогичных сервисов у конкурентов IBM, Microsoft, Oralce.
+                  li.fadeMeUp: .driver_img
+                    img(src='i/driver_7.png')
+                    .driver_popup
+                      h3 Alphabet Inc. – long
+                      p Alphabet Inc. – американский холдинг, которому принадлежит поисковая система Google, видеохостинг YouTube, операционная система для смартфонов Android и др. Корпорация была образована в октябре 2015 года путем реорганизации компании Google Inc. Инвестиционная привлекательность бумаг выросла на фоне ожидаемого выхода сервиса YouTube в прибыль. Повышение доходов планируется за счет запуска в апреле платной стриминговой платформы YouTubeTV, уникальность которой заключается в возможности просмотра платных кабельных каналов для ТВ: ABC, CBS, NBC и Fox, ранее требовавших отдельных подписок.
+
+                p.fadeMeUp Идеи актуальны по состоянию на I полугодие 2017 года.
+
+
+          // konservative
+          .strategy_info.strategyInfo
+            .features_section
+              .section_inner
+                ul.features_list.fadeMeUp
+                  li
+                    .feature_item
+                      .feature_img
+                        img(src='svg/amount.svg')
+                      p Сумма<br>инвестирования
+                      .feature_tip
+                        span.fz_20 от
+                        span.fz_50  600
+                        span.fz_20  тыс руб<br>(мин. 1 лот)
+
+                  li
+                    .feature_item
+                      .feature_img
+                        img(src='svg/term.svg')
+                      p Срок<br>инвестирования
+                      .feature_tip
+                        span.fz_20 от
+                        span.fz_50  12
+                        span.fz_20  мес
+
+                  li
+                    .feature_item
+                      .feature_img
+                        img(src='svg/income.svg')
+                      p Целевая<br>доходность
+                      .feature_tip
+                        span.fz_50  7-8%
+                        span.fz_20  %
+
+                  li
+                    .feature_item
+                      .feature_img
+                        img(src='svg/liquidity.svg')
+                      p Ликвидность
+                      .feature_tip
+                        span.fz_50  20
+                        span.fz_20  дней
+
+                  li
+                    .feature_item
+                      .feature_img
+                        img(src='svg/remuneration.svg')
+                      p Вознаграждение<br>за успех
+                      .feature_tip
+                        span.fz_50  10
+                        span.fz_20  % за успех свыше 5%;
+                        span.fz_50  1
+                        span.fz_20  % за управление
+
+            .section_inner
+              .stock_block
+                .stock_caption.fadeMeUp Акции американских эмитентов — основной инструмент средневзвешенного портфеля.
+
+                .stock_box.fadeMeUp
+                  p Консервативная стратегия является аналогом банковского депозита, однако приносит доход в 2-4 раза больше при сопоставимом уровне риска. Основу стратегии составляют еврооблигации крупнейших высоконадежных российских эмитентов и облигации первоклассных американских эмитентов.
+
+                .stock_box.fadeMeUp
+                  p Данная стратегия позволяет получать стабильный доход от вложения в надежные облигации, имеющие низкий потенциал снижения от негативных факторов конъюнктуры рынка. Инвестор получает как фиксированную доходность в виде купона, так и прибыль на разнице между ценой покупки облигации и ценой продажи.
+
+          // high
+          .strategy_info.strategyInfo
+            .features_section
+              .section_inner
+                ul.features_list.fadeMeUp
+                  li
+                    .feature_item
+                      .feature_img
+                        img(src='svg/amount.svg')
+                      p Сумма<br>инвестирования
+                      .feature_tip
+                        span.fz_20 от
+                        span.fz_50  1 800
+                        span.fz_20  тыс руб
+
+                  li
+                    .feature_item
+                      .feature_img
+                        img(src='svg/term.svg')
+                      p Срок<br>инвестирования
+                      .feature_tip
+                        span.fz_50  12
+                        span.fz_20  мес
+
+                  li
+                    .feature_item
+                      .feature_img
+                        img(src='svg/income.svg')
+                      p Целевая<br>доходность
+                      .feature_tip
+                        span.fz_50  20-30
+                        span.fz_20  %
+
+                  li
+                    .feature_item
+                      .feature_img
+                        img(src='svg/liquidity.svg')
+                      p Ликвидность
+                      .feature_tip
+                        span.fz_50  20
+                        span.fz_20  дней
+
+                  li
+                    .feature_item
+                      .feature_img
+                        img(src='svg/remuneration.svg')
+                      p Вознаграждение<br>за успех
+                      .feature_tip
+                        span.fz_50  30
+                        span.fz_20  % за успех
+
+            .section_inner
+              .stock_block
+                .stock_caption.fadeMeUp Акции американских эмитентов — основной инструмент средневзвешенного портфеля.
+
+                .stock_box.fadeMeUp
+                  p Высокодоходная стратегия позволяет инвестору получить существенную прибыль при принятии на себя повышенного риска. В эпоху цифровых технологий большая часть торгов на американских биржах проводится роботами, поскольку они могут уловить рыночные колебания, основанные на алгоритме торговли и принести существенную прибыль инвестору.
+
+                .stock_box.fadeMeUp
+                  p Высокодоходная стратегия предполагает диверсификацию: низкорискованные нейтральные к рынку арбитраж и парный трейдинг обеспечивает защиту портфеля, а статистические стратегии и скальпинг приносят высокий доход инвестору.
 
           .section_inner
-            .stock_block
-              .stock_caption.fadeMeUp Акции американских эмитентов — основной инструмент средневзвешенного портфеля.
-
-              .stock_box.fadeMeUp
-                p В рамках портфеля реализуются стратегии с оптимальным соотношением доходности и риска. В результате рост стоимости портфеля должен опередить динамику индекса S&P500.
-
-              .stock_box.fadeMeUp
-                p Структура портфеля позволяет сохранять высокий уровень надежности и ликвидности инвестиций практически при любой рыночной конъюнктуре.
-
-            .drivers_block
-              .drivers_caption.fadeMeUp Драйверы роста
-
-              ul.drivers_list
-                li.fadeMeUp: .driver_img
-                  img(src='i/driver_1.png')
-                  .driver_popup
-                    h3 Apple Inc. – long
-                    p Apple Inc. – американский производитель персональных и планшетных компьютеров, аудиоплееров, телефонов и программного обеспечения. Основным продуктом компании является линейка смартфонов iPhone, продажи которых в 2016 году достигли 207 млн. шт. В начале сентября компания Apple Inc. проведет презентацию нового iPhone, также инвесторы ждут от корпорации презентации и других технологических новинок.
-                li.fadeMeUp: .driver_img
-                  img(src='i/driver_2.png')
-                  .driver_popup
-                    h3 General Motors Company – long
-                    p General Motors Company – один из старейших автоконцернов в США, владеющий такими автомобильными брендами как: Buick, Cadillac, Chevrolet, GMC, Holden, Opel и Vauxhall. Финансовые результаты компании в 2016 году и I квартале 2017 года существенно улучшились благодаря подъему продаж в Североамериканском регионе из-за снижения присутствия на рынке автомобилей Volkswagen. Одновременно с этим, компания GM ведет разработку собственного электрокара, а электромобили стремительно набирают популярность в США. В дополнение к данным факторам, котировки корпорации поддержит масштабная программа выкупа акций на общую сумму $14 млрд.
-                li.fadeMeUp: .driver_img
-                  img(src='i/driver_3.png')
-                  .driver_popup
-                    h3 The Walt Disney Company – long
-                    p The Walt Disney Corporation – американская компания, которая является одним из мировых лидеров индустрии развлечений. Бизнес корпорации включает кино- и анимационную студию, тематические парки, аквапарки и телерадиовещание. Ключевыми драйверами для покупки акций компании выступают расширение индустрии развлечений и масс-меда, успехи фильмов мировых франшиз, а также результаты от открытия нового тематического парка развлечений в Шанхае.
-                li.fadeMeUp: .driver_img
-                  img(src='i/driver_4.png')
-                  .driver_popup
-                    h3 Constellation Brands Inc. – long
-                    p Constellation Brands Inc. – американский производитель пивных напитков и вина, владеющий одними из самых популярных в США брендов пива: Corona и Modelo. Компания активно наращивает долю рынка в ключевых сегментах. Способствует этому агрессивная продуктовая политика: менеджмент активно покупает местных производителей крафтового пива, расширяя продуктовую линейку. Помимо улучшения показателей прибыли, корпорация объявила о начале перехода с этапа рыночной экспансии на увеличение рентабельности бизнеса. В совокупности данные факторы делают бумаги корпорации привлекательными для покупки.
-                li.fadeMeUp: .driver_img
-                  img(src='i/driver_5.png')
-                  .driver_popup
-                    h3 McDonald’s Corp. – short
-                    p McDonald`s Inc. – это одна из крупнейших международных сетей быстрого питания, которая имеет рестораны в более чем 120 странах. Из 36,5 тыс. ресторанов более 30 тыс. работают по франшизе. Мы ожидаем, что пересмотр торговых соглашений внутри ЕС может спровоцировать увеличение издержек компании и сокращение рентабельности бизнеса, к тому же в Европе и США растет популярность здорового питания, в связи с чем сеть McDonald`s будет снижать темпы роста.
-                li.fadeMeUp: .driver_img
-                  img(src='i/driver_6.png')
-                  .driver_popup
-                    h3 Tableau Software, Inc. – short
-                    p Tableau Software Inc. занимается разработкой программного обеспечения для бизнес- аналитики с 2003 года для всех основных современных платформ, от мобильного телефона до персонального компьютера. Темпы роста выручки компании снизились с 70% г/г в 2014 до 20% г/г в 2016 году после прохождения активного этапа подъема популярности сервиса. По нашим прогнозам, темпы роста выручки корпорации продолжат снижаться в 2017 году на фоне выхода на рынок Big Data компании Amazon и улучшения аналогичных сервисов у конкурентов IBM, Microsoft, Oralce.
-                li.fadeMeUp: .driver_img
-                  img(src='i/driver_7.png')
-                  .driver_popup
-                    h3 Alphabet Inc. – long
-                    p Alphabet Inc. – американский холдинг, которому принадлежит поисковая система Google, видеохостинг YouTube, операционная система для смартфонов Android и др. Корпорация была образована в октябре 2015 года путем реорганизации компании Google Inc. Инвестиционная привлекательность бумаг выросла на фоне ожидаемого выхода сервиса YouTube в прибыль. Повышение доходов планируется за счет запуска в апреле платной стриминговой платформы YouTubeTV, уникальность которой заключается в возможности просмотра платных кабельных каналов для ТВ: ABC, CBS, NBC и Fox, ранее требовавших отдельных подписок.
-
-              p.fadeMeUp Идеи актуальны по состоянию на I полугодие 2017 года.
-
             +callback_holder(true)
 
             .news_holder
@@ -193,11 +322,10 @@ html(lang='ru')
 
             .mission_holder
               .mission_block
-                h3.mission_title.fadeMeUp Мы защищаем капиталы с&nbsp;2008 года и показываем положительный результат.
-                p.fadeMeUp Доверьтесь многолетнему опыту работы команды наших профессионалов.
-                //-p.fadeMeUp Компания не собирается останавливаться на достигнутом — нас ждут новые рынки, новые возможности и сердца новых клиентов.
+                h3.mission_title.fadeMeUp Доверьтесь многолетнему опыту работы команды наших профессионалов.
+                p.fadeMeUp Компания не собирается останавливаться на достигнутом — нас ждут новые рынки, новые возможности и сердца новых клиентов.
 
-                //-p.fadeMeUp Мы принимаем на себя разумные риски и дает возможность бизнесу любого масштаба расти и развиваться.
+                p.fadeMeUp Мы принимаем на себя разумные риски и дает возможность бизнесу любого масштаба расти и развиваться.
 
               .mission_image
                 .mission_image_w.fadeMeUp
@@ -232,6 +360,8 @@ html(lang='ru')
                       img(src='svg/incomes.svg')
                     h4.benefits_caption.fadeMeUp Доходность
                     p Уже почти десятилетие инвесторы компании получают доход, за всю историю не было ни одного убыточного года.
+
+
 
           .recognition_section: .recognition_holder
             .recognition_block
@@ -292,7 +422,7 @@ html(lang='ru')
                     .charity_caption Верю в чудо
                     p Калининград
                     p
-                      a.charity_link(href='#') www.deti39.com
+                      a.charity_link(target='_blank' href='http://www.deti39.com') www.deti39.com
                 li.fadeMeUp
                   .charity_item
                     .charity_img
@@ -300,7 +430,7 @@ html(lang='ru')
                     .charity_caption Свои дети
                     p Екатеринбург
                     p
-                      a.charity_link(href='#') www.svoi-deti.ru
+                      a.charity_link(target='_blank' href='http://www.svoi-deti.ru') www.svoi-deti.ru
                 li.fadeMeUp
                   .charity_item
                     .charity_img
@@ -308,7 +438,7 @@ html(lang='ru')
                     .charity_caption Сотвори из жизни шедевр
                     p Тюмень
                     p
-                      a.charity_link(href='#') fondshedevr.ru
+                      a.charity_link(target='_blank' href='http://fondshedevr.ru') fondshedevr.ru
                 li.fadeMeUp
                   .charity_item
                     .charity_img
@@ -316,7 +446,7 @@ html(lang='ru')
                     .charity_caption Острова
                     p Санкт-Петербург
                     p
-                      a.charity_link(href='#') www.ostrovaru.com
+                      a.charity_link(target='_blank' href='http://www.ostrovaru.com') www.ostrovaru.com
 
               .charity_footer: p.fadeMeUp: a(href='info.html') Раскрытие информации
 
@@ -407,17 +537,25 @@ html(lang='ru')
               ul.widget_holder
                 li
                   .widget_box
-                    img(src='i/insta.jpg')
+                    <!-- InstaWidget -->
+                    <a href="https://instawidget.net/v/user/qbf_region" id="link-061c185d90ddbfcc920418192b9ac4f110a9e84f1a93d1ef0d7f8d9dcbc76a45">@qbf_region</a>
+                    <script src="https://instawidget.net/js/instawidget.js?u=061c185d90ddbfcc920418192b9ac4f110a9e84f1a93d1ef0d7f8d9dcbc76a45&width=600px"></script>
+
+                    //-img(src='i/insta.jpg')
                     .widget_footer
-                      img(src='i/in.png')
+                      <a href="https://www.instagram.com/explore/tags/qbf/?hl=en"><img src="i/in.png" alt="Instagram logo"/></a>
+
                 li
                   .widget_box
-                    img(src='i/twit.jpg')
+                    <a class="twitter-timeline" href="https://twitter.com/qb_finance" data-chrome="nofooter noheader noborders transparent noscrollbar" data-tweet-limit="1">Tweets by qb_finance</a>
+                    <script async src="//platform.twitter.com/widgets.js" charset="utf-8" ></script>
+                    //-img(src='i/twit.jpg')
                     .widget_footer
-                      img(src='i/tw.png')
+                      <a href="https://twitter.com/qb_finance"><img src="i/tw.png" alt="Twitter logo"/></a>
+
                 li
                   .widget_box
-                    img(src='i/yt.png')
+                    a(href='https://www.youtube.com/channel/UCGqnTlLHBoXsQGmqEkRI4PQ'): img(src='i/yt.png')
 
       .footer
         .section_inner.clearfix
@@ -426,14 +564,14 @@ html(lang='ru')
               img(src='i/flag.png')
 
             p
-              a.info_link(href='#') Раскрытие информации
+              a.info_link(href='info.html') Раскрытие информации
 
             p
-              a.info_link.fw_bl(href='#') qbfin.ru
+              a.info_link.fw_bl(href='http://qbfin.ru') qbfin.ru
 
             p.copyright © ООО ИК «КьюБиЭф» 2017.
 
-            a.footer_logo(href='#')
+            a.footer_logo(href='index.html')
               img(src='svg/logo.svg')
 
           .footer_info.fadeMeUp
@@ -450,7 +588,9 @@ html(lang='ru')
             .footer_attention
               .fl Не является публичной офертой
 
-              .dev_block Разработка сайта — goga.spb.ru
+              .dev_block
+                span Разработка сайта —&nbsp;
+                a.dev_link(href='http://goga.spb.ru/new/') goga.spb.ru
 
     +popup()
 

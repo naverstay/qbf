@@ -830,7 +830,7 @@ function initScrollBars() {
     $('.mCSB').mCustomScrollbar({
       documentTouchScroll: true,
       mouseWheel: {
-        //preventDefault: true
+        preventDefault: true
       },
       theme: "dark",
       scrollEasing: "linear"
@@ -913,7 +913,27 @@ $(function ($) {
 
   initGallery();
 
-  body_var.delegate('.select2', 'change', function (e) {
+  body_var.delegate('.sendOrder', 'submit', function (e) {
+    e.preventDefault();
+
+    var form = $(this), form_data = form.serialize(); //собераем все данные из формы
+
+    if (form.find('.agreement').prop('checked')) {
+      $.ajax({
+        type: form.attr('method'), //Метод отправки
+        url: form.attr('action'), //путь до php фаила отправителя
+        data: form_data,
+        success: function () {
+          //код в этом блоке выполняется при успешной отправке сообщения
+          form.closest('.callback_holder').find('.respond').show();
+
+          setTimeout(function () {
+            form.closest('.callback_holder').find('.respond').hide();
+          }, 3000);
+        }
+      });
+    }
+  }).delegate('.select2', 'change', function (e) {
     $(this).validationEngine('validate');
 
   }).delegate('.strategyForm', 'submit', function (e) {
@@ -922,6 +942,8 @@ $(function ($) {
     if ($(this).validationEngine('validate')) {
       findStrategy($('.strategyBtn'));
     }
+
+    return false;
   }).delegate('.calcResult', 'click', function (e) {
     if ($(e.target).hasClass('calcResult')) {
       $(e.target).hide();
@@ -941,8 +963,10 @@ $(function ($) {
     defProp(chck);
 
   }).delegate('.tabControl', 'click', function () {
-    var tab = $(this), chck = $('.chartLabel').eq(tab.index()).find('input'),
+    var tab = $(this), ind = tab.index(), chck = $('.chartLabel').eq(ind).find('input'),
       def_check = tab.attr('data-default');
+
+    $($('.strategyInfo').eq(ind)).show().siblings('.strategyInfo').hide();
 
     tab.siblings('.tabControl').removeClass('selected').end().addClass('selected');
 
