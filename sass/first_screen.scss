@@ -162,7 +162,8 @@ body {
 
   @include respond-to-min($resp_step_2) {
     float: left;
-    width: 69%;
+    //width: 69%;
+    width: 67%;
     margin-right: -10%;
   }
 }
@@ -609,6 +610,26 @@ $tab_h: 113px;
       font-size: 12px;
     }
   }
+
+  .axis--x {
+    .tick {
+      text {
+        text-anchor: start;
+        font-size: 10px;
+        -webkit-transform: translate(-15px, 25px) rotate(-45deg);
+        -ms-transform: translate(-15px, 25px) rotate(-45deg);
+        transform: translate(-15px, 25px) rotate(-45deg);
+
+        @include respond-to-min($resp_step_2) {
+          -webkit-transform: translate(0, 0) rotate(0deg);
+          -ms-transform: translate(0, 0) rotate(0deg);
+          transform: translate(0, 0) rotate(0deg);
+          text-anchor: middle;
+          font-size: 12px;
+        }
+      }
+    }
+  }
 }
 
 .line {
@@ -674,9 +695,50 @@ $tab_h: 113px;
   opacity: .5;
 }
 
+.pie_label {
+  font: 12px $LatoBold;
+  color: #000;
+}
+
+.tooltip {
+  z-index: 2;
+  position: absolute;
+  text-align: center;
+  padding: 4px;
+  font-size: 12px;
+  color: #000;
+  background: rgba(167, 169, 172, .8);
+  border: 1px solid rgb(167, 169, 172);
+  box-shadow: 0 0 5px rgba(167, 169, 172, .8);
+  pointer-events: none;
+
+  b {
+    font-family: $LatoBold;
+  }
+
+  p {
+    font-size: 10px;
+  }
+
+  &._left {
+    text-align: left;
+  }
+}
+
 .dot {
   fill: #fff;
   stroke-width: 2px;
+
+  &.line_dot {
+    @include transition_all(opacity .3s);
+    opacity: 0;
+    position: relative;
+    fill: $gl_green;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
 
   .st &,
   .graph_0 & {
@@ -1039,6 +1101,10 @@ $tab_h: 113px;
 .respond {
   color: #fff;
   display: none;
+  float: left;
+  padding: 10px;
+  margin: 0 0 -20px -10px !important;
+  background: lighten($gl_green, 10%);
 }
 
 .callback_title {
@@ -1799,32 +1865,33 @@ $tab_h: 113px;
 .widget_holder {
 
   @include respond-to-min($resp_step_2) {
-    display: table;
-    width: 100%;
-    //table-layout: fixed;
-    border-collapse: collapse;
+    @include flex_block(row wrap, space-around, stretch);
 
     li {
+      @include flex_block(column nowrap, center, center);
       border: 1px solid #f0eeee;
-      display: table-cell;
-      vertical-align: middle;
       position: relative;
+      padding-bottom: 60px;
+      flex: 1 0 auto;
+
+      + li {
+        border-left: 0;
+      }
     }
   }
 }
 
 .widget_footer {
-  //position: absolute;
-  //bottom: 0;
-  //right: 0;
-  //left: 0;
-  //height: 50px;
-  padding: 0 50px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  height: 56px;
+  padding: 0 32px;
   text-align: right;
 }
 
 .widget_box {
-  position: relative;
   text-align: center;
   padding-top: 20px;
   padding-bottom: 30px;
@@ -1999,6 +2066,7 @@ $tab_h: 113px;
 }
 
 .check_v1 {
+  @extend %no-user-select;
   display: inline-block;
   vertical-align: top;
 
@@ -2090,6 +2158,14 @@ $tab_h: 113px;
   .inp_hidden:checked + .check_text {
     &:before {
       content: $i-check;
+    }
+  }
+
+  .inp_hidden:checked + & {
+    .check_text {
+      &:before {
+        content: $i-check;
+      }
     }
   }
 }
@@ -2825,6 +2901,7 @@ $tab_h: 113px;
 }
 
 .strategy_chart {
+  position: relative;
   padding-top: 20px;
   margin-bottom: 25px;
   text-align: center;
@@ -2838,6 +2915,145 @@ $tab_h: 113px;
   @include respond-to-min($resp_step_2) {
     padding-top: 37px;
   }
+}
+
+.flowBlock {
+  position: fixed;
+  display: block;
+  right: -220px;
+  bottom: 15%;
+  width: 340px;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  border-radius: 7px 0 0 7px;
+  -webkit-box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
+  -webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+  cursor: pointer;
+  z-index: 999;
+}
+
+.flowBlock .leftSide {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  width: 110px;
+  height: auto;
+  margin: 0 5px 0 0;
+  padding: 10px 0 0 10px;
+}
+
+.flowBlock .rightSide {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  width: 200px;
+  height: auto;
+  margin: 0;
+  padding: 10px 0 0;
+}
+
+.flowBlock .rightSide p {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+  padding: 0;
+  font-size: 14px;
+  line-height: 19px;
+  color: #aaa;
+}
+
+.flowBlock ul.buttons {
+  position: relative;
+  display: none;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  font-size: 0;
+  text-align: center;
+  list-style-type: none;
+  border-top: 1px solid #ddd;
+}
+
+.flowBlock ul.buttons li {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  width: 50%;
+  height: auto;
+  margin: 0 auto;
+  font-size: 14px;
+  line-height: 14px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.flowBlock ul.buttons li:first-child {
+  border-right: 1px solid #ddd;
+  border-radius: 0 0 0 7px;
+}
+
+.flowBlock ul.buttons li a {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 10px 0 10px;
+  text-decoration: none;
+  color: #000;
+}
+
+.flowBlock ul.buttons li a:hover {
+  background: #efefef;
+}
+
+.flowBlock:hover {
+  right: 0;
+}
+
+.flowBlock:hover ul {
+  display: block;
+}
+
+.flowBlock:hover .caption {
+  display: none;
+}
+
+.flowBlock .icon {
+  position: relative;
+  display: block;
+  width: 115px;
+  height: auto;
+  margin: 5px 0;
+  padding: 0;
+}
+
+.flowBlock img {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.flowBlock .caption {
+  position: relative;
+  display: block;
+  width: 115px;
+  height: auto;
+  margin: 0;
+  padding: 7px 0 8px;
+  color: #000;
+  text-align: center;
 }
 
 // **********  text

@@ -14,6 +14,23 @@ Array.prototype.indexOf || (Array.prototype.indexOf = function (d, e) {
   return -1
 });
 
+d3.selection.prototype.closest = function (selector) {
+  var closestMatch = undefined;
+  var matchArr = [];
+  this.each(function () {
+    var elm = this;
+    while (typeof elm.parentNode.matches === "function" && !closestMatch) {
+      elm = elm.parentNode;
+      if (elm.matches(selector)) {
+        closestMatch = elm;
+        matchArr.push(closestMatch);
+      }
+    }
+    closestMatch = undefined;
+  });
+  return d3.selectAll(matchArr);
+}
+
 var all_pins = [],
   map_timer,
   all_tooltips = [],
@@ -78,7 +95,8 @@ var all_pins = [],
   chart_data,
   area_data,
   strategy_data,
-  mainSlider;
+  mainSlider,
+  months = ["Янв", "Фев", "Март", "Апр", "Май", "Июнь", "Июль", "Авг", "Сен", "Окт", "Ноя", "Дек"];
 
 function docScrollTo(pos, speed, callback) {
 
@@ -209,6 +227,18 @@ function callbackDialog() {
       }
     }
   });
+}
+
+function dateRu(q) {
+  var date = new Date(q);
+
+  return months[date.getMonth()] + ' ' + date.getFullYear();
+}
+
+function lineTip(q) {
+  var date = new Date(q.date);
+
+  return '<p><b>' + months[date.getMonth()] + ' ' + date.getFullYear() + '</b></p><div>Доходность стратегии с 2014 года, %: <b>' + d3.format(",.0%")(q.close / 100) + '</b></div>';
 }
 
 function initMainSlider() {
@@ -711,6 +741,488 @@ function loadChart() {
   }
 
   $('.tabControl.selected').click();
+}
+
+function initPopupLine(id, data) {
+// Define the div for the tooltip
+  var tooltip_1 = d3.select(id).closest('.strategy_chart').append("div")
+    .attr("class", "tooltip _left")
+    .style("opacity", 0);
+
+  // set the dimensions and margins of the graph
+  var margin = {top: 20, right: 20, bottom: 60, left: 50},
+    width = 600 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
+
+// parse the date / time
+  var parseTime = d3.timeParse("%d/%m/%Y");
+
+// set the ranges
+  var x = d3.scaleTime().range([0, width]);
+  var y = d3.scaleLinear().range([height, 0]);
+
+// define the line
+  var valueline = d3.line()
+    .x(function (d) {
+      return x(d.date);
+    })
+    .y(function (d) {
+      return y(d.close);
+    });
+
+// append the svg obgect to the body of the page
+// appends a 'group' element to 'svg'
+// moves the 'group' element to the top left margin
+  var svg = d3.select(id).append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform",
+      "translate(" + margin.left + "," + margin.top + ")");
+
+  // format the data
+  data.forEach(function (d) {
+    d.date = parseTime(d.date);
+    d.close = +d.close;
+  });
+
+  // Scale the range of the data
+  x.domain(d3.extent(data, function (d) {
+    return d.date;
+  }));
+  y.domain([0, d3.max(data, function (d) {
+    return d.close;
+  })]);
+
+  // Add the X Axis
+  svg.append("g")
+    .attr("transform", "translate(0," + height + ")")
+    .call(
+      d3.axisBottom(x)
+        .tickFormat(dateRu)
+    ).selectAll("text")
+    .attr("y", 20)
+    .attr("x", -40)
+    .attr("transform", "rotate(-45)")
+    .style("text-anchor", "start");
+
+  // Add the Y Axis
+  svg.append("g")
+    .call(
+      d3.axisLeft(y)
+        .ticks(5)
+        .tickSize(-width)
+    );
+
+  // Add the valueline path.
+  svg.append("path")
+    .data([data])
+    .attr("stroke", "#0caea7")
+    .attr("class", "line")
+    .attr("d", valueline);
+
+  // Add the scatterplot
+  svg.selectAll("dot")
+    .data(data)
+    .enter().append("circle")
+    .attr("r", 5)
+    .attr("class", "line_dot dot")
+    .attr("cx", function (d) {
+      return x(d.date);
+    })
+    .attr("cy", function (d) {
+      return y(d.close);
+    })
+    .on("mousemove", function (d) {
+      tooltip_1.transition()
+        .duration(200)
+        .style("opacity", .9);
+      tooltip_1.html(lineTip(d))
+        .style("left", (d3.event.layerX) + "px")
+        .style("top", (d3.event.clientY - 110) + "px");
+    })
+    .on("mouseout", function (d) {
+      tooltip_1.transition()
+        .duration(500)
+        .style("opacity", 0);
+    });
+
+}
+
+function initPopupDonut_1() {
+  var data = [{
+    name: 'Облигации',
+    percentage: 90,
+    count: 90,
+    color: '#9e9fa3'
+  }, {
+    name: 'Опционы',
+    percentage: 10,
+    count: 10,
+    color: '#337ea6'
+  }];
+
+  var width = 540,
+    height = 400;
+
+  var arc = d3.arc()
+    .outerRadius(160)
+    .innerRadius(100)
+    .padAngle(.01);
+
+  var pie = d3.pie()
+    .sort(null)
+    .value(function (d) {
+      return d.count;
+    });
+
+  var svg = d3.select('#pie_1').append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .append("g")
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+  var g = svg.selectAll(".arc")
+    .data(pie(data))
+    .enter().append("g");
+
+  var tooltip_1 = d3.select("#pie_1").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
+  g.append("path")
+    .attr("d", arc)
+    .attr("class", 'donut')
+    .style("fill", function (d, i) {
+      return d.data.color;
+    })
+    .on("mousemove", function (d) {
+      var parent = $(d3.event.srcElement).closest('.strategy_chart');
+
+      console.log(d, d3.event, parent.offset().top, parent.offset().left);
+
+      tooltip_1.transition()
+        .duration(200)
+        .style("opacity", .9);
+      tooltip_1.html("<span>" + d.data.name + "<span><br/><b>" + d3.format(",.1%")(d.data.percentage / 100) + "</b>")
+        .style("left", (d3.event.layerX + 20) + "px")
+        .style("top", (d3.event.clientY - 40) + "px");
+    })
+    .on("mouseout", function (d) {
+      tooltip_1.transition()
+        .duration(500)
+        .style("opacity", 0);
+    });
+
+  g.append("text")
+    .attr("transform", function (d) {
+      var _d = arc.centroid(d);
+      _d[0] *= 1.4;	//multiply by a constant factor
+      _d[1] *= 1.4;	//multiply by a constant factor
+      return "translate(" + _d + ")";
+    })
+    .attr("dy", ".50em")
+    .attr("class", "pie_label")
+    .style("text-anchor", "middle")
+    .text(function (d) {
+      if (d.data.percentage < 2) {
+        return '';
+      }
+      return d.data.percentage + '%';
+    });
+
+
+  /*  var key = function (d) {
+      console.log(d);
+      return d.data.label;
+    };
+
+    var polyline = svg.select(".lines").selectAll("polyline")
+      .data(pie(data), key);
+
+    function midAngle(d) {
+      return d.startAngle + (d.endAngle - d.startAngle) / 2;
+    }*/
+
+
+  /*  polyline.enter()
+      .append("polyline");
+
+    polyline.transition().duration(1000)
+      .attrTween("points", function (d) {
+        console.log(this, d);
+        this._current = this._current || d;
+        var interpolate = d3.interpolate(this._current, d);
+        this._current = interpolate(0);
+        return function (t) {
+          var d2 = interpolate(t);
+          var pos = arc.centroid(d2);
+          pos[0] = radius * 0.95 * (midAngle(d2) < Math.PI ? 1 : -1);
+          return [arc.centroid(d2), arc.centroid(d2), pos];
+        };
+      });*/
+
+  //polyline.exit()
+  //  .remove();
+
+  //g.append("text")
+  //  .attr("text-anchor", "middle")
+  //  .attr('font-size', '4em')
+  //  .attr('y', 20)
+  //  .text(totalCount);
+
+}
+
+function initPopupDonut_2() {
+  var data = [{
+    name: 'Финансовые инструменты',
+    percentage: 58,
+    count: 58,
+    color: '#9e9fa3'
+  }, {
+    name: 'Валюта',
+    percentage: 7,
+    count: 7,
+    color: '#337ea6'
+  }, {
+    name: 'Недвижимость',
+    percentage: 35,
+    count: 35,
+    color: '#8fbb4a'
+  }];
+
+  var width = 540,
+    height = 400;
+
+  var arc = d3.arc()
+    .outerRadius(160)
+    .innerRadius(100)
+    .padAngle(.01);
+
+  var pie = d3.pie()
+    .sort(null)
+    .value(function (d) {
+      return d.count;
+    });
+
+  var svg = d3.select('#pie_2').append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .append("g")
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+  var g = svg.selectAll(".arc")
+    .data(pie(data))
+    .enter().append("g");
+
+  var tooltip_2 = d3.select("#pie_2").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
+  g.append("path")
+    .attr("d", arc)
+    .attr("class", 'donut')
+    .style("fill", function (d, i) {
+      return d.data.color;
+    })
+    .on("mousemove", function (d) {
+      var parent = $(d3.event.srcElement).closest('.strategy_chart');
+
+      console.log(d, d3.event, parent.offset().top, parent.offset().left);
+
+      tooltip_2.transition()
+        .duration(200)
+        .style("opacity", .9);
+      tooltip_2.html("<span>" + d.data.name + "<span><br/><b>" + d3.format(",.1%")(d.data.percentage / 100) + "</b>")
+        .style("left", (d3.event.layerX + 20) + "px")
+        .style("top", (d3.event.clientY - 40) + "px");
+    })
+    .on("mouseout", function (d) {
+      tooltip_2.transition()
+        .duration(500)
+        .style("opacity", 0);
+    });
+
+  g.append("text")
+    .attr("transform", function (d) {
+      var _d = arc.centroid(d);
+      _d[0] *= 1.4;	//multiply by a constant factor
+      _d[1] *= 1.4;	//multiply by a constant factor
+      return "translate(" + _d + ")";
+    })
+    .attr("dy", ".50em")
+    .attr("class", "pie_label")
+    .style("text-anchor", "middle")
+    .text(function (d) {
+      if (d.data.percentage < 2) {
+        return '';
+      }
+      return d.data.percentage + '%';
+    });
+
+
+  /*  var key = function (d) {
+      console.log(d);
+      return d.data.label;
+    };
+
+    var polyline = svg.select(".lines").selectAll("polyline")
+      .data(pie(data), key);
+
+    function midAngle(d) {
+      return d.startAngle + (d.endAngle - d.startAngle) / 2;
+    }*/
+
+
+  /*  polyline.enter()
+      .append("polyline");
+
+    polyline.transition().duration(1000)
+      .attrTween("points", function (d) {
+        console.log(this, d);
+        this._current = this._current || d;
+        var interpolate = d3.interpolate(this._current, d);
+        this._current = interpolate(0);
+        return function (t) {
+          var d2 = interpolate(t);
+          var pos = arc.centroid(d2);
+          pos[0] = radius * 0.95 * (midAngle(d2) < Math.PI ? 1 : -1);
+          return [arc.centroid(d2), arc.centroid(d2), pos];
+        };
+      });*/
+
+  //polyline.exit()
+  //  .remove();
+
+  //g.append("text")
+  //  .attr("text-anchor", "middle")
+  //  .attr('font-size', '4em')
+  //  .attr('y', 20)
+  //  .text(totalCount);
+
+}
+
+function initPopupDonut_3() {
+  var data = [{
+    name: 'Валюта',
+    percentage: 80,
+    count: 80,
+    color: '#9e9fa3'
+  }, {
+    name: 'Сырье',
+    percentage: 20,
+    count: 20,
+    color: '#337ea6'
+  }];
+
+  var width = 540,
+    height = 400;
+
+  var arc = d3.arc()
+    .outerRadius(160)
+    .innerRadius(100)
+    .padAngle(.01);
+
+  var pie = d3.pie()
+    .sort(null)
+    .value(function (d) {
+      return d.count;
+    });
+
+  var svg = d3.select('#pie_3').append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .append("g")
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+  var g = svg.selectAll(".arc")
+    .data(pie(data))
+    .enter().append("g");
+
+  var tooltip_3 = d3.select("#pie_3").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
+  g.append("path")
+    .attr("d", arc)
+    .attr("class", 'donut')
+    .style("fill", function (d, i) {
+      return d.data.color;
+    })
+    .on("mousemove", function (d) {
+      var parent = $(d3.event.srcElement).closest('.strategy_chart');
+
+      console.log(d, d3.event, parent.offset().top, parent.offset().left);
+
+      tooltip_3.transition()
+        .duration(200)
+        .style("opacity", .9);
+      tooltip_3.html("<span>" + d.data.name + "<span><br/><b>" + d3.format(",.1%")(d.data.percentage / 100) + "</b>")
+        .style("left", (d3.event.layerX + 20) + "px")
+        .style("top", (d3.event.clientY - 40) + "px");
+    })
+    .on("mouseout", function (d) {
+      tooltip_3.transition()
+        .duration(500)
+        .style("opacity", 0);
+    });
+
+  g.append("text")
+    .attr("transform", function (d) {
+      var _d = arc.centroid(d);
+      _d[0] *= 1.4;	//multiply by a constant factor
+      _d[1] *= 1.4;	//multiply by a constant factor
+      return "translate(" + _d + ")";
+    })
+    .attr("dy", ".50em")
+    .attr("class", "pie_label")
+    .style("text-anchor", "middle")
+    .text(function (d) {
+      if (d.data.percentage < 2) {
+        return '';
+      }
+      return d.data.percentage + '%';
+    });
+
+
+  /*  var key = function (d) {
+      console.log(d);
+      return d.data.label;
+    };
+
+    var polyline = svg.select(".lines").selectAll("polyline")
+      .data(pie(data), key);
+
+    function midAngle(d) {
+      return d.startAngle + (d.endAngle - d.startAngle) / 2;
+    }*/
+
+
+  /*  polyline.enter()
+      .append("polyline");
+
+    polyline.transition().duration(1000)
+      .attrTween("points", function (d) {
+        console.log(this, d);
+        this._current = this._current || d;
+        var interpolate = d3.interpolate(this._current, d);
+        this._current = interpolate(0);
+        return function (t) {
+          var d2 = interpolate(t);
+          var pos = arc.centroid(d2);
+          pos[0] = radius * 0.95 * (midAngle(d2) < Math.PI ? 1 : -1);
+          return [arc.centroid(d2), arc.centroid(d2), pos];
+        };
+      });*/
+
+  //polyline.exit()
+  //  .remove();
+
+  //g.append("text")
+  //  .attr("text-anchor", "middle")
+  //  .attr('font-size', '4em')
+  //  .attr('y', 20)
+  //  .text(totalCount);
 
 }
 
@@ -737,15 +1249,17 @@ function initChart() {
 }
 
 function updateFade() {
-  var scrtop = getScrollTop(), wndH = wnd.innerHeight();
+  if (wnd) {
+    var scrtop = getScrollTop(), wndH = wnd.innerHeight();
 
-  $('.fadeMeUp:not(.fade_up)').each(function (ind) {
-    var blck = $(this);
+    $('.fadeMeUp:not(.fade_up)').each(function (ind) {
+      var blck = $(this);
 
-    if ((scrtop + wndH * .9) > blck.offset().top) {
-      blck.addClass('fade_up');
-    }
-  });
+      if ((scrtop + wndH * .9) > blck.offset().top) {
+        blck.addClass('fade_up');
+      }
+    });
+  }
 }
 
 function getScrollTop() {
@@ -839,11 +1353,6 @@ function initScrollBars() {
 }
 
 function findStrategy(btn) {
-
-  //ERRORS
-  var error = false;
-
-
   //GET DATA
   var age = $('.strategyForm [name="age"]').val();
   var sum = $('.strategyForm [name="sum"]').val();
@@ -852,12 +1361,12 @@ function findStrategy(btn) {
 
   var result = "";
 
-
   //CALC
 
   if ((age === 3) && (sum === 3) && (period === 3) && (risk === 1)) {
     result = 'Консервативная стратегия';
     $('#st_1').css({'display': 'block'});
+
   } else if ((age === 2) && (sum === 1) && (period === 1) && (risk === 4)) {
     result = 'Высокодоходная стратегия';
     $('#st_3').css({'display': 'block'});
@@ -901,7 +1410,7 @@ $(function ($) {
 
   initSelect();
 
-  initValidation();
+  //initValidation();
 
   //confirmDialogDefaults();
 
@@ -911,12 +1420,189 @@ $(function ($) {
 
   initChart();
 
+  initPopupLine('#chart_1', [
+    {
+      date: '1/1/2014',
+      close: 3.62
+    },
+    {
+      date: '1/4/2014',
+      close: 6.12
+    },
+    {
+      date: '1/7/2014',
+      close: 9.92
+    },
+    {
+      date: '1/10/2014',
+      close: 13.10
+    },
+    {
+      date: '1/1/2015',
+      close: 16.97
+    },
+    {
+      date: '1/4/2015',
+      close: 20.68
+    },
+    {
+      date: '1/7/2015',
+      close: 23.64
+    },
+    {
+      date: '1/10/2015',
+      close: 26.71
+    },
+    {
+      date: '1/1/2016',
+      close: 29.65
+    },
+    {
+      date: '1/4/2016',
+      close: 30.68
+    },
+    {
+      date: '1/7/2016',
+      close: 34.50
+    },
+    {
+      date: '1/10/2016',
+      close: 34.77
+    },
+    {
+      date: '1/1/2017',
+      close: 40.35
+    }
+  ]);
+
+  initPopupLine('#chart_2', [
+    {
+      date: '1/1/2014',
+      close: 9.12
+    },
+    {
+      date: '1/4/2014',
+      close: 16.44
+    },
+    {
+      date: '1/7/2014',
+      close: 24.65
+    },
+    {
+      date: '1/10/2014',
+      close: 32.49
+    },
+    {
+      date: '1/1/2015',
+      close: 41.09
+    },
+    {
+      date: '1/4/2015',
+      close: 48.55
+    },
+    {
+      date: '1/7/2015',
+      close: 54.66
+    },
+    {
+      date: '1/10/2015',
+      close: 61.61
+    },
+    {
+      date: '1/1/2016',
+      close: 68.69
+    },
+    {
+      date: '1/4/2016',
+      close: 75.52
+    },
+    {
+      date: '1/7/2016',
+      close: 81.92
+    },
+    {
+      date: '1/10/2016',
+      close: 90.79
+    },
+    {
+      date: '1/1/2017',
+      close: 96.57
+    }
+  ]);
+
+  initPopupLine('#chart_3', [
+    {
+      date: '1/1/2014',
+      close: -1.94
+    },
+    {
+      date: '1/4/2014',
+      close: 4.77
+    },
+    {
+      date: '1/7/2014',
+      close: 13.15
+    },
+    {
+      date: '1/10/2014',
+      close: 13.13
+    },
+    {
+      date: '1/1/2015',
+      close: 21.12
+    },
+    {
+      date: '1/4/2015',
+      close: 22.31
+    },
+    {
+      date: '1/7/2015',
+      close: 28.30
+    },
+    {
+      date: '1/10/2015',
+      close: 29.24
+    },
+    {
+      date: '1/1/2016',
+      close: 38.07
+    },
+    {
+      date: '1/4/2016',
+      close: 44.37
+    },
+    {
+      date: '1/7/2016',
+      close: 50.66
+    },
+    {
+      date: '1/10/2016',
+      close: 57.22
+    },
+    {
+      date: '1/1/2017',
+      close: 66.68
+    }
+  ]);
+
+  initPopupDonut_1();
+
+  initPopupDonut_2();
+
+  initPopupDonut_3();
+
   initGallery();
+
+  //$('.calcResult').show();
 
   body_var.delegate('.sendOrder', 'submit', function (e) {
     e.preventDefault();
 
-    var form = $(this), form_data = form.serialize(); //собераем все данные из формы
+    return false;
+  }).delegate('.sendOrder button', 'click', function (e) {
+    e.preventDefault();
+
+    var form = $(this).closest('form'), form_data = form.serialize(); //собераем все данные из формы
 
     if (form.find('.agreement').prop('checked')) {
       $.ajax({
@@ -924,8 +1610,11 @@ $(function ($) {
         url: form.attr('action'), //путь до php фаила отправителя
         data: form_data,
         success: function () {
+          yaCounter45518583.reachGoal('MAIN_FORM');
           //код в этом блоке выполняется при успешной отправке сообщения
           form.closest('.callback_holder').find('.respond').show();
+
+          form[0].reset();
 
           setTimeout(function () {
             form.closest('.callback_holder').find('.respond').hide();
@@ -933,11 +1622,25 @@ $(function ($) {
         }
       });
     }
+
+    return false;
+
+  }).delegate('.check_v1', 'click', function (e) {
+    var lbl = $(this);
+
+    if (!lbl.find('input').length) {
+      var inp = $('#' + lbl.attr('for'));
+
+      if (inp.length) {
+        inp.prop('checked', !inp.prop('checked'));
+      }
+    }
+
   }).delegate('.select2', 'change', function (e) {
     $(this).validationEngine('validate');
-
   }).delegate('.strategyForm', 'submit', function (e) {
     e.preventDefault();
+    yaCounter45518583.reachGoal('CALC');
 
     if ($(this).validationEngine('validate')) {
       findStrategy($('.strategyBtn'));

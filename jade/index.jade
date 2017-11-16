@@ -14,10 +14,10 @@ html(lang='ru')
               .main_slider
                 .mainSlider
                   +slide('i/manager_4.png', 'В компании умеют находить решения в самых сложных экономических условиях и защищать интересы вашей семьи, используя максимум инструментов', 'Пахомов Владимир Сергеевич', 'директор филиальной сети')
-                  +slide('i/manager.png', 'QBF приумножает капитал своих клиентов — это неизменно, из года в год, несмотря на все кризисы и волнения на рынках.', 'Голубев Алексей Сергеевич', 'руководитель клиентского офиса')
+                  +slide('i/manager.png', 'QBF приумножает капитал своих клиентов — это неизменно, из года в год, несмотря на все кризисы и волнения на рынках.', 'Голубев Алексей Сергеевич', 'руководитель клиентского офиса Санкт-Петебург')
                   +slide('i/manager_3.png', 'Европейский финансовый сервис во всем своем многообразии — это, прежде всего, проверенный временем и тысячами клиентов подход.', 'Геворгян Геворг Шекспирович', 'руководитель отдела инвестиционных услуг')
-                  +slide('i/manager_2.png', 'Вопрос денег — это вопрос личный, приватный, поэтому защита инвестиций для QBF означает очень деликатный процесс, сопряженный с индивидуальным подходом, предельной честностью и заслуженным доверием.', 'Рыков Дмитрий Иванович', 'руководитель филиала Тюмен')
-                  +slide('i/manager_1.png', 'Сформированная за годы работы команда экспертов взаимодействует не с обезличенным вкладчиком, а с живым человеком', 'Исхаков Евгений Валерьевич', 'руководитель филиала Екатеринбург')
+                  +slide('i/manager_2.png', 'Вопрос денег — это вопрос личный, приватный, поэтому защита инвестиций для QBF означает очень деликатный процесс, сопряженный с индивидуальным подходом, предельной честностью и заслуженным доверием.', 'Рыков Дмитрий Иванович', 'руководитель филиала Тюмень')
+                  +slide('i/manager_1 copy.png', 'Сформированная за годы работы команда экспертов взаимодействует не с обезличенным вкладчиком, а с живым человеком', 'Исхаков Евгений Валерьевич', 'руководитель филиала Екатеринбург')
 
                 .sliderDots.slider_dots
               .sliderControls.slider_controls
@@ -32,7 +32,7 @@ html(lang='ru')
               h2.section_title Стратегии, проверенные временем
 
               .tabs
-                .tab_control.tabControl.selected.fadeMeUp(data-default='0,8,5,9')
+                .tab_control.tabControl.selected.fadeMeUp(data-default='0,3,8,5,9')
                   img(src='i/strategy_1.jpg')
                   span.strategy_name Средневзвешенная
                 .tab_control.tabControl.fadeMeUp(data-default='1,4,7,9')
@@ -56,13 +56,13 @@ html(lang='ru')
                           li.line_0
                             label.check_v1.chartLabel
                               input.inp_hidden.chartToggle(type='checkbox' data-chart='.st_0' checked)
-                              span.check_text: span Средневзвешенная
+                              span.check_text: span Средневзвешенная стратегия QBF
                             label.check_v1.chartLabel(style='display:none;')
                               input.inp_hidden.chartToggle(type='checkbox' data-chart='.st_1' checked)
-                              span.check_text: span Консервативная
+                              span.check_text: span Консервативная стратегия QBF
                             label.check_v1.chartLabel(style='display:none;')
                               input.inp_hidden.chartToggle(type='checkbox' data-chart='.st_2' checked)
-                              span.check_text: span Высокодоходная
+                              span.check_text: span Высокодоходная стратегия QBF
 
           // average
           .strategy_info.strategyInfo
@@ -224,7 +224,7 @@ html(lang='ru')
 
             .section_inner
               .stock_block
-                .stock_caption.fadeMeUp Акции американских эмитентов — основной инструмент средневзвешенного портфеля.
+                .stock_caption.fadeMeUp Консервативная стратегия - аналог банковского депозита.
 
                 .stock_box.fadeMeUp
                   p Консервативная стратегия является аналогом банковского депозита, однако приносит доход в 2-4 раза больше при сопоставимом уровне риска. Основу стратегии составляют еврооблигации крупнейших высоконадежных российских эмитентов и облигации первоклассных американских эмитентов.
@@ -285,7 +285,7 @@ html(lang='ru')
 
             .section_inner
               .stock_block
-                .stock_caption.fadeMeUp Акции американских эмитентов — основной инструмент средневзвешенного портфеля.
+                .stock_caption.fadeMeUp Алгоритмическая торговля и диверсификация - залог успеха высокодоходной стратегии.
 
                 .stock_box.fadeMeUp
                   p Высокодоходная стратегия позволяет инвестору получить существенную прибыль при принятии на себя повышенного риска. В эпоху цифровых технологий большая часть торгов на американских биржах проводится роботами, поскольку они могут уловить рыночные колебания, основанные на алгоритме торговли и принести существенную прибыль инвестору.
@@ -361,11 +361,9 @@ html(lang='ru')
                     h4.benefits_caption.fadeMeUp Доходность
                     p Уже почти десятилетие инвесторы компании получают доход, за всю историю не было ни одного убыточного года.
 
-
-
           .recognition_section: .recognition_holder
             .recognition_block
-              h3.recognition_title.fadeMeUp Профессиональное признание
+              h3.recognition_title.fadeMeUp Профессиональное признание и лицензии
 
               ul.recognition_list
                 li.fadeMeUp: .recognition_item
@@ -511,14 +509,14 @@ html(lang='ru')
                   ul.map_contacts
                     li: span +7 (343) 312 22 00
                     <br>
-                    li: a.map_link(href='mailto:region@qbfin.ru') region@qbfin.ru
+                    li: a.map_link(href='mailto:invest.ekb@qbfin.ru') invest.ekb@qbfin.ru
 
                 .office_address.officeAddr(style='display:none')
                   p 236001, Калининград, бизнес-центр «Морской» Театральная улица, 35, этаж 8
                   ul.map_contacts
                     li: span +7 (4012) 720 317
                     <br>
-                    li: a.map_link(href='mailto:invest@qbfin.ru') invest@qbfin.ru
+                    li: a.map_link(href='mailto:region@qbfin.ru') region@qbfin.ru
 
                 .office_address.officeAddr(style='display:none')
                   p 625048, Тюмень ул. Максима Горького, д.74 БЦ «Демидов стан»
@@ -591,6 +589,8 @@ html(lang='ru')
               .dev_block
                 span Разработка сайта —&nbsp;
                 a.dev_link(href='http://goga.spb.ru/new/') goga.spb.ru
+
+      +flow()
 
     +popup()
 

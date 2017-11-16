@@ -193,6 +193,67 @@ mixin slide(img, text, author, post)
       .quote_author_name= author
       .quote_author_post= post
 
+mixin flow()
+  <div class="flowBlock">
+  <div class="leftSide">
+  <span class="icon"><img src="i/flow-icons.png" alt="" /></span>
+  <span class="caption">Есть вопросы?</span>
+  </div>
+  <div class="rightSide">
+  <p>Добро пожаловать в&nbsp;QBF. Получите персональную консультацию.</p>
+  </div>
+  <ul class="buttons">
+  <li><a href="mailto:region@qbfin.ru">Напишите нам</a></li>
+  <li><a href="tel:+8-800-777-00-18">Позвоните нам</a></li>
+  </ul>
+  </div>
+
+  | 	<!-- Код тега ремаркетинга Google -->
+  | <script type="text/javascript">
+  | /* <![CDATA[ */
+  | var google_conversion_id = 837306874;
+  | var google_custom_params = window.google_tag_params;
+  | var google_remarketing_only = true;
+  | /* ]]> */
+  | </script>
+  | <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+  | </script>
+  | <noscript>
+  | <div style="display:inline;">
+  | <img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/837306874/?guid=ON&amp;script=0"/>
+  | </div>
+  | </noscript>
+
+  | <!-- Yandex.Metrika counter -->
+  | <script type="text/javascript" >
+  | (function (d, w, c) {
+  | (w[c] = w[c] || []).push(function() {
+  | try {
+  | w.yaCounter45518583 = new Ya.Metrika({
+  | id:45518583,
+  | clickmap:true,
+  | trackLinks:true,
+  | accurateTrackBounce:true,
+  | webvisor:true,
+  | trackHash:true
+  | });
+  | } catch(e) { }
+  | });
+
+  | var n = d.getElementsByTagName("script")[0],
+  | s = d.createElement("script"),
+  | f = function () { n.parentNode.insertBefore(s, n); };
+  | s.type = "text/javascript";
+  | s.async = true;
+  | s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+  | if (w.opera == "[object Opera]") {
+  | d.addEventListener("DOMContentLoaded", f, false);
+  | } else { f(); }
+  | })(document, window, "yandex_metrika_callbacks");
+  | </script>
+  | <noscript><div><img src="https://mc.yandex.ru/watch/45518583" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+  | <!-- /Yandex.Metrika counter -->
 
 mixin popup()
   .popup_holder.calcResult()
@@ -206,7 +267,8 @@ mixin popup()
       ul#st_1.strategy_charts
         li
           .strategy_chart
-            img(src='i/pie_1.jpg')
+            #pie_1
+            //-img(src='i/pie_1.jpg')
           .strategy_legend
             span.legend_item._gray Облигации
             span.legend_item._blue Опционы
@@ -217,7 +279,8 @@ mixin popup()
 
         li
           .strategy_chart
-            img(src='i/chart1.jpg')
+            #chart_1
+            //-img(src='i/chart1.jpg')
           .strategy_legend
             p &mdash; Доходность стратегии с 2014 года, %
 
@@ -226,7 +289,8 @@ mixin popup()
       ul#st_2.strategy_charts
         li
           .strategy_chart
-            img(src='i/pie_2.jpg')
+            #pie_2
+            //-img(src='i/pie_2.jpg')
           .strategy_legend
             span.legend_item._gray Финансовые инструменты
             span.legend_item._blue Валюта
@@ -239,7 +303,8 @@ mixin popup()
 
         li
           .strategy_chart
-            img(src='i/chart2.jpg')
+            #chart_2
+            //-img(src='i/chart2.jpg')
           .strategy_legend
             p &mdash; Доходность стратегии с 2014 года, %
 
@@ -248,14 +313,16 @@ mixin popup()
       ul#st_3.strategy_charts
         li
           .strategy_chart
-            img(src='i/pie_3.jpg')
+            #pie_3
+            //-img(src='i/pie_3.jpg')
           .strategy_legend
             span.legend_item._gray Валюта
             span.legend_item._blue Сырье
 
         li
           .strategy_chart
-            img(src='i/chart3.jpg')
+            #chart_3
+            //-img(src='i/chart3.jpg')
           .strategy_legend
             p &mdash; Доходность стратегии с 2014 года, %
 
@@ -263,7 +330,30 @@ mixin popup()
 
       .popup_tip Рассчитанный финансовый план не является окончательным и может быть изменен после персональной консультации.
 
-      +callback_holder()
+      .callback_holder
+        .callback_info
+          h3.callback_title(class = anim ? 'fadeMeUp' : '') Получите
+          h4.callback_tip(class = anim ? 'fadeMeUp' : '') персональную консультацию по стратегиям.
+          p(class = anim ? 'fadeMeUp' : ''): span Мы перезвоним вам в течение 20-ти минут.
+          p.respond: span Сообщение отправлено
+
+        .callback_form(class = anim ? 'fadeMeUp' : '')
+          form.sendOrder(action='mailer.php' method='post')
+            .f_cell
+              .input_w
+                input.f_input_v1(placeholder='Как вас зовут' name='name')
+            .f_cell
+              .input_w
+                input.f_input_v1(placeholder='Телефон или почта' name='phone')
+
+            .f_cell
+              input#agreement.agreement.inp_hidden(type='checkbox' name='agreement')
+              label.check_v1(for='agreement')
+                span.check_text Я даю свое согласие на обработку персональных данных
+
+            .f_cell
+              button.btn_v2.callback_btn.gray_btn
+                span.fw_b Получить консультацию
 
 
 mixin scripts(index)
