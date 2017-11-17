@@ -3,7 +3,7 @@ doctype html
 html(lang='ru')
   +dev_head('QBF главная')
 
-  body
+  body.home
     .wrapper
       .base
         +header()
@@ -32,14 +32,14 @@ html(lang='ru')
               h2.section_title Стратегии, проверенные временем
 
               .tabs
-                .tab_control.tabControl.selected.fadeMeUp(data-default='0,3,8,5,9')
+                .tab_control.tabControl.selected.fadeMeUp(data-default='0,3,8,5,9' data-disable='4,6,7')
                   img(src='i/strategy_1.jpg')
                   span.strategy_name Средневзвешенная
-                .tab_control.tabControl.fadeMeUp(data-default='1,4,7,9')
+                .tab_control.tabControl.fadeMeUp(data-default='1,4,7,9' data-disable='3,5,6,8')
                   img(src='i/strategy_2.jpg')
                   span.strategy_name Консервативная
 
-                .tab_control.tabControl.fadeMeUp(data-default='2,6,9')
+                .tab_control.tabControl.fadeMeUp(data-default='2,6,9' data-disable='3,4,5,7,8')
                   img(src='i/strategy_3.jpg')
                   span.strategy_name Высокодоходная
                 .tab_unit.selected.fadeMeUp

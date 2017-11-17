@@ -14,23 +14,6 @@ Array.prototype.indexOf || (Array.prototype.indexOf = function (d, e) {
   return -1
 });
 
-d3.selection.prototype.closest = function (selector) {
-  var closestMatch = undefined;
-  var matchArr = [];
-  this.each(function () {
-    var elm = this;
-    while (typeof elm.parentNode.matches === "function" && !closestMatch) {
-      elm = elm.parentNode;
-      if (elm.matches(selector)) {
-        closestMatch = elm;
-        matchArr.push(closestMatch);
-      }
-    }
-    closestMatch = undefined;
-  });
-  return d3.selectAll(matchArr);
-}
-
 var all_pins = [],
   map_timer,
   all_tooltips = [],
@@ -659,7 +642,7 @@ function loadChart() {
     .attr("class", function (d, i) {
 
       if (updateLegend && i >= 3) {
-        chartToggleList.append($('<li class="line_' + (i - 2) + '"><label class="check_v1"><input class="inp_hidden chartToggle" type="checkbox" data-chart=".graph_' + (i - 2) + '" checked=""><span class="check_text"><span>' + d.id + '</span></span></label></li>'));
+        chartToggleList.append($('<li class="line_' + (i - 2) + '"><label class="check_v1 chartLabel"><input class="inp_hidden chartToggle" type="checkbox" data-chart=".graph_' + (i - 2) + '" checked=""><span class="check_text"><span>' + d.id + '</span></span></label></li>'));
       }
 
       return 'line line_' + (i >= 3 ? (i - 2) : 0);
@@ -1387,38 +1370,23 @@ function findStrategy(btn) {
   }, 2000);
 }
 
-function initGallery() {
-  if ($('.diplomaList').length) {
-    $('.diplomaList').lightGallery({
-      selector: '.diplomaLink',
-      speed: 200,
-      thumbnail: true,
-      zoom: true,
-      dynamic: false,
-      download: false,
-      scale: .5,
-      enableZoomAfter: 0,
-      actualSize: true
+function initHomePage() {
+  d3.selection.prototype.closest = function (selector) {
+    var closestMatch = undefined;
+    var matchArr = [];
+    this.each(function () {
+      var elm = this;
+      while (typeof elm.parentNode.matches === "function" && !closestMatch) {
+        elm = elm.parentNode;
+        if (elm.matches(selector)) {
+          closestMatch = elm;
+          matchArr.push(closestMatch);
+        }
+      }
+      closestMatch = undefined;
     });
-  }
-}
-
-$(function ($) {
-
-  wnd = $(window);
-  body_var = $('body');
-
-  initSelect();
-
-  //initValidation();
-
-  //confirmDialogDefaults();
-
-  initScrollBars();
-
-  initMainSlider();
-
-  initChart();
+    return d3.selectAll(matchArr);
+  };
 
   initPopupLine('#chart_1', [
     {
@@ -1593,6 +1561,44 @@ $(function ($) {
 
   initGallery();
 
+}
+
+function initGallery() {
+  if ($('.diplomaList').length) {
+    $('.diplomaList').lightGallery({
+      selector: '.diplomaLink',
+      speed: 200,
+      thumbnail: true,
+      zoom: true,
+      dynamic: false,
+      download: false,
+      scale: .5,
+      enableZoomAfter: 0,
+      actualSize: true
+    });
+  }
+}
+
+$(function ($) {
+  wnd = $(window);
+  body_var = $('body');
+
+  initSelect();
+
+  //initValidation();
+
+  //confirmDialogDefaults();
+
+  initScrollBars();
+
+  initMainSlider();
+
+  initChart();
+
+  if (body_var.hasClass('home')) {
+    initHomePage();
+  }
+
   //$('.calcResult').show();
 
   body_var.delegate('.sendOrder', 'submit', function (e) {
@@ -1667,7 +1673,7 @@ $(function ($) {
 
   }).delegate('.tabControl', 'click', function () {
     var tab = $(this), ind = tab.index(), chck = $('.chartLabel').eq(ind).find('input'),
-      def_check = tab.attr('data-default');
+      def_check = tab.attr('data-default'), dis_check = tab.attr('data-disable');
 
     $($('.strategyInfo').eq(ind)).show().siblings('.strategyInfo').hide();
 
@@ -1680,10 +1686,26 @@ $(function ($) {
     $('.st').hide().filter(chck.attr('data-chart')).show();
 
     if (def_check && def_check.length) {
-      var arr = def_check.split(',');
+      var check_arr = def_check.split(',');
 
       $('.chartToggle').each(function (ind) {
-        toggleChart($(this).prop('checked', arr.indexOf(ind + '') > -1));
+        toggleChart($(this).prop('checked', check_arr.indexOf(ind + '') > -1));
+      });
+    }
+
+    if (def_check && def_check.length) {
+      var disabled_arr = dis_check.split(',');
+
+      $('.chartToggle').each(function (ind) {
+        var chrt = d3.selectAll('#main_chart .graph' + ind);
+
+        if (disabled_arr.indexOf(ind + '') > -1) {
+          chrt.classed('hide', true);
+          $('.chartLabel').eq(ind).closest('li').hide();
+        } else {
+          chrt.classed('hide', false);
+          $('.chartLabel').eq(ind).closest('li').show();
+        }
       });
     }
 
