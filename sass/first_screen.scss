@@ -125,6 +125,9 @@ body {
   }
 
   @include respond-to-min($resp_step_2) {
+    position: absolute;
+    top: 0;
+    right: 20px;
     float: right;
     width: 35.5%;
     margin-top: 75px;
@@ -207,6 +210,7 @@ body {
   @extend %clearfix;
   position: relative;
   z-index: 4;
+  clear: both;
 
   @include respond-to-min($resp_step_1) {
     margin-top: -40px;
@@ -265,7 +269,7 @@ body {
     margin-left: -1px;
   }
 
-  @include respond-to-min($resp_step_2) {
+  @include respond-to-min($resp_step_3) {
     position: absolute;
     top: 0;
     border: none;
