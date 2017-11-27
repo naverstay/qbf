@@ -2486,6 +2486,15 @@ $tab_h: 113px;
   }
 }
 
+.info_tip {
+  line-height: 20px;
+  font-weight: 300;
+  color: #454548;
+  padding: 1%;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
 .info_caption {
   color: $gl_green;
   font: 16px $LatoBold;
