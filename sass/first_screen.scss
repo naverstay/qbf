@@ -776,6 +776,10 @@ $tab_h: 113px;
   .graph_7 & {
     stroke: #9ea900;
   }
+
+  @include respond-to-max($resp_step_1) {
+    display: none;
+  }
 }
 
 .strategy_info {
@@ -1526,7 +1530,7 @@ $tab_h: 113px;
     }
 
     @include respond-to-min($resp_step_3) {
-      width: 25%;
+      //width: 25%;
     }
   }
 
@@ -1589,7 +1593,7 @@ $tab_h: 113px;
 
   @include respond-to-min($resp_step_3) {
     li {
-      width: 25%;
+      //width: 25%;
     }
   }
 }
